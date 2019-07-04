@@ -13,6 +13,31 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('site');
 
 Route::get('lang/{language}', ['as' => 'lang.switch', 'uses' => 'LanguageController@switchLang']);
+
+Auth::routes();
+
+
+Route::namespace('Admin')->middleware('auth')->group(function () {
+    // Controllers Within The "Fin\Http\Controllers\Admin" Namespace
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('posts', 'PostController');
+//    Route::get('/home', ['as' => 'home', 'uses' => 'AdminController@index']);
+//    Route::get('ajax-categories', ['as' => 'ajax-regions', 'uses' => 'AjaxCategoryController@regions']);
+//    Route::get('ajax-tags', ['as' => 'ajax-tags', 'uses' => 'AjaxTagController@tags']);
+//    Route::get('ajax-municipalities/{region?}', [
+//        'as' => 'ajax-municipalities', 'uses' => 'AjaxCategoryController@municipalities'
+//    ]);
+//    Route::post('ajax-dropzone-store', ['as' => 'ajax-dropzone-store', 'uses' => 'AjaxDropzoneController@storeFile']);
+//    Route::post('ajax-dropzone-delete', ['as' => 'ajax-dropzone-delete', 'uses' => 'AjaxDropzoneController@deleteFile']);
+//
+//    Route::resource('images', 'ImageController');
+//    Route::resource('slides', 'SlideController');
+//    Route::resource('categories', 'CategoryController');
+//    Route::resource('tags', 'TagController');
+
+
+
+});

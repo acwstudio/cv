@@ -12,7 +12,7 @@ return [
     */
     'locales' => [
         'en' => 'English',
-        'ru' => 'Russian',
+        'ru' => 'Русский',
     ],
 
     /*
@@ -39,7 +39,7 @@ return [
     | and never fallback to the translator one.
     |
     */
-    'locale' => null,
+    'locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
