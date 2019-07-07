@@ -21,9 +21,12 @@ Auth::routes();
 
 
 Route::namespace('Admin')->middleware('auth')->group(function () {
-    // Controllers Within The "Fin\Http\Controllers\Admin" Namespace
+
     Route::get('/home', 'HomeController@index')->name('home');
+
     Route::resource('posts', 'PostController');
+    Route::resource('users', 'UserController');
+
 //    Route::get('/home', ['as' => 'home', 'uses' => 'AdminController@index']);
 //    Route::get('ajax-categories', ['as' => 'ajax-regions', 'uses' => 'AjaxCategoryController@regions']);
 //    Route::get('ajax-tags', ['as' => 'ajax-tags', 'uses' => 'AjaxTagController@tags']);

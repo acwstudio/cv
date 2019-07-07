@@ -1,6 +1,13 @@
 @extends('back.master')
 
 @section('content')
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="index.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Blank Page</li>
+    </ol>
 
     <main role="main" class="container">
         <h1 class="mt-5">Sticky footer with fixed navbar</h1>

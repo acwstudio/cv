@@ -20,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        dd(Post::translatedIn()->first()->title);
+        dd(Post::all());
     }
 
     /**

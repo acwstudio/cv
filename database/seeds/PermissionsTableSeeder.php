@@ -15,9 +15,6 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        Permission::create(['name' => 'post_create']);
-        Permission::create(['name' => 'post_edit']);
-        Permission::create(['name' => 'post_delete']);
-        Permission::create(['name' => 'comment_create']);
+        //dump();
     }
 }
