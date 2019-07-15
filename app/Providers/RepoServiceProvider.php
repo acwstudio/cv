@@ -29,5 +29,6 @@ class RepoServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->bind('App\Repositories\Contracts\UserInterface', 'App\Repositories\DB_MySQL\UserRepository');
+        $this->app->bind('App\Repositories\Contracts\PostInterface', 'App\Repositories\DB_MySQL\PostRepository');
     }
 }

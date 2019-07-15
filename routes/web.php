@@ -11,14 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('site');
+Route::get('/', ['as' => 'blog', 'uses' => 'BlogController@index']);
 
 Route::get('lang/{language}', ['as' => 'lang.switch', 'uses' => 'LanguageController@switchLang']);
 
 Auth::routes();
-
 
 Route::namespace('Admin')->middleware('auth')->group(function () {
 

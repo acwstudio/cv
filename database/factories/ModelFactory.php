@@ -12,6 +12,7 @@
 | database. Just tell the factory how a default model should look.
 |
 */
+
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
@@ -22,26 +23,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'password' => $password ?: $password = bcrypt('123456'),
         'remember_token' => Illuminate\Support\Str::random(10),
         'active' => 1,
-    ];
-});
-
-$factory->define(App\Post::class, function (Faker\Generator $faker) {
-    return [
-        'user_id' => function () {
-            return factory(App\User::class)->create()->id;
-        },
-
-    ];
-});
-
-$factory->define(App\PostTranslation::class, function (Faker\Generator $faker) {
-    return [
-        'locale' => 'ru',
-        'post_id' => function() {
-            return factory(App\Post::class)->create()->id;
-        },
-        'title' => $faker->sentence(8),
-        'body' => $faker->text(500),
     ];
 });
 

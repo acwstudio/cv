@@ -7,5 +7,11 @@ return[
         'user' => 'User',
         'posts' => 'Posts',
         'post' => 'Post',
-    ]
+    ],
+
+    'sidebar' => [
+        'dashboard' => 'Dashboard',
+        'users' => 'Users',
+        'posts' => 'Posts',
+    ],
 ];

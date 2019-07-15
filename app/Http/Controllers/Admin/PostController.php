@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Post;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,6 +14,18 @@ use App\Http\Controllers\Controller;
  */
 class PostController extends Controller
 {
+    protected $post;
+
+    /**
+     * PostController constructor.
+     *
+     * @param PostService $postService
+     */
+    public function __construct(PostService $postService)
+    {
+        $this->post = $postService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +33,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        dd(Post::all());
+        $posts = $this->post->srvIndex();
+
+        return view('back.post.index', compact('posts'));
     }
 
     /**

@@ -5,12 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class PostTranslation
+ * Class TagTranslation
  *
  * @package App
  */
-class PostTranslation extends Model
+class TagTranslation extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['title', 'body', 'active'];
+    public $fillable = ['name'];
 }

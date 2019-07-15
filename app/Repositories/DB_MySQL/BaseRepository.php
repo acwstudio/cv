@@ -22,6 +22,30 @@ class BaseRepository
     }
 
     /**
+     * @param integer $id
+     * @param array $relations
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public function getById(int $id, array $relations = [])
+    {
+        $instance = $this->getNewInstance();
+
+        return $instance->with($relations)->find($id);
+    }
+
+    /**
+     * @param string $field
+     * @param mixed $value
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function findBy(string $field, $value)
+    {
+        $instance = $this->getNewInstance();
+
+        return $instance->where($field, $value)->get();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
      */
     protected function getNewInstance()
