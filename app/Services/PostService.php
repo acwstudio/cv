@@ -29,7 +29,7 @@ class PostService
      */
     public function srvIndex()
     {
-        $posts = $this->post->getAllPosts(['category.translations', 'category', 'tags', 'tags.translations', 'user', 'translations']);
+        $posts = $this->post->getAll(['category.translations', 'category', 'tags', 'tags.translations', 'user', 'translations']);
 
         foreach ($posts as $post) {
             if (Auth::user()) {
@@ -39,4 +39,5 @@ class PostService
        // dd($posts->find(3));
         return $posts;
     }
+
 }

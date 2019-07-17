@@ -17,6 +17,13 @@ interface BaseInterface
     public function getAll(array $relations = []);
 
     /**
+     * @param int $count
+     * @param array $relations
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public function paginate(int $count, array $relations = []);
+
+    /**
      * @param integer $id
      * @param array $relations
      * @return \Illuminate\Database\Eloquent\Collection

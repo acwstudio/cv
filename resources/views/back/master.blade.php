@@ -99,7 +99,8 @@
 <script src="{{ asset('admin/js/sb-admin.min.js') }}"></script>
 
 <!-- Demo scripts for this page-->
-@include('back.user.script')
+{{--@include('back.user.script')--}}
+@yield('script')
 
 </body>
 

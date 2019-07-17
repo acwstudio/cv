@@ -22,6 +22,21 @@ class BaseRepository
     }
 
     /**
+     * @param int $count
+     * @param array $relations
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public function paginate(int $count, array $relations = [])
+    {
+        $instance = $this->getNewInstance();
+        $instance = $instance->with($relations)->paginate($count);
+
+        $instance->paginate_links = $instance->links();
+
+        return $instance;
+    }
+
+    /**
      * @param integer $id
      * @param array $relations
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model

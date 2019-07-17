@@ -6,14 +6,14 @@
         <li class="breadcrumb-item">
             <a href="{{ route('home') }}">{{ __('menu.bread.dashboard') }}</a>
         </li>
-        <li class="breadcrumb-item active">{{ __('menu.bread.users') }}</li>
+        <li class="breadcrumb-item active">{{ __('menu.bread.posts') }}</li>
     </ol>
 
     <!-- DataTables Example -->
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fas fa-table"></i>
-            {{ __('tables.titleTable.users') }}
+            <i class="fas fa-list"></i>
+            {{ __('tables.titleTable.posts') }}
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -74,4 +74,7 @@
         </div>
     </div>
 
+@endsection
+@section('script')
+    @include('back.post.script')
 @endsection

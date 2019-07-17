@@ -20,7 +20,7 @@ class PostsTableSeeder extends Seeder
         $users = DB::table('users')->get();
         $categories = DB::table('categories')->pluck('id', 'alias');
         $tags = DB::table('tags')->pluck('id', 'alias');
-        
+
         foreach ($users as $user) {
             for ($i = 0; $i < 5; $i++) {
                 $post_id = DB::table('posts')->insertGetId([

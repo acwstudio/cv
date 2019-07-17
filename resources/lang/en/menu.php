@@ -7,6 +7,7 @@ return[
         'user' => 'User',
         'posts' => 'Posts',
         'post' => 'Post',
+        'create' => 'Create',
     ],
 
     'sidebar' => [

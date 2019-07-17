@@ -11,9 +11,5 @@ use Illuminate\Database\Eloquent\Collection;
  */
 interface PostInterface extends BaseInterface
 {
-    /**
-     * @param array $relations
-     * @return Collection
-     */
-    public function getAllPosts(array $relations = []): Collection;
+
 }

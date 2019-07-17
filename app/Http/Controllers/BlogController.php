@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Services\BlogService;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 
@@ -13,16 +14,16 @@ use Illuminate\Http\Request;
  */
 class BlogController extends Controller
 {
-    protected $post;
+    protected $blog;
 
     /**
      * BlogController constructor.
      *
      * @param PostService $postService
      */
-    public function __construct(PostService $postService)
+    public function __construct(BlogService $blogService)
     {
-        $this->post = $postService;
+        $this->blog = $blogService;
     }
 
     /**
@@ -30,8 +31,13 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $this->post->srvIndex();
+        $posts = $this->blog->srvPostsList();
 
-        return view('welcome');
+        return view('blog.blog', compact('posts'));
+    }
+
+    public function show()
+    {
+
     }
 }

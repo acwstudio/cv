@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Services;
+
+use App\Repositories\Contracts\RoleInterface;
 use App\Repositories\Contracts\UserInterface;
 use Auth;
 
@@ -12,15 +14,17 @@ use Auth;
 class UserService
 {
     protected $user;
+    protected $role;
 
     /**
      * UserService constructor.
      *
      * @param UserInterface $user
      */
-    public function __construct(UserInterface $userRepository)
+    public function __construct(UserInterface $userRepository, RoleInterface $roleRepository)
     {
         $this->user = $userRepository;
+        $this->role = $roleRepository;
     }
 
     /**
@@ -28,18 +32,19 @@ class UserService
      */
     public function srvIndex()
     {
-        $users = $this->user->getAll();
+        $users = $this->user->getAll(['posts', 'roles', 'roles.permissions']);
 
         foreach ($users as $item) {
-
-            $perms = $item->getPermissionsViaRoles()->pluck('name');
-            $roles = $item->getRoleNames();
-            $item->perms = $perms;
-            $item->roles = $roles;
             $item->isAdmin = Auth::user()->hasRole('admin');
-
         }
-//        dd($users);
+
         return $users;
+    }
+
+    public function srvCreate()
+    {
+        $roles = $this->role->getAll();
+
+        return $roles;
     }
 }

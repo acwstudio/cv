@@ -12,7 +12,7 @@
     <!-- DataTables Example -->
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fas fa-table"></i>
+            <i class="fas fa-list"></i>
             {{ __('tables.titleTable.users') }}
         </div>
         <div class="card-body">
@@ -36,13 +36,15 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                                @foreach($user->perms as $perm)
-                                    <span class="badge badge-pill badge-info">{{ $perm }}</span>
+                                @foreach($user->roles as $role)
+                                    @foreach($role->permissions as $perm)
+                                    <span class="badge badge-pill badge-info">{{ $perm->name }}</span>
+                                    @endforeach
                                 @endforeach
                             </td>
                             <td>
                                 @foreach($user->roles as $role)
-                                    <span class="badge badge-pill badge-dark">{{ $role }}</span>
+                                    <span class="badge badge-pill badge-dark">{{ $role->name }}</span>
                                 @endforeach
                             </td>
                             <td>
@@ -73,4 +75,7 @@
         </div>
     </div>
 
+@endsection
+@section('script')
+    @include('back.user.script')
 @endsection

@@ -14,6 +14,7 @@
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">Users:</h6>
             <a class="dropdown-item" href="{{ route('users.index') }}">User's List</a>
+            <a class="dropdown-item" href="{{ route('users.create') }}">Add User</a>
             <a class="dropdown-item" href="#">Roles</a>
             <a class="dropdown-item" href="#">Permissions</a>
             <div class="dropdown-divider"></div>

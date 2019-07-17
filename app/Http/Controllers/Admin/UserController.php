@@ -48,7 +48,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = $this->user->srvCreate();
+
+        return view('back.user.create', compact('roles'));
     }
 
     /**

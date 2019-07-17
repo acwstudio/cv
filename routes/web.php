@@ -12,6 +12,7 @@
 */
 
 Route::get('/', ['as' => 'blog', 'uses' => 'BlogController@index']);
+Route::get('post/{id}', ['as' => 'post', 'uses' => 'BlogController@show']);
 
 Route::get('lang/{language}', ['as' => 'lang.switch', 'uses' => 'LanguageController@switchLang']);
 
@@ -23,6 +24,8 @@ Route::namespace('Admin')->middleware('auth')->group(function () {
 
     Route::resource('posts', 'PostController');
     Route::resource('users', 'UserController');
+    Route::resource('tags', 'TagController');
+    Route::resource('categories', 'CategoryController');
 
 //    Route::get('/home', ['as' => 'home', 'uses' => 'AdminController@index']);
 //    Route::get('ajax-categories', ['as' => 'ajax-regions', 'uses' => 'AjaxCategoryController@regions']);

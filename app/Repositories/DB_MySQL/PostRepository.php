@@ -14,14 +14,4 @@ class PostRepository extends BaseRepository implements PostInterface
 {
     protected $modelName = '\App\Post';
 
-    /**
-     * @param array $relations
-     * @return Collection
-     */
-    public function getAllPosts(array $relations = []): Collection
-    {
-        $posts = $this->getAll($relations);
-
-        return $posts;
-    }
 }
