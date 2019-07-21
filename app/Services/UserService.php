@@ -5,6 +5,9 @@ namespace App\Services;
 use App\Repositories\Contracts\RoleInterface;
 use App\Repositories\Contracts\UserInterface;
 use Auth;
+use Hash;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use App\User;
 
 /**
  * Class UserService
@@ -13,6 +16,8 @@ use Auth;
  */
 class UserService
 {
+    use RegistersUsers;
+
     protected $user;
     protected $role;
 
@@ -46,5 +51,19 @@ class UserService
         $roles = $this->role->getAll();
 
         return $roles;
+    }
+
+    public function srvStore()
+    {
+
+    }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    public function srvRegister(array $data)
+    {
+        return $this->user->register($data);
     }
 }

@@ -28,10 +28,25 @@ class RepoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind('App\Repositories\Contracts\UserInterface', 'App\Repositories\DB_MySQL\UserRepository');
-        $this->app->bind('App\Repositories\Contracts\PostInterface', 'App\Repositories\DB_MySQL\PostRepository');
-        $this->app->bind('App\Repositories\Contracts\TagInterface', 'App\Repositories\DB_MySQL\TagRepository');
-        $this->app->bind('App\Repositories\Contracts\CategoryInterface', 'App\Repositories\DB_MySQL\CategoryRepository');
-        $this->app->bind('App\Repositories\Contracts\RoleInterface', 'App\Repositories\DB_MySQL\RoleRepository');
+        $this->app->bind(
+            'App\Repositories\Contracts\UserInterface',
+            'App\Repositories\DB_MySQL\UserRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\Contracts\PostInterface',
+            'App\Repositories\DB_MySQL\PostRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\Contracts\TagInterface',
+            'App\Repositories\DB_MySQL\TagRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\Contracts\CategoryInterface',
+            'App\Repositories\DB_MySQL\CategoryRepository'
+        );
+        $this->app->bind(
+            'App\Repositories\Contracts\RoleInterface',
+            'App\Repositories\DB_MySQL\RoleRepository'
+        );
     }
 }

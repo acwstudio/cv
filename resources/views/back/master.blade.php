@@ -18,6 +18,7 @@
 
     <!-- Page level plugin CSS-->
     <link href="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/vendor/dropzone/dropzone.css') }}" rel="stylesheet">
 
     <link href="{{ asset('admin/vendor/awesome-bootstrap-checkbox.css') }}" rel="stylesheet">
     <!-- Custom styles for this template-->
@@ -94,6 +95,7 @@
 <!-- Page level plugin JavaScript-->
 <script src="{{ asset('admin/vendor/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.js') }}"></script>
+<script src="{{ asset('admin/vendor/dropzone/dropzone.js') }}"></script>
 
 <!-- Custom scripts for all pages-->
 <script src="{{ asset('admin/js/sb-admin.min.js') }}"></script>
@@ -101,7 +103,12 @@
 <!-- Demo scripts for this page-->
 {{--@include('back.user.script')--}}
 @yield('script')
-
+<script>
+    Dropzone.autoDiscover = false;
+    $('#image').dropzone({
+        url: '/images'
+    })
+</script>
 </body>
 
 </html>

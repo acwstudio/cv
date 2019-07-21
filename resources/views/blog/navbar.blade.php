@@ -9,27 +9,27 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Blog
+                    <a class="nav-link" href="#">{{ __('menu.navbar.blog') }}
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="#">{{ __('menu.navbar.contact') }}</a>
                 </li>
 
                 @if (Route::has('login'))
 
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/home') }}">Admin</a>
+                            <a class="nav-link" href="{{ url('/home') }}">{{ __('menu.navbar.dashboard') }}</a>
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('menu.navbar.login') }}</a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">Register</a>
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('menu.navbar.register') }}</a>
                             </li>
                         @endif
                     @endauth

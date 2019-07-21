@@ -3,6 +3,8 @@
 namespace App\Repositories\DB_MySQL;
 
 use App\Repositories\Contracts\UserInterface;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UserRepository
@@ -11,6 +13,8 @@ use App\Repositories\Contracts\UserInterface;
  */
 class UserRepository extends BaseRepository implements UserInterface
 {
+//    use RegistersUsers;
+
     protected $modelName = '\App\User';
 
     /**
@@ -31,5 +35,23 @@ class UserRepository extends BaseRepository implements UserInterface
     public function findBy(string $field, $value)
     {
         // TODO: Implement findBy() method.
+    }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    public function register(array $data)
+    {
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'active' => false,
+        ]);
+
+        $user->assignRole('user');
+
+        return $user;
     }
 }

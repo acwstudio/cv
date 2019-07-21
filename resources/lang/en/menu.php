@@ -15,4 +15,12 @@ return[
         'users' => 'Users',
         'posts' => 'Posts',
     ],
+
+    'navbar' => [
+        'blog' => 'Blog',
+        'contact' => 'Contact',
+        'login' => 'Login',
+        'register' => 'Register',
+        'dashboard' => 'Dashboard',
+    ],
 ];
