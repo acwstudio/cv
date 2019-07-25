@@ -8,6 +8,7 @@ use Auth;
 use Hash;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\User;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class UserService
@@ -41,21 +42,20 @@ class UserService
 
         foreach ($users as $item) {
             $item->isAdmin = Auth::user()->hasRole('admin');
+            $item->page = Session::get('success');
         }
 
         return $users;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function srvCreate()
     {
         $roles = $this->role->getAll();
 
         return $roles;
-    }
-
-    public function srvStore()
-    {
-
     }
 
     /**

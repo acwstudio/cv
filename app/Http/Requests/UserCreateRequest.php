@@ -31,7 +31,10 @@ class UserCreateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => $this->request->has('password_confirmation') ?
+                ['required', 'string', 'min:8', 'confirmed'] :
+                ['required', 'string', 'min:8'],
+            !$this->request->has('role') ?: 'role' => ['required', 'string'],
         ];
     }
 }

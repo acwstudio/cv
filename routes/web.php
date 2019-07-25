@@ -33,8 +33,8 @@ Route::namespace('Admin')->middleware('auth')->group(function () {
 //    Route::get('ajax-municipalities/{region?}', [
 //        'as' => 'ajax-municipalities', 'uses' => 'AjaxCategoryController@municipalities'
 //    ]);
-//    Route::post('ajax-dropzone-store', ['as' => 'ajax-dropzone-store', 'uses' => 'AjaxDropzoneController@storeFile']);
-//    Route::post('ajax-dropzone-delete', ['as' => 'ajax-dropzone-delete', 'uses' => 'AjaxDropzoneController@deleteFile']);
+    Route::post('dropzone-store', ['as' => 'dropzone-store', 'uses' => 'DropzoneController@store']);
+    Route::post('dropzone-delete', ['as' => 'dropzone-delete', 'uses' => 'DropzoneController@delete']);
 //
 //    Route::resource('images', 'ImageController');
 //    Route::resource('slides', 'SlideController');

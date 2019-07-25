@@ -15,4 +15,5 @@ interface UserInterface extends BaseInterface
      * @return mixed
      */
     public function register(array $data);
+
 }

@@ -77,5 +77,5 @@
 
 @endsection
 @section('script')
-    @include('back.user.script')
+    @include('back.user.scripts.index')
 @endsection

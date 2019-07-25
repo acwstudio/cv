@@ -47,11 +47,12 @@ class UserRepository extends BaseRepository implements UserInterface
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'active' => false,
+            'active' => isset($data['active']) ? true : false,
         ]);
 
-        $user->assignRole('user');
+        $data['role'] ? $user->assignRole($data['role']) : $user->assignRole('user');
 
         return $user;
     }
+
 }

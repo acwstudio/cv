@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\UserCreateRequest;
 use App\Services\UserService;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+//use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -56,12 +59,15 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param UserCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(UserCreateRequest $request)
     {
-        //
+        $this->user->srvRegister($request->all());
+
+        return redirect()->route('users.index')
+        ->with('success','last');
     }
 
     /**
