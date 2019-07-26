@@ -50,7 +50,7 @@ class UserRepository extends BaseRepository implements UserInterface
             'active' => isset($data['active']) ? true : false,
         ]);
 
-        $data['role'] ? $user->assignRole($data['role']) : $user->assignRole('user');
+        $user->assignRole($data['role']);
 
         return $user;
     }

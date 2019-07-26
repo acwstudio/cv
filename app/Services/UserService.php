@@ -64,6 +64,8 @@ class UserService
      */
     public function srvRegister(array $data)
     {
+        isset($data['role']) ? $data['role'] : $data['role'] = 'user';
+
         return $this->user->register($data);
     }
 }

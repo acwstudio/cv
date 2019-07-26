@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Services\UserService;
-use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 /**
@@ -59,7 +56,7 @@ class RegisterController extends Controller
     public function register(UserCreateRequest $request)
     {
         $user = $this->user->srvRegister($request->all());
-
+        
         event(new Registered($user));
 
         $this->guard()->login($user);
