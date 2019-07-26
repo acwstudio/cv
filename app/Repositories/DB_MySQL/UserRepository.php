@@ -26,6 +26,8 @@ class UserRepository extends BaseRepository implements UserInterface
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'active' => isset($data['active']) ? true : false,
+            'image_name' => $data['image_name'],
+            'image_extension' => $data['image_extension'],
         ]);
 
         /** @var $user User */

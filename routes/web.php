@@ -33,6 +33,7 @@ Route::namespace('Admin')->middleware('auth')->group(function () {
 //    Route::get('ajax-municipalities/{region?}', [
 //        'as' => 'ajax-municipalities', 'uses' => 'AjaxCategoryController@municipalities'
 //    ]);
+    Route::post('activator',  ['as' => 'activator', 'uses' => 'AjaxController@activator']);
     Route::post('dropzone-store', ['as' => 'dropzone-store', 'uses' => 'DropzoneController@store']);
     Route::post('dropzone-delete', ['as' => 'dropzone-delete', 'uses' => 'DropzoneController@delete']);
 //

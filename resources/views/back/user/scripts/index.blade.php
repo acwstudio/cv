@@ -23,4 +23,10 @@
         table: $('#dataTable'),
     });
 
+    cv.active({
+        checker: $('td .form-check-input'),
+        model: "user",
+        url: '{{ route('activator') }}',
+    });
+
 </script>

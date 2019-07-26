@@ -7,6 +7,7 @@ use App\Repositories\Contracts\UserInterface;
 use App\Traits\ManageImages;
 use Auth;
 use File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 /**
@@ -46,7 +47,8 @@ class UserService
 
         foreach ($users as $item) {
             $image_path = $image_dir . $item->image_name . '.' . $item->image_extension;
-            if (file_exists($image_path)) {
+
+            if (file_exists(public_path('/') . $this->user['path'] . $item->image_name . '.' . $item->image_extension)) {
                 $item->image_path = $image_path;
             } else {
                 $item->image_path = $dummy_path;
@@ -89,6 +91,8 @@ class UserService
         $files = File::files($temp_path);
 
         isset($data['role']) ? $data['role'] : $data['role'] = 'user';
+        $data['image_name'] = 'user-';
+        $data['image_extension'] = 'jpg';
 
         $user_new = $this->srv_user->register($data);
 
@@ -106,4 +110,5 @@ class UserService
 
         return $user_new;
     }
+
 }

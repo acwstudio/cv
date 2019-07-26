@@ -18,6 +18,30 @@ let cv = (function () {
 
     };
 
+    let activitySwitcher = function (checkboxes) {
+
+        let checkers = checkboxes.checker;
+        console.log(checkboxes)
+        let handler = function (e) {
+            console.log(e.currentTarget.id)
+            $.ajax({
+                url: checkboxes.url,
+                type: 'post',
+                data: {
+                    id: e.currentTarget.id,
+                    model: checkboxes.model,
+                    value: $(e.currentTarget).prop('checked') ? 1 : 0,
+                },
+
+                success: function (data) {
+                    console.log(data);
+                },
+            });
+        };
+
+        checkers.on('click', handler);
+    };
+
     let initDropzone = function (props) {
         console.log(props);
 
@@ -150,6 +174,7 @@ let cv = (function () {
     return {
         datatable: initDataTable,
         dropzone: initDropzone,
+        active: activitySwitcher,
     }
 
 })();

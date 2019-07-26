@@ -23,6 +23,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'password' => $password ?: $password = bcrypt('123456'),
         'remember_token' => Illuminate\Support\Str::random(10),
         'active' => 1,
+        'image_name' => 'user-',
+        'image_extension' => 'jpg',
     ];
 });
 
