@@ -21,6 +21,7 @@
                     <thead>
                     <tr>
                         <th>{{ __('tables.fields.id') }}</th>
+                        <th>{{ __('tables.fields.image') }}</th>
                         <th>{{ __('tables.fields.name') }}</th>
                         <th>{{ __('tables.fields.email') }}</th>
                         <th>{{ __('tables.fields.permission') }}</th>
@@ -33,6 +34,9 @@
                     @foreach($users as $user)
                         <tr>
                             <td>{{ $user->id }}</td>
+                            <td>
+                                <img src="{{ $user->image_path }}" height="100px">
+                            </td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
@@ -76,6 +80,7 @@
     </div>
 
 @endsection
+
 @section('script')
     @include('back.user.scripts.index')
 @endsection

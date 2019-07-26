@@ -13,29 +13,7 @@ use Illuminate\Support\Facades\Hash;
  */
 class UserRepository extends BaseRepository implements UserInterface
 {
-//    use RegistersUsers;
-
     protected $modelName = '\App\User';
-
-    /**
-     * @param integer $id
-     * @param array $relations
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function getById(int $id, array $relations = [])
-    {
-        // TODO: Implement getById() method.
-    }
-
-    /**
-     * @param string $field
-     * @param mixed $value
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function findBy(string $field, $value)
-    {
-        // TODO: Implement findBy() method.
-    }
 
     /**
      * @param array $data
@@ -43,16 +21,35 @@ class UserRepository extends BaseRepository implements UserInterface
      */
     public function register(array $data)
     {
-        $user = User::create([
+        $user = $this->getNewInstance()->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'active' => isset($data['active']) ? true : false,
         ]);
 
+        /** @var $user User */
         $user->assignRole($data['role']);
 
         return $user;
+    }
+
+    /**
+     * @param int $id
+     * @param array $data
+     */
+    public function update(int $id, array $data)
+    {
+        $user = $this->getById($id);
+
+        $user->update([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'active' => isset($data['active']) ? true : false,
+            'image_name' => $data['image_name'],
+            'image_extension' => $data['image_extension'],
+        ]);
     }
 
 }

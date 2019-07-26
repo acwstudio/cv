@@ -23,6 +23,7 @@ return [
 
     'fields' => [
         'id' => 'ID',
+        'image' => 'Image',
         'name' => 'Name',
         'email' => 'Email',
         'role' => 'Role',
