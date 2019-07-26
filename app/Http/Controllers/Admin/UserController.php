@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Services\UserService;
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-//use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Traits\HasRoles;
 
 /**

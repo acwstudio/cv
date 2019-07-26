@@ -56,7 +56,7 @@ class RegisterController extends Controller
     public function register(UserCreateRequest $request)
     {
         $user = $this->user->srvRegister($request->all());
-        
+
         event(new Registered($user));
 
         $this->guard()->login($user);

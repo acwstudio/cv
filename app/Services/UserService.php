@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Contracts\RoleInterface;
 use App\Repositories\Contracts\UserInterface;
+use App\Traits\ManageImages;
 use Auth;
 use Hash;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -17,9 +18,10 @@ use Illuminate\Support\Facades\Session;
  */
 class UserService
 {
-    use RegistersUsers;
+//    use RegistersUsers;
+    use ManageImages;
 
-    protected $user;
+    protected $srv_user;
     protected $role;
 
     /**
@@ -29,8 +31,10 @@ class UserService
      */
     public function __construct(UserInterface $userRepository, RoleInterface $roleRepository)
     {
-        $this->user = $userRepository;
+        $this->srv_user = $userRepository;
         $this->role = $roleRepository;
+
+        //$this->setItemsFromConfig('preset');
     }
 
     /**
@@ -38,7 +42,7 @@ class UserService
      */
     public function srvIndex()
     {
-        $users = $this->user->getAll(['posts', 'roles', 'roles.permissions']);
+        $users = $this->srv_user->getAll(['posts', 'roles', 'roles.permissions']);
 
         foreach ($users as $item) {
             $item->isAdmin = Auth::user()->hasRole('admin');
@@ -64,8 +68,10 @@ class UserService
      */
     public function srvRegister(array $data)
     {
+        //dd($this->user['temp']);
         isset($data['role']) ? $data['role'] : $data['role'] = 'user';
+        $data['image_name'] = 'user-';
 
-        return $this->user->register($data);
+        return $this->srv_user->register($data);
     }
 }
