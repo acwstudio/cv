@@ -7,6 +7,7 @@ use App\Repositories\Contracts\UserInterface;
 use App\Traits\ManageImages;
 use Auth;
 use File;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -93,6 +94,8 @@ class UserService
         isset($data['role']) ? $data['role'] : $data['role'] = 'user';
         $data['image_name'] = 'user-';
         $data['image_extension'] = 'jpg';
+        $data['active'] = isset($data['active']) ? true : false;
+        $data['password'] = Hash::make($data['password']);
 
         $user_new = $this->srv_user->register($data);
 

@@ -36,4 +36,17 @@ interface BaseInterface
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function findBy(string $field, $value);
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function update(int $id, array $data);
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
+    public function store(array $data);
 }

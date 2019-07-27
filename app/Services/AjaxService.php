@@ -30,11 +30,12 @@ class AjaxService
      */
     public function srvActivator(array $data)
     {
-        if($data['model'] === 'user'){
-            /** @var User $user */
-            $user = $this->user->getById($data['id']);
+        $active = array_filter($data, function($key) {
+            return $key === 'active';
+        }, $flag = ARRAY_FILTER_USE_KEY);
 
-            $user->update(['active' => $data['value']]);
+        if($data['model'] === 'user'){
+            $user = $this->user->update($data['id'], $active);
         }
 
         return response()->json($user);

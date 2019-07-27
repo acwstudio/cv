@@ -33,6 +33,6 @@ class AjaxController extends Controller
     {
         $user = $this->user->srvActivator($request->all());
 
-        return $user;
+        return response()->json($user);
     }
 }

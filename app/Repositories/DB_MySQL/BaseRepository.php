@@ -61,6 +61,28 @@ class BaseRepository
     }
 
     /**
+     * @param int $id
+     * @param array $data
+     */
+    public function update(int $id, array $data)
+    {
+        $user = $this->getById($id);
+
+        $user->update($data);
+    }
+
+    /**
+     * @param array $data
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+     */
+    public function store(array $data)
+    {
+        $model = $this->getNewInstance()->create($data);
+
+        return $model;
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Builder
      */
     protected function getNewInstance()

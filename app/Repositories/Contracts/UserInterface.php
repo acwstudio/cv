@@ -16,10 +16,5 @@ interface UserInterface extends BaseInterface
      */
     public function register(array $data);
 
-    /**
-     * @param int $id
-     * @param array $data
-     * @return mixed
-     */
-    public function update(int $id, array $data);
+
 }
