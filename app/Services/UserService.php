@@ -114,4 +114,18 @@ class UserService
         return $user_new;
     }
 
+    /**
+     * @param int $id
+     * @return int
+     */
+    public function srvDestroy(int $id)
+    {
+        if(Auth::user()->hasRole('admin')) {
+            $result = $this->srv_user->destroy($id);
+        } else {
+            $result = null;
+        }
+
+        return $result;
+    }
 }

@@ -5,16 +5,22 @@
     let form = $('#store-post');
     //let submit = $('#submit-category');
 
-    cv.dropzone({
-        dropzones: form.find("div.dropzone"),
-        urlStore: '{{ route('dropzone-store') }}',
-        urlDelete: '{{ route('dropzone-delete') }}',
-        maxFiles: 1,
-        thmbn_h: 160,
-        thmbn_w: null,
-        mode: 'create',
-        method: 'post',
-        form: form,
+    cv.init({
+        dropzone: {
+            dropzones: form.find("div.dropzone"),
+            url: '{{ route('dropzone-store') }}',
+            urlDelete: '{{ route('dropzone-delete') }}',
+            autoPQ: true,
+            maxFiles: 1,
+            maxFilesize: 1,
+            acceptedFiles: 'image/*',
+            thmbn_h: 160,
+            thmbn_w: null,
+            mode: 'create',
+        },
+
+        {{--method: 'post',--}}
+        {{--form: form,--}}
         //submit: submit,
     });
 

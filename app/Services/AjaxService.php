@@ -38,6 +38,6 @@ class AjaxService
             $user = $this->user->update($data['id'], $active);
         }
 
-        return response()->json($user);
+        return $user->active;
     }
 }

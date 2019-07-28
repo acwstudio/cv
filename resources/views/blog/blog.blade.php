@@ -15,7 +15,7 @@
                 <i class="fas fa-folder-open text-info"></i>
                 <span class="badge badge-info">{{ $post->category->name }}</span>
                 <p class="card-text">{!! $post->body !!}</p>
-                <a href="{{ route('post', $post->id) }}" class="btn btn-primary">Read More &rarr;</a>
+                <a href="{{ route('post', $post->id) }}" class="btn btn-outline-info">Read More &rarr;</a>
             </div>
             <div class="card-footer text-muted">
                 Posted on

@@ -63,12 +63,15 @@ class BaseRepository
     /**
      * @param int $id
      * @param array $data
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
     public function update(int $id, array $data)
     {
-        $user = $this->getById($id);
+        $model = $this->getById($id);
 
-        $user->update($data);
+        $model->update($data);
+
+        return $model;
     }
 
     /**
@@ -80,6 +83,20 @@ class BaseRepository
         $model = $this->getNewInstance()->create($data);
 
         return $model;
+    }
+
+    /**
+     * @param int $id
+     * @return bool|null
+     * @throws \Exception
+     */
+    public function destroy(int $id)
+    {
+        $model = $this->getById($id);
+
+        $model->delete();
+
+        return response()->json(1);
     }
 
     /**

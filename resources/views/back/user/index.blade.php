@@ -32,7 +32,7 @@
                     </thead>
                     <tbody>
                     @foreach($users as $user)
-                        <tr>
+                        <tr id="{{ $user->id }}">
                             <td>{{ $user->id }}</td>
                             <td>
                                 <img src="{{ $user->image_path }}" height="100px">
@@ -52,24 +52,24 @@
                                 @endforeach
                             </td>
                             <td>
-                                <div class="form-check abc-checkbox abc-checkbox-info">
-                                    <input class="form-check-input" id="{{ $user->id }}" type="checkbox"
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="checkbox-{{ $user->id }}" name="active"
                                             {{ $user->active === 1 ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="{{ $user->id }}"></label>
+                                    <label class="custom-control-label" for="checkbox-{{ $user->id }}"></label>
                                 </div>
                             </td>
                             <td>
-                                <a href="#" class="btn btn-outline-info btn-sm mb-1">
+                                <a href="#" id="show-{{ $user->id }}" class="btn btn-outline-info btn-sm mb-1">
                                     <i class="fa fa-info fa-fw"></i>
                                 </a>
-                                <a href="#" class="btn btn-outline-warning btn-sm mb-1">
+                                <a href="#" id="edit-{{ $user->id }}" class="btn btn-outline-warning btn-sm mb-1">
                                     <i class="fa fa-pencil-alt fa-fw"></i>
                                 </a>
-                                <span class="{{ $user->isAdmin ? '' : "isdisabled" }}">
-                                    <a href="#" class="btn btn-outline-danger btn-sm">
+                                {{--<span class="{{ $user->isAdmin ? '' : "isdisabled" }}">--}}
+                                    <a href="{{ route('users.destroy', $user->id) }}" id="delete-{{ $user->id }}" class="btn btn-outline-danger btn-sm">
                                     <i class="fa fa-trash-alt fa-fw"></i>
                                 </a>
-                                </span>
+                                {{--</span>--}}
                             </td>
                         </tr>
                     @endforeach

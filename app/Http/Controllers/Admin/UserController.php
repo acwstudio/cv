@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Services\UserService;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Traits\HasRoles;
@@ -105,10 +106,12 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return int
      */
     public function destroy($id)
     {
-        //
+        $result = $this->user->srvDestroy($id);
+
+        return $result;
     }
 }

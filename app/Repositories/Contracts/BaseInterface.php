@@ -49,4 +49,10 @@ interface BaseInterface
      * @return mixed
      */
     public function store(array $data);
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function destroy(int $id);
 }

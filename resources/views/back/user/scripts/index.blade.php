@@ -17,16 +17,33 @@
         },
     };
 
-    cv.datatable({
-        test: transDataTable,
-        page: '{{ $user->page ? $user->page : 'first' }}',
-        table: $('#dataTable'),
-    });
+    let transActivator = {
 
-    cv.active({
-        checker: $('td .form-check-input'),
-        model: "user",
-        url: '{{ route('activator') }}',
+    };
+
+    let swalTrans = {
+        titleConfirm: "{{ __('swal.user.title-confirm') }}",
+        textConfirm: "{{ __('swal.user.text-confirm') }}",
+        cancel: "{{ __('swal.user.cancel') }}",
+        ok: "{{ __('swal.user.ok') }}",
+    };
+
+    cv.init({
+        datatable: {
+            translations: transDataTable,
+            page: '{{ $user->page ? $user->page : 'first' }}',
+            table: $('#dataTable'),
+            checkers: $('td .custom-control-input'),
+            buttons: $('td .btn'),
+        },
+        translations: {
+            swal: swalTrans,
+        },
+        activator: {
+            model: "user",
+            url: "{{ route('activator') }}",
+            type: 'post',
+        },
     });
 
 </script>
