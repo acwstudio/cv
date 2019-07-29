@@ -69,7 +69,7 @@
 
                 <a class="dropdown-item" href="{{ route('blog') }}">Back to site</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" href="#">{{ Auth::user()->roles()->first()->name }}</a>
             </div>
 
         </li>

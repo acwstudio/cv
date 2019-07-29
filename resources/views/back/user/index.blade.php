@@ -59,7 +59,7 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="#" id="show-{{ $user->id }}" class="btn btn-outline-info btn-sm mb-1">
+                                <a href="{{ route('users.show', $user->id) }}" id="show-{{ $user->id }}" class="btn btn-outline-info btn-sm mb-1">
                                     <i class="fa fa-info fa-fw"></i>
                                 </a>
                                 <a href="#" id="edit-{{ $user->id }}" class="btn btn-outline-warning btn-sm mb-1">

@@ -22,10 +22,20 @@
     };
 
     let swalTrans = {
-        titleConfirm: "{{ __('swal.user.title-confirm') }}",
+        titleConfirm: "{{ __('swal.global.title-confirm') }}",
+        titleDenied: "{{ __('swal.global.title-denied') }}",
+        titleCanceled: "{{ __('swal.global.title-canceled') }}",
+        titleDeleted: "{{ __('swal.global.title-deleted') }}",
+        titleActive: "{{ __('swal.global.title-active') }}",
+        titleInactive: "{{ __('swal.global.title-inactive') }}",
         textConfirm: "{{ __('swal.user.text-confirm') }}",
-        cancel: "{{ __('swal.user.cancel') }}",
-        ok: "{{ __('swal.user.ok') }}",
+        textDenied: "{{ __('swal.user.text-denied') }}",
+        textCanceled: "{{ __('swal.user.text-canceled') }}",
+        textDeleted: "{{ __('swal.user.text-deleted') }}",
+        textActive: "{{ __('swal.user.text-active') }}",
+        textInactive: "{{ __('swal.user.text-inactive') }}",
+        cancel: "{{ __('swal.global.cancel') }}",
+        ok: "{{ __('swal.global.ok') }}",
     };
 
     cv.init({

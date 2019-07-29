@@ -116,6 +116,29 @@ class UserService
 
     /**
      * @param int $id
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function srvShow($id)
+    {
+        $image_dir = asset('/') . $this->user['path'];
+        $dummy_path = asset('/') . $this->user['dummy'] . 'user.jpg';
+
+        $user = $this->srv_user->getById($id);
+        $image_path = $image_dir . $user->image_name . '.' . $user->image_extension;
+
+        if (file_exists(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension)) {
+            $user->image_path = $image_path;
+        } else {
+            $user->image_path = $dummy_path;
+        }
+
+        $user->u_role = $user->roles->first()->name;
+
+        return $user;
+    }
+
+    /**
+     * @param int $id
      * @return int
      */
     public function srvDestroy(int $id)

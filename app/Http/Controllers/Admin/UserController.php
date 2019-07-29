@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Services\UserService;
-use Auth;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Traits\HasRoles;
@@ -71,12 +71,16 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Throwable
      */
     public function show($id)
     {
-        //
+        $user = $this->user->srvShow($id);
+        $show = view('back.user.show', compact('user'))->render();
+
+        return $show;
     }
 
     /**

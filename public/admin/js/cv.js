@@ -22,6 +22,7 @@ let cv = (function () {
 
         dt ? initDatatable() : null;
         dz ? initDropzone() : null;
+
         console.log(trans);
     }
 
@@ -75,7 +76,8 @@ let cv = (function () {
 
                 success: function (data) {
                     swal({
-                        text: data === "1" ? "You have switch on active!" : "You have switch off active!",
+                        title: data === "1" ? trans.titleActive : trans.titleInactive,
+                        text: data === "1" ? trans.textActive : trans.textInactive,
                         icon: data === "1" ? "success" : "warning",
                     });
                 },
@@ -114,8 +116,8 @@ let cv = (function () {
                                 console.log(data);
                                 if (data) {
                                     swal({
-                                        title: 'That\'s that',
-                                        text: 'User has been deleted!',
+                                        title: trans.titleDeleted,
+                                        text: trans.textDeleted,
                                         icon: 'success'
                                     }).then(function () {
                                         location.reload();
@@ -123,8 +125,8 @@ let cv = (function () {
 
                                 } else {
                                     swal({
-                                        title: 'Permission denied!',
-                                        text: 'You are not Admin!',
+                                        title: trans.titleDenied,
+                                        text: trans.textDenied,
                                         icon: 'warning'
                                     })
                                 }
@@ -132,14 +134,24 @@ let cv = (function () {
                         });
                     } else {
                         swal({
-                            title: 'delete',
-                            text: '',
+                            title: trans.titleCanceled,
+                            text: trans.textCanceled,
                             icon: 'info',
-                            timer: 2500
                         })
                     }
                 });
 
+            }
+            if (btn_act === "show") {
+                console.log(url);
+                $('#myModal').modal('show');
+                $.ajax({
+                    url: url,
+                    success: function (data) {
+                        console.log(data)
+                        $('.modal-content').html(data);
+                    }
+                });
             }
         });
 
