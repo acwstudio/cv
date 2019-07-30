@@ -9,26 +9,33 @@ let cv = (function () {
     Dropzone.autoDiscover = false;
 
     let dt = {};
-    let ac = {};
     let dz = {};
-    let trans = {};
+    let sw = {};
+    let sets = {};
+    let elems = {};
 
     function cvInit(props) {
 
         dt = props.datatable;
         dz = props.dropzone;
-        ac = props.activator;
-        trans = props.translations.swal;
+        sw = props.swal.translations;
+        sets = props.sets;
+        elems = props.elems;
 
         dt ? initDatatable() : null;
         dz ? initDropzone() : null;
 
-        console.log(trans);
+        elems.modal_wrap.on('hidden.bs.modal', manageModal);
+
     }
 
+    let manageModal = function () {
+        elems.modal_cont.html(sets.modal_default);
+    };
+
     let initDatatable = function () {
-        let table = dt.table.DataTable({
-            "language": dt.translations,
+        let table = elems.table.DataTable({
+            "language": dt.transDataTable,
         });
 
         active();
@@ -36,7 +43,7 @@ let cv = (function () {
     };
 
     let initDropzone = function () {
-        console.log(dz);
+
         let dropzones = dz.dropzones;
 
         dropzones.each(function (index, value) {
@@ -61,23 +68,23 @@ let cv = (function () {
 
     let active = function () {
 
-        dt.checkers.on('click', function (e) {
+        elems.checkers.on('click', function (e) {
             let parse_id = e.currentTarget.id.split('-');
             let user_id = parse_id[parse_id.length - 1];
-            console.log(ac.url);
+
             $.ajax({
-                url: ac.url,
-                type: ac.type,
+                url: sets.urlActive,
+                type: sets.typeActive,
                 data: {
                     id: user_id,
-                    model: ac.model,
+                    model: sets.model,
                     active: $(e.currentTarget).prop('checked') ? 1 : 0,
                 },
 
                 success: function (data) {
                     swal({
-                        title: data === "1" ? trans.titleActive : trans.titleInactive,
-                        text: data === "1" ? trans.textActive : trans.textInactive,
+                        title: data === "1" ? sw.titleActive : sw.titleInactive,
+                        text: data === "1" ? sw.textActive : sw.textInactive,
                         icon: data === "1" ? "success" : "warning",
                     });
                 },
@@ -88,24 +95,23 @@ let cv = (function () {
 
     let buttonsAction = function () {
 
-        dt.buttons.on('click', function (e) {
+        elems.buttons.on('click', function (e) {
 
             e.preventDefault();
 
             let parse_id = e.currentTarget.id.split('-');
-            let btn_id = parse_id[parse_id.length - 1];
             let btn_act = parse_id[0];
             let url = e.currentTarget.href;
 
             if (btn_act === "delete") {
                 swal({
-                    title: trans.titleConfirm,
-                    text: trans.textConfirm,
+                    title: sw.titleConfirm,
+                    text: sw.textConfirm,
                     icon: "warning",
                     dangerMode: true,
                     buttons: [
-                        trans.cancel,
-                        trans.ok,
+                        sw.cancel,
+                        sw.ok,
                     ],
                 }).then(function (result) {
                     if (result) {
@@ -116,8 +122,8 @@ let cv = (function () {
                                 console.log(data);
                                 if (data) {
                                     swal({
-                                        title: trans.titleDeleted,
-                                        text: trans.textDeleted,
+                                        title: sw.titleDeleted,
+                                        text: sw.textDeleted,
                                         icon: 'success'
                                     }).then(function () {
                                         location.reload();
@@ -125,8 +131,8 @@ let cv = (function () {
 
                                 } else {
                                     swal({
-                                        title: trans.titleDenied,
-                                        text: trans.textDenied,
+                                        title: sw.titleDenied,
+                                        text: sw.textDenied,
                                         icon: 'warning'
                                     })
                                 }
@@ -134,8 +140,8 @@ let cv = (function () {
                         });
                     } else {
                         swal({
-                            title: trans.titleCanceled,
-                            text: trans.textCanceled,
+                            title: sw.titleCanceled,
+                            text: sw.textCanceled,
                             icon: 'info',
                         })
                     }
@@ -143,13 +149,12 @@ let cv = (function () {
 
             }
             if (btn_act === "show") {
-                console.log(url);
-                $('#myModal').modal('show');
+
+                elems.modal_wrap.modal('show');
                 $.ajax({
                     url: url,
                     success: function (data) {
-                        console.log(data)
-                        $('.modal-content').html(data);
+                        elems.modal_cont.html(data);
                     }
                 });
             }

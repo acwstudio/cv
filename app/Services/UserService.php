@@ -57,10 +57,14 @@ class UserService
 
             $item->isAdmin = Auth::user()->hasRole('admin');
             $item->page = Session::get('success');
-
         }
 
-        return $users;
+        $transDataTable = collect(__('jsPlugins.datatable'))->toJson();
+        $transSwal = collect(__('jsPlugins.swal.global'))->merge(collect(__('jsPlugins.swal.user')));
+
+        $data = compact('users', 'transDataTable', 'transSwal');
+
+        return view('back.user.index', $data);
     }
 
     /**

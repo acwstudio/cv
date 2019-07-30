@@ -71,7 +71,13 @@
 <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-
+            <div class="modal-body">
+                <div class="card mb-3">
+                    <div class="card-header text-center">
+                        <img src="{{ asset('admin/images/loader.gif') }}" width="100">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

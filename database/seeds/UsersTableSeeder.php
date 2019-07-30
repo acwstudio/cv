@@ -21,6 +21,9 @@ class UsersTableSeeder extends Seeder
         /* @var $factory \Illuminate\Database\Eloquent\Factory */
         factory(User::class, 10)->create()->each(function($u) {
             /** @var User $u */
+            $i = $u->id - 1;
+            $u->update(['image_name' => 'user-' . $i]);
+
             if ($u->id == 1) {
                 $u->assignRole('admin');
             } elseif($u->id > 1 && $u->id < 4) {
