@@ -119,7 +119,6 @@ let cv = (function () {
                             url: url,
                             type: "delete",
                             success: function (data) {
-                                console.log(data);
                                 if (data) {
                                     swal({
                                         title: sw.titleDeleted,

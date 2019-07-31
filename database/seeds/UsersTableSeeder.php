@@ -18,6 +18,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        $dummy_path = public_path('/') . config('cv-images.preset.user.dummy') . 'user_pics';
+        $image_path = public_path('/') . config('cv-images.preset.user.path');
+
+        $files = File::files($dummy_path);
+
+        //File::move($dummy_path, $image_path);
+        dd($files);
+
         /* @var $factory \Illuminate\Database\Eloquent\Factory */
         factory(User::class, 10)->create()->each(function($u) {
             /** @var User $u */
