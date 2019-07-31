@@ -20,7 +20,7 @@
         </div>
         <div class="card-body">
             {{--<div class="container">--}}
-                <form id="store-post" method="post" action="{{ route('users.store') }}" role="form"
+                <form id="edit-user" method="post" action="{{ route('users.store') }}" role="form"
                       enctype="multipart/form-data">
 
                     @csrf

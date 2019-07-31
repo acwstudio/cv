@@ -8,7 +8,6 @@ use App\Traits\ManageImages;
 use Auth;
 use File;
 use Hash;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 /**
@@ -81,7 +80,11 @@ class UserService
 
         $roles = $this->role->getAll();
 
-        return $roles;
+        $transSwal = collect(__('jsPlugins.swal.global'))->merge(collect(__('jsPlugins.swal.user')));
+
+        $data = compact('roles', 'transSwal');
+
+        return view('back.user.create', $data);
     }
 
     /**
@@ -115,6 +118,8 @@ class UserService
 
         }
 
+        session()->flash('sw-success', 'User was added');
+        //dd(session()->all());
         return $user_new;
     }
 
@@ -147,8 +152,13 @@ class UserService
      */
     public function srvDestroy(int $id)
     {
+        $user = $this->srv_user->getById($id);
+
         if(Auth::user()->hasRole('admin')) {
             $result = $this->srv_user->destroy($id);
+            if(file_exists(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension)) {
+                File::delete(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension);
+            }
         } else {
             $result = null;
         }

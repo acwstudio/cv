@@ -2,7 +2,7 @@
 
 <script type="text/javascript">
 
-    let form = $('#store-user');
+    let form = $('#edit-user');
 
     cv.init({
         dropzone: {
@@ -22,7 +22,7 @@
         },
 
         sets: {
-            mode: 'create',
+            mode: 'edit',
         }
 
     });

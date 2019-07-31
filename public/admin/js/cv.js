@@ -15,17 +15,16 @@ let cv = (function () {
     let elems = {};
 
     function cvInit(props) {
-
+        console.log(props);
         dt = props.datatable;
         dz = props.dropzone;
         sw = props.swal.translations;
         sets = props.sets;
         elems = props.elems;
 
+
         dt ? initDatatable() : null;
         dz ? initDropzone() : null;
-
-        elems.modal_wrap.on('hidden.bs.modal', manageModal);
 
     }
 
@@ -38,6 +37,7 @@ let cv = (function () {
             "language": dt.transDataTable,
         });
 
+        elems.modal_wrap.on('hidden.bs.modal', manageModal);
         active();
         buttonsAction();
     };
@@ -50,7 +50,7 @@ let cv = (function () {
 
             $(value).dropzone({
                 thumbnailHeight: dz.thmbn_h,
-                thumbnailWidth: dz.thumbn_w,
+                thumbnailWidth: dz.thmbn_w,
                 autoProcessQueue: dz.autoPQ,
                 url: dz.url,
                 maxFiles: dz.maxFiles,
@@ -173,7 +173,8 @@ let cv = (function () {
 
                 if (file.name !== 'mockfile') {
                     swal({
-                        text: "You reached limit!",
+                        title: sw.titleUpload,
+                        text: sw.textUpload,
                         icon: "warning"
                     });
                 }
@@ -185,7 +186,7 @@ let cv = (function () {
                 // Create the remove button
                 let removeButton = Dropzone.createElement("<button style='pointer-events: auto' " +
                     "id=" + file_id + " " +
-                    "class='btn btn-sm btn-danger btn-block'>" + "Remove file</button>");
+                    "class='btn btn-sm btn-danger btn-block'>" + "<i class='fa fa-trash fa-fw'></i></button>");
 
                 // Listen to the click event
                 removeButton.addEventListener("click", function (e) {
@@ -196,7 +197,7 @@ let cv = (function () {
                     element.dropzone.removeFile(file);
 
                     if (file.name !== 'mockfile') {
-                        if (dz.mode === 'edit') {
+                        if (sets.mode === 'edit') {
                             let mockFile = {name: "mockfile", size: 12345};
                             createMockFile(element.dropzone, dz, mockFile);
                         }
@@ -235,6 +236,40 @@ let cv = (function () {
             element.dropzone.on("success", function (file, response) {
                 console.log(response);
                 $('#' + file_id).data('fileName', response);
+
+            });
+
+            element.dropzone.on("error", function (file, errorMessage, xhr) {
+
+                let storeErrors = errorMessage.errors;
+                const list = document.createElement('ul');
+
+                if (storeErrors) {
+                    $.each(storeErrors, function (key, value) {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = value;
+                        listItem.style.textAlign = "left";
+                        list.appendChild(listItem);
+                    });
+
+                    swal({
+                        title: sw.titleUpload,
+                        text: errorMessage.message,
+                        icon: "error",
+                        content: list,
+                        className: "error",
+                    }).then(
+                        this.removeAllFiles(true)
+                    );
+                } else {
+                    swal({
+                        title: sw.titleUpload,
+                        text: errorMessage,
+                        icon: "error",
+                    }).then(
+                        this.removeAllFiles(true)
+                    );
+                }
 
             });
 

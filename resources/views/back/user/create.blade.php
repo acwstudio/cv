@@ -19,7 +19,7 @@
             {{ __('forms.titleForm.users') }}
         </div>
         <div class="card-body row justify-content-center">
-            <form id="store-post" method="post" action="{{ route('users.store') }}" role="form"
+            <form id="store-user" method="post" action="{{ route('users.store') }}" role="form"
                   enctype="multipart/form-data" class="col col-lg-9">
 
                 @csrf

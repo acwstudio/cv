@@ -8,9 +8,9 @@ return [
             'path' => 'images/users/',
             'temp' => 'images/temp-files/users/',
             'dummy' => 'images/dummies/',
-            'height' => 230,
-            'width' => 0,
-            'manipulation' => Spatie\Image\Manipulations::FIT_CONTAIN,
+            'height' => 200,
+            'width' => 200,
+            'manipulation' => Spatie\Image\Manipulations::FIT_CROP,
         ],
         'post' => [
             'prefix' => 'post-',

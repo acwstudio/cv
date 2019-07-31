@@ -35,7 +35,7 @@ class UserController extends Controller
      *
      * @return UserService[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function index()
+    public function index(Request $request)
     {
         return $this->user->srvIndex();
     }
@@ -43,13 +43,11 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function create()
     {
-        $roles = $this->user->srvCreate();
-
-        return view('back.user.create', compact('roles'));
+        return $this->user->srvCreate();
     }
 
     /**

@@ -1,10 +1,7 @@
 <?php
 
-use App\Post;
-use App\PostTranslation;
 use App\User;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
 
 /**
  * Class UsersTableSeeder
@@ -21,10 +18,10 @@ class UsersTableSeeder extends Seeder
         $dummy_path = public_path('/') . config('cv-images.preset.user.dummy') . 'user_pics';
         $image_path = public_path('/') . config('cv-images.preset.user.path');
 
-        $files = File::files($dummy_path);
-
-        //File::move($dummy_path, $image_path);
-        dd($files);
+        $files = File::files($image_path);
+        if(count($files) > 0) {
+            File::copyDirectory($dummy_path, $image_path);
+        }
 
         /* @var $factory \Illuminate\Database\Eloquent\Factory */
         factory(User::class, 10)->create()->each(function($u) {

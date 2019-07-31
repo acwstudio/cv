@@ -32,5 +32,13 @@
             urlActive: "{{ route('activator') }}",
         },
     });
+    
+    @if(session()->has('sw-success'))
+    swal({
+        title: 'Create User',
+        text: '{{ session()->get('sw-success') }}',
+        icon: 'success',
+    });
+    @endif
 
 </script>
