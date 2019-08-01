@@ -41,7 +41,7 @@
                             <label for="form_email">{{ __('forms.fields.email') }} *</label>
                             <input id="form_email" type="email" name="email" value="{{ $user->email }}"
                                    class="form-control @error('email') is-invalid @enderror"
-                                   placeholder="{{ __('forms.ph-user.email') }} *">
+                                   placeholder="{{ __('forms.ph-user.email') }} *" disabled>
 
                             @error('email')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -54,7 +54,7 @@
                             <label for="form_password">{{ __('forms.fields.password') }} *</label>
                             <input id="form_password" type="text" name="password" value="{{ old('password') }}"
                                    class="form-control @error('password') is-invalid @enderror"
-                                   placeholder="{{ __('forms.ph-user.password') }} *">
+                                   placeholder="{{ __('forms.ph-user.password') }} *" disabled>
 
                             @error('password')
                             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

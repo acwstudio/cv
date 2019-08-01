@@ -27,4 +27,18 @@ class UserRepository extends BaseRepository implements UserInterface
         return $user;
     }
 
+    /**
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function userUpdate(int $id, array $data)
+    {
+        $user = $this->update($id, $data);
+        /** @var $user User */
+        $user->syncRoles($data['role']);
+
+        return $user;
+    }
+
 }

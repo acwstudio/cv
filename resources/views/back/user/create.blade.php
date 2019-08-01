@@ -82,10 +82,12 @@
 
                     <input id="form_active" type="checkbox" name="active" class="custom-control-input">
                     <label class="custom-control-label mr-lg-3"
-                           for="form_active">{{ __('forms.fields.active') }}</label>
+                           for="form_active">{{ __('forms.fields.active') }}
+                    </label>
 
                     <button type="submit"
-                            class="btn btn-primary float-right">{{ __('forms.buttons.add-user') }}</button>
+                            class="btn btn-primary float-right">{{ __('forms.buttons.add-user') }}
+                    </button>
 
                 </div>
 

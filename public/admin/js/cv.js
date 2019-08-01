@@ -37,6 +37,16 @@ let cv = (function () {
             "language": dt.transDataTable,
         });
 
+        console.log($.cookie('page'));
+        console.log( table.page.info().page);
+        table.page(parseInt($.cookie('page')), 10).draw('page');
+        // table.page(param.page).draw('page');
+
+        table.on( 'draw', function () {
+            console.log( table.page.info().page);
+            $.cookie('page', table.page.info().page);
+        } );
+
         elems.modal_wrap.on('hidden.bs.modal', manageModal);
         active();
         buttonsAction();
@@ -203,6 +213,7 @@ let cv = (function () {
                         if (sets.mode === 'edit') {
                             let mockFile = {name: "mockfile", size: 12345};
                             createMockFile(element.dropzone, mockFile);
+                            //createMockFile(mockFile);
                         }
                         $.ajax({
                             url: dz.urlDelete,
@@ -276,7 +287,7 @@ let cv = (function () {
 
             });
 
-            let createMockFile = function (dropzone, mockFile) {
+            let createMockFile = function (mockFile) {
 
                 for (const [key, value] of Object.entries(sets.pathMockFile)) {
 
@@ -294,7 +305,8 @@ let cv = (function () {
 
             if (sets.mode === 'edit') {
                 let mockFile = {name: "mockfile", size: 12345};
-                createMockFile(element.dropzone, mockFile);
+                // createMockFile(element.dropzone, mockFile);
+                createMockFile(mockFile);
             }
 
         });

@@ -25,8 +25,6 @@
             mode: 'edit',
             pathMockFile: {
                 user: '{{ $user->path }}',
-                {{--map: '{{ $category->paths['map'] }}',--}}
-                {{--image: '{{ $category->paths['image'] }}',--}}
             },
         }
 

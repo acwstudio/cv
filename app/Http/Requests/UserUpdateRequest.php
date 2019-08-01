@@ -5,11 +5,11 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class UserCreateRequest
+ * Class UserUpdateRequest
  *
  * @package App\Http\Requests
  */
-class UserCreateRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,18 +30,8 @@ class UserCreateRequest extends FormRequest
     {
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'role' => 'required|string',
         ];
-
-        if ($this->session()->previousUrl() === route('users.create')) {
-            $rules['role'] = 'required|string';
-        }
-
-        if ($this->request->has('password_confirmation')) {
-            $rules['password'] = 'required|string|min:8|confirmed';
-        } else {
-            $rules['password'] = 'required|string|min:8';
-        }
 
         return $rules;
     }

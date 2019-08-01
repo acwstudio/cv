@@ -7,7 +7,6 @@
     cv.init({
         datatable: {
             translations: JSON.parse('{!! $transDataTable !!}'),
-            page: '{{ $user->page ? $user->page : 'first' }}',
         },
 
         swal: {

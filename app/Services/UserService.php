@@ -49,13 +49,13 @@ class UserService
             $image_path = $image_dir . $item->image_name . '.' . $item->image_extension;
 
             if (file_exists(public_path('/') . $this->user['path'] . $item->image_name . '.' . $item->image_extension)) {
-                $item->image_path = $image_path;
+                $item->image_path = $image_path . '?' . time();
             } else {
                 $item->image_path = $dummy_path;
             }
 
             $item->isAdmin = Auth::user()->hasRole('admin');
-            $item->page = Session::get('success');
+            $item->page = Session::get('page');
         }
 
         $transDataTable = collect(__('jsPlugins.datatable'))->toJson();
@@ -136,7 +136,7 @@ class UserService
         $image_path = $image_dir . $user->image_name . '.' . $user->image_extension;
 
         if (file_exists(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension)) {
-            $user->image_path = $image_path;
+            $user->image_path = $image_path . '?' . time();
         } else {
             $user->image_path = $dummy_path;
         }
@@ -155,7 +155,9 @@ class UserService
         $user = $this->srv_user->getById($id);
 
         if (file_exists(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension)) {
-            $user->path = asset('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension;
+            $user->path = asset('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension . '?' . time();
+        } else{
+            $user->path = asset('/') . $this->user['dummy'] . 'user.jpg';
         }
 
         $user->u_role = $user->roles->first()->name;
@@ -165,6 +167,32 @@ class UserService
         $data = compact('roles', 'transSwal', 'user');
 
         return view('back.user.edit', $data);
+    }
+
+    /**
+     * @param array $data
+     * @param int $id
+     */
+    public function srvUpdate(array $data, int $id)
+    {
+        $temp_path = public_path('/') . $this->user['temp'];
+        $user_path = public_path('/') . $this->user['path'];
+
+        $files = File::files($temp_path);
+
+        $data['active'] = isset($data['active']) ? true : false;
+//        $user = $this->srv_user->userUpdate($id, $data);
+        //dd($user);
+        if ($files) {
+            $data['image_name'] = 'user-' . $id;
+            $data['image_extension'] = $files[0]->getExtension();
+            $imageUser = $data['image_name'] . '.' . $data['image_extension'];
+            File::move($temp_path . $files[0]->getFilename(), $user_path . $imageUser);
+        }
+
+        $this->srv_user->userUpdate($id, $data);
+
+        session()->flash('sw-success', 'User was edited');
     }
 
     /**

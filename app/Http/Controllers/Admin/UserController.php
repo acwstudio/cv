@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Services\UserService;
-use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -35,7 +34,7 @@ class UserController extends Controller
      *
      * @return UserService[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function index(Request $request)
+    public function index()
     {
         return $this->user->srvIndex();
     }
@@ -60,8 +59,7 @@ class UserController extends Controller
     {
         $this->user->srvRegister($request->all());
 
-        return redirect()->route('users.index')
-        ->with('success','last');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -97,9 +95,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
-        //
+        $this->user->srvUpdate($request->all(), $id);
+
+        return redirect()->route('users.index');
     }
 
     /**
