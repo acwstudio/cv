@@ -12,11 +12,10 @@
         <li class="breadcrumb-item active">{{ __('menu.bread.create') }}</li>
     </ol>
 
-    <!-- DataTables Example -->
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-plus"></i>
-            {{ __('forms.titleForm.users') }}
+            {{ __('forms.title.user.create') }}
         </div>
         <div class="card-body row justify-content-center">
             <form id="store-user" method="post" action="{{ route('users.store') }}" role="form"

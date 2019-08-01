@@ -97,13 +97,15 @@ let cv = (function () {
 
         elems.buttons.on('click', function (e) {
 
-            e.preventDefault();
+            //e.preventDefault();
 
             let parse_id = e.currentTarget.id.split('-');
             let btn_act = parse_id[0];
             let url = e.currentTarget.href;
 
             if (btn_act === "delete") {
+                e.preventDefault();
+                e.stopPropagation();
                 swal({
                     title: sw.titleConfirm,
                     text: sw.textConfirm,
@@ -148,7 +150,8 @@ let cv = (function () {
 
             }
             if (btn_act === "show") {
-
+                e.preventDefault();
+                e.stopPropagation();
                 elems.modal_wrap.modal('show');
                 $.ajax({
                     url: url,
@@ -199,7 +202,7 @@ let cv = (function () {
                     if (file.name !== 'mockfile') {
                         if (sets.mode === 'edit') {
                             let mockFile = {name: "mockfile", size: 12345};
-                            createMockFile(element.dropzone, dz, mockFile);
+                            createMockFile(element.dropzone, mockFile);
                         }
                         $.ajax({
                             url: dz.urlDelete,
@@ -273,9 +276,9 @@ let cv = (function () {
 
             });
 
-            let createMockFile = function (dropzone, param, mockFile) {
+            let createMockFile = function (dropzone, mockFile) {
 
-                for (const [key, value] of Object.entries(dz.pathMockFile)) {
+                for (const [key, value] of Object.entries(sets.pathMockFile)) {
 
                     if (element.id === key) {
                         element.dropzone.emit("addedfile", mockFile);
@@ -289,9 +292,9 @@ let cv = (function () {
 
             };
 
-            if (dz.mode === 'edit') {
+            if (sets.mode === 'edit') {
                 let mockFile = {name: "mockfile", size: 12345};
-                createMockFile(element.dropzone, props, mockFile);
+                createMockFile(element.dropzone, mockFile);
             }
 
         });

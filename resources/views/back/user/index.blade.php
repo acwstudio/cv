@@ -53,21 +53,21 @@
                             </td>
                             <td>
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="checkbox-{{ $user->id }}" name="active"
-                                            {{ $user->active === 1 ? 'checked' : '' }}>
+                                    <input type="checkbox" class="custom-control-input" id="checkbox-{{ $user->id }}"
+                                           name="active" {{ $user->active === 1 ? 'checked' : '' }}>
                                     <label class="custom-control-label" for="checkbox-{{ $user->id }}"></label>
                                 </div>
                             </td>
                             <td>
-                                <a href="{{ route('users.show', $user->id) }}" id="show-{{ $user->id }}" class="btn btn-outline-info btn-sm mb-1">
-                                    <i class="fa fa-info fa-fw"></i>
+                                <a href="{{ route('users.show', $user->id) }}" id="show-{{ $user->id }}"
+                                   class="btn btn-outline-info btn-sm mb-1"><i class="fa fa-info fa-fw"></i>
                                 </a>
-                                <a href="#" id="edit-{{ $user->id }}" class="btn btn-outline-warning btn-sm mb-1">
-                                    <i class="fa fa-pencil-alt fa-fw"></i>
+                                <a href="{{ route('users.edit', $user->id) }}" id="edit-{{ $user->id }}"
+                                   class="btn btn-outline-warning btn-sm mb-1"><i class="fa fa-pencil-alt fa-fw"></i>
                                 </a>
                                 {{--<span class="{{ $user->isAdmin ? '' : "isdisabled" }}">--}}
-                                    <a href="{{ route('users.destroy', $user->id) }}" id="delete-{{ $user->id }}" class="btn btn-outline-danger btn-sm">
-                                    <i class="fa fa-trash-alt fa-fw"></i>
+                                    <a href="{{ route('users.destroy', $user->id) }}" id="delete-{{ $user->id }}"
+                                       class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-alt fa-fw"></i>
                                 </a>
                                 {{--</span>--}}
                             </td>

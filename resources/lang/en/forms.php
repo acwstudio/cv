@@ -1,9 +1,15 @@
 <?php
 
 return [
-    'titleForm' => [
-        'users' => 'New User',
-        'posts' => 'New Post',
+    'title' => [
+        'user' => [
+            'create' => 'New User',
+            'edit' => 'Edit User',
+        ],
+        'post' => [
+            'create' => 'New Post',
+            'edit' => 'Edit Post',
+        ],
     ],
     'jumbotron-user' => [
         'title' => 'Hello, ',
@@ -27,6 +33,7 @@ return [
     ],
     'buttons' => [
         'add-user' => 'Add User',
+        'update-user' => 'Update User',
     ],
     'ph-user' => [
         'name' => 'Your name',

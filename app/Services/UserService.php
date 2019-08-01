@@ -113,7 +113,7 @@ class UserService
 
             $this->srv_user->update($user_new->id, $data);
 
-            $imageUser = $data['image_name'] . '.'  . $data['image_extension'];
+            $imageUser = $data['image_name'] . '.' . $data['image_extension'];
             File::move($temp_path . $files[0]->getFilename(), $user_path . $imageUser);
 
         }
@@ -148,15 +148,36 @@ class UserService
 
     /**
      * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function srvEdit(int $id)
+    {
+        $user = $this->srv_user->getById($id);
+
+        if (file_exists(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension)) {
+            $user->path = asset('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension;
+        }
+
+        $user->u_role = $user->roles->first()->name;
+        $roles = $this->role->getAll();
+        $transSwal = collect(__('jsPlugins.swal.global'))->merge(collect(__('jsPlugins.swal.user')));
+
+        $data = compact('roles', 'transSwal', 'user');
+
+        return view('back.user.edit', $data);
+    }
+
+    /**
+     * @param int $id
      * @return int
      */
     public function srvDestroy(int $id)
     {
         $user = $this->srv_user->getById($id);
 
-        if(Auth::user()->hasRole('admin')) {
+        if (Auth::user()->hasRole('admin')) {
             $result = $this->srv_user->destroy($id);
-            if(file_exists(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension)) {
+            if (file_exists(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension)) {
                 File::delete(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension);
             }
         } else {
