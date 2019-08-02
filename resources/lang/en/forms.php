@@ -5,6 +5,7 @@ return [
         'user' => [
             'create' => 'New User',
             'edit' => 'Edit User',
+            'show' => 'Info User',
         ],
         'post' => [
             'create' => 'New Post',
@@ -30,10 +31,12 @@ return [
         'tags' => 'Tags',
         'active' => 'On/Off',
         'action' => 'Action',
+        'created' => 'Registration Date',
     ],
     'buttons' => [
         'add-user' => 'Add User',
         'update-user' => 'Update User',
+        'close' => 'Close',
     ],
     'ph-user' => [
         'name' => 'Your name',

@@ -9,7 +9,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-border fa-info"></i>
-            User Info
+            {{ __('forms.title.user.show') }}
         </div>
         <div class="card-body row justify-content-center">
             <div class="col-lg-4">
@@ -23,15 +23,15 @@
                         <td>{{$user->id}}</td>
                     </tr>
                     <tr>
-                        <td>Name</td>
+                        <td>{{ __('tables.fields.name') }}</td>
                         <td>{{$user->name}}</td>
                     </tr>
                     <tr>
-                        <td>Role</td>
+                        <td>{{ __('tables.fields.role') }}</td>
                         <td>{{$user->u_role}}</td>
                     </tr>
                     <tr>
-                        <td>Data Registration</td>
+                        <td>{{ __('forms.fields.created') }}</td>
                         <td>{{$user->created_at}}</td>
                     </tr>
                 </table>
@@ -44,5 +44,5 @@
 
 <!-- Modal footer -->
 <div class="modal-footer">
-    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-info" data-dismiss="modal">{{ __('forms.buttons.close') }}</button>
 </div>

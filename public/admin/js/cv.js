@@ -37,13 +37,9 @@ let cv = (function () {
             "language": dt.transDataTable,
         });
 
-        console.log($.cookie('page'));
-        console.log( table.page.info().page);
-        table.page(parseInt($.cookie('page')), 10).draw('page');
-        // table.page(param.page).draw('page');
+        $.cookie('page') ? table.page(parseInt($.cookie('page')), 10).draw('page') : table.page(parseInt('0', 10));
 
         table.on( 'draw', function () {
-            console.log( table.page.info().page);
             $.cookie('page', table.page.info().page);
         } );
 
