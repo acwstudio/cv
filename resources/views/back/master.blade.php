@@ -23,7 +23,10 @@
 
     {{--<link href="{{ asset('admin/vendor/awesome-bootstrap-checkbox.css') }}" rel="stylesheet">--}}
     <!-- Custom styles for this template-->
+    <link href="{{ asset('admin/vendor/select2/css/select2.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/sb-admin.css') }}" rel="stylesheet">
+
+    {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />--}}
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 
 
@@ -95,6 +98,7 @@
 <script src="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.js') }}"></script>
 <script src="{{ asset('admin/vendor/dropzone/dropzone.js') }}"></script>
 <script src="{{ asset('admin/vendor/sweetalert.min.js') }}"></script>
+<script src="{{ asset('admin/vendor/select2/js/select2.min.js') }}"></script>
 <script src="{{ asset('admin/js/cv.js') }}"></script>
 
 <!-- Custom scripts for all pages-->

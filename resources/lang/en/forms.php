@@ -10,6 +10,7 @@ return [
         'post' => [
             'create' => 'New Post',
             'edit' => 'Edit Post',
+            'show' => 'Info Post',
         ],
     ],
     'jumbotron-user' => [
@@ -35,6 +36,7 @@ return [
     ],
     'buttons' => [
         'add-user' => 'Add User',
+        'add-post' => 'Add Post',
         'update-user' => 'Update User',
         'close' => 'Close',
     ],
@@ -42,5 +44,11 @@ return [
         'name' => 'Your name',
         'email' => 'Your email',
         'password' => 'Password',
+    ],
+    'ph-post' => [
+        'title' => 'Title',
+        'body' => 'Text',
+        'category' => 'Select a category...',
+        'tag' => 'Select tags...',
     ],
 ];

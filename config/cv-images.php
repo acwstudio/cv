@@ -17,9 +17,9 @@ return [
             'path' => 'images/posts/',
             'temp' => 'images/temp-files/posts/',
             'dummy' => 'images/dummies/',
-            'height' => 500,
-            'width' => 0,
-            'manipulation' => Spatie\Image\Manipulations::FIT_CONTAIN,
+            'height' => 300,
+            'width' => 730,
+            'manipulation' => Spatie\Image\Manipulations::FIT_CROP,
         ],
 
     ]

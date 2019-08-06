@@ -13,20 +13,30 @@ let cv = (function () {
     let sw = {};
     let sets = {};
     let elems = {};
+    let sl2 = {};
 
     function cvInit(props) {
-        console.log(props);
+        console.log(props.elems.select);
         dt = props.datatable;
         dz = props.dropzone;
+        sl2 = props.select2;
         sw = props.swal.translations;
         sets = props.sets;
         elems = props.elems;
 
-
         dt ? initDatatable() : null;
         dz ? initDropzone() : null;
-
+        sl2 ? initSelect2() : null;
     }
+
+    let initSelect2 = function () {
+        elems.select.category.select2({
+            placeholder: sl2.placeholder.category,
+        });
+        elems.select.tag.select2({
+            placeholder: sl2.placeholder.tag,
+        });
+    };
 
     let manageModal = function () {
         elems.modal_cont.html(sets.modal_default);
@@ -34,7 +44,7 @@ let cv = (function () {
 
     let initDatatable = function () {
         let table = elems.table.DataTable({
-            "language": dt.transDataTable,
+            "language": dt.translations,
         });
 
         $.cookie('page') ? table.page(parseInt($.cookie('page')), 10).draw('page') : table.page(parseInt('0', 10));
@@ -76,13 +86,13 @@ let cv = (function () {
 
         elems.checkers.on('click', function (e) {
             let parse_id = e.currentTarget.id.split('-');
-            let user_id = parse_id[parse_id.length - 1];
+            let item_id = parse_id[parse_id.length - 1];
 
             $.ajax({
                 url: sets.urlActive,
                 type: sets.typeActive,
                 data: {
-                    id: user_id,
+                    id: item_id,
                     model: sets.model,
                     active: $(e.currentTarget).prop('checked') ? 1 : 0,
                 },

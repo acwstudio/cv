@@ -21,6 +21,8 @@ class CreatePostTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->boolean('active')->default(true);
+            $table->string('image_name')->nullable();
+            $table->string('image_extension')->nullable();
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

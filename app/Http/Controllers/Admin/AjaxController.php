@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
  */
 class AjaxController extends Controller
 {
-    protected $user;
+    protected $model;
 
     /**
      * AjaxController constructor.
@@ -22,7 +22,7 @@ class AjaxController extends Controller
      */
     public function __construct(AjaxService $ajaxService)
     {
-        $this->user = $ajaxService;
+        $this->model = $ajaxService;
     }
 
     /**
@@ -31,7 +31,7 @@ class AjaxController extends Controller
      */
     public function activator(Request $request)
     {
-        $user = $this->user->srvActivator($request->all());
+        $user = $this->model->srvActivator($request->all());
 
         return response()->json($user);
     }

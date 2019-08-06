@@ -60,7 +60,7 @@ class UserService
 
         $transDataTable = collect(__('jsPlugins.datatable'))->toJson();
         $transSwal = collect(__('jsPlugins.swal.global'))->merge(collect(__('jsPlugins.swal.user')));
-
+        //dd($transDataTable);
         $data = compact('users', 'transDataTable', 'transSwal');
 
         return view('back.user.index', $data);

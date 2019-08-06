@@ -21,6 +21,7 @@
                     <thead>
                     <tr>
                         <th>{{ __('tables.fields.id') }}</th>
+                        <th>{{ __('tables.fields.image') }}</th>
                         <th>{{ __('tables.fields.author') }}</th>
                         <th>{{ __('tables.fields.title') }}</th>
                         <th>{{ __('tables.fields.body') }}</th>
@@ -34,7 +35,9 @@
                     @foreach($posts as $post)
                         <tr>
                             <td>{{ $post->id }}</td>
-                            {{--<td>{{ $post->r_user->name }}</td>--}}
+                            <td>
+                                <img src="{{ $post->image_path }}" height="100px">
+                            </td>
                             <td>{{ $post->user->name }}</td>
                             <td>{{ $post->title }}</td>
                             <td>{{ $post->body }}</td>
@@ -47,24 +50,26 @@
                             @endforeach
                             </td>
                             <td>
-                                <div class="form-check abc-checkbox abc-checkbox-info">
-                                    <input class="form-check-input" id="{{ $post->id }}" type="checkbox"
-                                            {{ $post->active === 1 ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="{{ $post->id }}"></label>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="checkbox-{{ $post->id }}"
+                                           name="active" {{ $post->active === 1 ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="checkbox-{{ $post->id }}"></label>
                                 </div>
                             </td>
                             <td>
-                                <a href="#" class="btn btn-outline-info btn-sm mb-1">
+                                <a href="{{ route('posts.show', $post->id) }}" id="show-"{{ $post->id }}
+                                   class="btn btn-outline-info btn-sm mb-1">
                                     <i class="fa fa-info fa-fw"></i>
                                 </a>
-                                <a href="#" class="btn btn-outline-warning btn-sm mb-1">
+                                <a href="{{ route('posts.edit', $post->id) }}" id="edit-{{ $post->id }}"
+                                   class="btn btn-outline-warning btn-sm mb-1">
                                     <i class="fa fa-pencil-alt fa-fw"></i>
                                 </a>
-                                <span class="{{ $post->isAdmin ? '' : "isdisabled" }}">
-                                    <a href="#" class="btn btn-outline-danger btn-sm">
-                                    <i class="fa fa-trash-alt fa-fw"></i>
+                                {{--<span class="{{ $post->isAdmin ? '' : "isdisabled" }}">--}}
+                                    <a href="{{ route('posts.destroy', $post->id) }}" id="delete-{{ $post->id }}"
+                                         class="btn btn-outline-danger btn-sm"><i class="fa fa-trash-alt fa-fw"></i>
                                 </a>
-                                </span>
+                                {{--</span>--}}
                             </td>
                         </tr>
                     @endforeach
@@ -75,6 +80,7 @@
     </div>
 
 @endsection
+
 @section('script')
-    @include('back.post.script')
+    @include('back.post.scripts.index')
 @endsection

@@ -16,9 +16,6 @@ trait ManageImages
     public $imageDefaults;
     public $user;
     public $post;
-//    public $image;
-//    public $slide;
-//    public $photo;
 
     /**
      * @param $imageTypeKey

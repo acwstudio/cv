@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
+use App\Repositories\Contracts\PostInterface;
 use App\Repositories\Contracts\UserInterface;
-use App\User;
 
 /**
  * Class AjaxService
@@ -13,15 +13,17 @@ use App\User;
 class AjaxService
 {
     protected $user;
+    protected $post;
 
     /**
      * AjaxService constructor.
      *
      * @param UserInterface $user
      */
-    public function __construct(UserInterface $user)
+    public function __construct(UserInterface $user, PostInterface $post)
     {
         $this->user = $user;
+        $this->post = $post;
     }
 
     /**
@@ -35,9 +37,13 @@ class AjaxService
         }, $flag = ARRAY_FILTER_USE_KEY);
 
         if($data['model'] === 'user'){
-            $user = $this->user->update($data['id'], $active);
+            $model = $this->user->update($data['id'], $active);
         }
 
-        return $user->active;
+        if($data['model'] === 'post'){
+            $model = $this->post->update($data['id'], $active);
+        }
+
+        return $model->active;
     }
 }

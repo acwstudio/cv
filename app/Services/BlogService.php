@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Services;
+
 use App\Repositories\Contracts\CategoryInterface;
 use App\Repositories\Contracts\PostInterface;
 use App\Repositories\Contracts\TagInterface;
+use App\Traits\ManageImages;
 use Illuminate\Database\Eloquent\Collection;
-
 
 /**
  * Class BlogService
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class BlogService
 {
+    use ManageImages;
+
     protected $blog;
     protected $tag;
     protected $category;
@@ -26,24 +29,62 @@ class BlogService
     public function __construct(PostInterface $post, TagInterface $tag, CategoryInterface $category)
     {
         $this->blog = $post;
-        $this->tag = $tag;
-        $this->category = $category;
-    }
+        $this->tag = $tag->getAll();
+        $this->category = $category->getAll();
 
+        $this->setItemsFromConfig('preset');
+    }
 
     /**
      * @return Collection|\Illuminate\Database\Eloquent\Model
      */
     public function srvPostsList()
     {
-        $posts = $this->blog
-            ->paginate(3, [
-                'category.translations', 'category', 'tags', 'tags.translations', 'user', 'translations'
-            ]);
-        //dd($posts);
-        $posts->s_tags = $this->tag->getAll(['translations']);
-        $posts->s_categories = $this->category->getAll(['translations']);
+        $image_dir = asset('/') . $this->post['path'];
+        $dummy_path = asset('/') . $this->post['dummy'] . 'post.jpg';
+        //dd($dummy_path);
+        $posts = $this->blog->paginate(3);
+        $posts->s_tags = $this->tag;
+        $posts->s_categories = $this->category;
 
-        return $posts;
+        foreach ($posts as $item) {
+            $image_path = $image_dir . $item->image_name . '.' . $item->image_extension;
+
+            if (file_exists(public_path('/') . $this->post['path'] . $item->image_name . '.' . $item->image_extension)) {
+                $item->image_path = $image_path . '?' . time();
+            } else {
+                $item->image_path = $dummy_path;
+            }
+        }
+
+//        return $posts;
+        return view('blog.blog', compact('posts'));
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Throwable
+     */
+    public function srvPost(int $id)
+    {
+        $image_dir = asset('/') . $this->post['path'];
+        $dummy_path = asset('/') . $this->post['dummy'] . 'post.jpg';
+
+        $postItem = $this->blog->getById($id);
+        $posts = $this->blog->getAll();
+
+        $image_path = $image_dir . $postItem->image_name . '.' . $postItem->image_extension;
+
+        if (file_exists(public_path('/') . $this->post['path'] . $postItem->image_name . '.' . $postItem->image_extension)) {
+            $postItem->image_path = $image_path . '?' . time();
+        } else {
+            $postItem->image_path = $dummy_path;
+        }
+
+        $posts->s_tags = $this->tag;
+        $posts->s_categories = $this->category;
+
+        return view('blog.post', compact('postItem', 'posts'));
     }
 }

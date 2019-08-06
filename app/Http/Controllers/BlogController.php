@@ -27,17 +27,24 @@ class BlogController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
     public function index()
     {
-        $posts = $this->blog->srvPostsList();
+//        $posts = $this->blog->srvPostsList();
+        return $this->blog->srvPostsList();
 
-        return view('blog.blog', compact('posts'));
+//        return view('blog.blog', compact('posts'));
+
     }
 
-    public function show()
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Throwable
+     */
+    public function show(int $id)
     {
-
+        return $this->blog->srvPost($id);
     }
 }

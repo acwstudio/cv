@@ -20,6 +20,7 @@
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Posts:</h6>
             <a class="dropdown-item" href="{{ route('posts.index') }}">Post's List</a>
+            <a class="dropdown-item" href="{{ route('posts.create') }}">Add Post</a>
             <a class="dropdown-item" href="#">Categories</a>
             <a class="dropdown-item" href="#">Tags</a>
         </div>

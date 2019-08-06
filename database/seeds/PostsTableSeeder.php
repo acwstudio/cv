@@ -26,7 +26,14 @@ class PostsTableSeeder extends Seeder
                 $post_id = DB::table('posts')->insertGetId([
                     'user_id' => $user->id,
                     'category_id' => $categories->random(),
+                    'image_name' => 'post_',
+                    'image_extension' => 'jpg',
                     'created_at' => date('Y-m-d H-i-s'),
+                ]);
+
+                DB::table('posts')->where('id', $post_id)->update([
+                    'image_name' => 'post_' . $post_id,
+                    'image_extension' => 'jpg',
                 ]);
 
                 $num_tag = rand(1, 3);

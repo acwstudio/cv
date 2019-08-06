@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">{{ __('menu.navbar.blog') }}
+                    <a class="nav-link" href="{{ route('blog') }}">{{ __('menu.navbar.blog') }}
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>

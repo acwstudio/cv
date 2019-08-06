@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\PostCreateRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Post;
 use App\Services\PostService;
 use Illuminate\Http\Request;
@@ -29,13 +31,11 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
-        $posts = $this->post->srvIndex();
-
-        return view('back.post.index', compact('posts'));
+        return $this->post->srvIndex();
     }
 
     /**
@@ -45,16 +45,16 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return $this->post->srvCreate();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PostCreateRequest $request
+     * @return void
      */
-    public function store(Request $request)
+    public function store(PostCreateRequest $request)
     {
         //
     }
@@ -62,12 +62,16 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Throwable
      */
     public function show($id)
     {
-        //
+        $postItem = $this->post->srvShow($id);
+        $show = view('back.post.show', compact('postItem'))->render();
+
+        return $show;
     }
 
     /**
@@ -84,11 +88,11 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param PostUpdateRequest $request
+     * @param  int $id
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(PostUpdateRequest $request, $id)
     {
         //
     }
