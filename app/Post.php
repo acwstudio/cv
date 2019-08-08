@@ -15,8 +15,8 @@ class Post extends Model implements TranslatableContract
 {
     use Translatable;
 
-    public $translatedAttributes = ['title', 'body', 'active'];
-    protected $fillable = ['user_id', 'category_id', 'active'];
+    public $translatedAttributes = ['title', 'body'];
+    protected $fillable = ['user_id', 'category_id', 'active', 'image_name', 'image_extension'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

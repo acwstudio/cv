@@ -11,5 +11,10 @@ use Illuminate\Database\Eloquent\Collection;
  */
 interface PostInterface extends BaseInterface
 {
-
+    /**
+     * @param int $id
+     * @param array $tags
+     * @return mixed
+     */
+    public function pivotPostTag(int $id, array $tags);
 }

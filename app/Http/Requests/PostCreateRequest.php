@@ -28,8 +28,13 @@ class PostCreateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $rules = [
+            'title' => ['required', 'string', 'max:255'],
+            'body' => ['required'],
+            'category' => ['required'],
+            'tag' => ['required'],
         ];
+
+        return $rules;
     }
 }

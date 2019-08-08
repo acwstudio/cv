@@ -6,6 +6,7 @@ use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests\PostUpdateRequest;
 use App\Post;
 use App\Services\PostService;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -41,7 +42,7 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -52,11 +53,30 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      *
      * @param PostCreateRequest $request
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(PostCreateRequest $request)
     {
-        //
+//        $data = [
+//            'user_id' => Auth::user()->id,
+//            'category_id' => 1,
+//            'image_name' => 'post-',
+//            'image_extension' => 'jpg',
+//            'active' => isset($data['active']) ? true : false,
+//            'en' => [
+//                'title' => 'test title',
+//                'body' => 'bbbbbbbbbbbb',
+//            ],
+//            'ru' => [
+//                'title' => 'тест заголовка',
+//                'body' => 'чччччччччччччч',
+//            ],
+//        ];
+//        $post = Post::create($data);
+        //dd($post);
+        $this->post->srvStore($request->all());
+
+        return redirect()->route('posts.index');
     }
 
     /**

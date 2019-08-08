@@ -92,6 +92,50 @@ class PostService
     }
 
     /**
+     * @param array $data
+     * @return mixed
+     */
+    public function srvStore(array $data)
+    {
+        $temp_path = public_path('/') . $this->post['temp'];
+        $post_path = public_path('/') . $this->post['path'];
+
+        $files = File::files($temp_path);
+
+        $post = [
+            'user_id' => Auth::user()->id,
+            'category_id' => $data['category'],
+            'image_name' => 'post-',
+            'image_extension' => 'jpg',
+            'active' => isset($data['active']) ? 1 : 0,
+            app()->getLocale() => [
+                'title' => $data['title'],
+                'body' => $data['body'],
+            ],
+        ];
+
+        $post_new = $this->srv_post->store($post);
+
+        $this->srv_post->pivotPostTag($post_new->id, $data['tag']);
+
+        if ($files) {
+
+            $post['image_name'] = 'post-' . $post_new->id;
+            $post['image_extension'] = $files[0]->getExtension();
+
+            $this->srv_post->update($post_new->id, $post);
+
+            $imagePost = $post['image_name'] . '.' . $post['image_extension'];
+            File::move($temp_path . $files[0]->getFilename(), $post_path . $imagePost);
+
+        }
+
+        session()->flash('sw-success', __('jsPlugins.swal.post.textCreate'));
+
+        return $post_new;
+    }
+
+    /**
      * @param $id
      * @return \Illuminate\Database\Eloquent\Collection
      */

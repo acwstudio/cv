@@ -51,7 +51,7 @@ class PostsTableSeeder extends Seeder
                     'locale' => 'en',
                     'title' => $fakerEN->name,
                     'body' => $fakerEN->realText(500),
-                    'active' => 1,
+//                    'active' => 1,
                 ]);
 
                 DB::table('post_translations')->insert([
@@ -59,7 +59,7 @@ class PostsTableSeeder extends Seeder
                     'locale' => 'ru',
                     'title' => $fakerRU->name,
                     'body' => $fakerRU->realText(500),
-                    'active' => 1,
+//                    'active' => 1,
                 ]);
             }
         }

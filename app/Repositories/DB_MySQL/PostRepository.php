@@ -3,7 +3,6 @@
 namespace App\Repositories\DB_MySQL;
 
 use App\Repositories\Contracts\PostInterface;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class PostRepository
@@ -14,4 +13,15 @@ class PostRepository extends BaseRepository implements PostInterface
 {
     protected $modelName = '\App\Post';
 
+    /**
+     * @param int $id
+     * @param array $tags
+     * @return mixed
+     */
+    public function pivotPostTag(int $id, array $tags)
+    {
+        /** @var \App\Post $post */
+        $post = $this->getById($id);
+        $post->tags()->attach($tags);
+    }
 }

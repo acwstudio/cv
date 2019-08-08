@@ -34,7 +34,7 @@
 
     @if(session()->has('sw-success'))
     swal({
-        title: 'Create User',
+        title: '{{ __('jsPlugins.swal.user.titleCreate') }}',
         text: '{{ session()->get('sw-success') }}',
         icon: 'success',
     });

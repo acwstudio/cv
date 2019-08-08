@@ -16,7 +16,7 @@ let cv = (function () {
     let sl2 = {};
 
     function cvInit(props) {
-        console.log(props.elems.select);
+
         dt = props.datatable;
         dz = props.dropzone;
         sl2 = props.select2;
@@ -112,8 +112,6 @@ let cv = (function () {
     let buttonsAction = function () {
 
         elems.buttons.on('click', function (e) {
-
-            //e.preventDefault();
 
             let parse_id = e.currentTarget.id.split('-');
             let btn_act = parse_id[0];

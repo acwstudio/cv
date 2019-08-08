@@ -118,7 +118,7 @@ class UserService
 
         }
 
-        session()->flash('sw-success', 'User was added');
+        session()->flash('sw-success', __('jsPlugins.swal.user.textCreate'));
         //dd(session()->all());
         return $user_new;
     }

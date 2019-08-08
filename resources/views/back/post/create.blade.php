@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <label for="form_title">{{ __('forms.fields.title') }} *</label>
-                        <input id="form_title" type="text" name="name" value="{{ old('title') }}"
+                        <input id="form_title" type="text" name="title" value="{{ old('title') }}"
                                class="form-control @error('title') is-invalid @enderror"
                                placeholder="{{ __('forms.ph-post.title') }} *">
 
@@ -37,9 +37,10 @@
                     <div class="form-group col-lg-6">
                         <label for="form_category">{{ __('forms.fields.category') }} *</label>
                         <select id="form_category" class="form-control @error('category') is-invalid @enderror" name="category">
-                            <option value="" {{ old('category') ? '' : 'selected' }}></option>
+                            <option></option>
                             @foreach($categories as $category)
-                                <option {{ old('category') == $category->name ? 'selected' : '' }}>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" {{ old('category') == $category->name ? 'selected' :
+                                '' }}>{{ $category->name }}</option>
                             @endforeach
                         </select>
                         @error('category')
@@ -50,11 +51,11 @@
 
                 <div class="row">
                     <div class="form-group col-lg-12">
-                        <label for="form_tag">{{ __('forms.fields.tags') }}</label>
+                        <label for="form_tag">{{ __('forms.fields.tags') }} *</label>
                         <select id="form_tag" class="form-control @error('tag') is-invalid @enderror" multiple="multiple" name="tag[]">
-                            {{--<option value="" {{ old('tag') ? '' : 'selected' }}></option>--}}
+
                             @foreach($tags as $tag)
-                                <option {{ old('tag') == $tag->name ? 'selected' : '' }}>{{ $tag->name }}</option>
+                                <option value="{{ $tag->id }}" {{ old('tag') == $tag->name ? 'selected' : '' }}>{{ $tag->name }}</option>
                             @endforeach
                         </select>
                         @error('tag')
@@ -65,7 +66,18 @@
 
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label>Image *</label>
+                        <label for="form_body">{{ __('forms.fields.body') }} *</label>
+                        <textarea id="form_body" class="form-control @error('body') is-invalid @enderror" name="body"
+                                  placeholder="{{ __('forms.ph-post.body') }}">{{ old('body') }}</textarea>
+                        @error('body')
+                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label>{{ __('forms.fields.image') }} *</label>
                         <div id="post" class="form-control dropzone dz-clickable dropzone-file-area"></div>
                     </div>
                 </div>

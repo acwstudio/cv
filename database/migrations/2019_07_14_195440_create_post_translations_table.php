@@ -23,7 +23,7 @@ class CreatePostTranslationsTable extends Migration
 
             $table->string('title');
             $table->text('body');
-            $table->boolean('active')->default(true);
+            //$table->boolean('active')->default(true);
 
             $table->unique(['post_id', 'locale']);
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');

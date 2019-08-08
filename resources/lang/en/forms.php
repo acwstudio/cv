@@ -20,6 +20,7 @@ return [
     ],
     'fields' => [
         'id' => 'ID',
+        'image' => 'Image',
         'name' => 'Name',
         'email' => 'Email',
         'password' => 'Password',
@@ -47,7 +48,7 @@ return [
     ],
     'ph-post' => [
         'title' => 'Title',
-        'body' => 'Text',
+        'body' => 'Type text...',
         'category' => 'Select a category...',
         'tag' => 'Select tags...',
     ],
