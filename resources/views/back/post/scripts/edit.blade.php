@@ -2,7 +2,7 @@
 
 <script type="text/javascript">
 
-    let form = $('#store-post');
+    let form = $('#edit-post');
     let category = $('#form_category');
     let tag = $('#form_tag');
     let summernote = $('#form_body');
@@ -37,7 +37,10 @@
         },
 
         sets: {
-            mode: 'create',
+            mode: 'edit',
+            pathMockFile: {
+                post: '{{ $postItem->path }}',
+            },
         },
 
         elems: {

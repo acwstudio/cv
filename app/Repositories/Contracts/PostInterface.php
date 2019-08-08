@@ -17,4 +17,11 @@ interface PostInterface extends BaseInterface
      * @return mixed
      */
     public function pivotPostTag(int $id, array $tags);
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function postUpdate(int $id, array $data);
 }

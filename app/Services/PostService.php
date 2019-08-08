@@ -132,7 +132,6 @@ class PostService
 
         session()->flash('sw-title', __('jsPlugins.swal.post.titleCreate'));
         session()->flash('sw-text', __('jsPlugins.swal.post.textCreate'));
-//        session()->flash('sw-success', __('jsPlugins.swal.post.textCreate'));
 
         return $post_new;
     }
@@ -146,7 +145,8 @@ class PostService
         $image_dir = asset('/') . $this->post['path'];
         $dummy_path = asset('/') . $this->post['dummy'] . 'post.jpg';
 
-        $postItem = $this->srv_post->getById($id);
+        $postItem = $this->srv_post->getById($id, ['tags', 'category']);
+
         $image_path = $image_dir . $postItem->image_name . '.' . $postItem->image_extension;
 
         if (file_exists(public_path('/') . $this->post['path'] . $postItem->image_name . '.' . $postItem->image_extension)) {
@@ -156,6 +156,56 @@ class PostService
         }
 
         return $postItem;
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function srvEdit(int $id)
+    {
+        $postItem = $this->srv_post->getById($id,  ['tags', 'category']);
+        $postItem->tagItems = $postItem->tags->pluck('id')->toArray();
+        if (file_exists(public_path('/') . $this->post['path'] . $postItem->image_name . '.' . $postItem->image_extension)) {
+            $postItem->path = asset('/') . $this->post['path'] . $postItem->image_name . '.' . $postItem->image_extension . '?' . time();
+        } else{
+            $postItem->path = asset('/') . $this->post['dummy'] . 'post.jpg';
+        }
+
+        $categories = $this->category->getAll();
+        $tags = $this->tag->getAll();
+
+        $transSwal = collect(__('jsPlugins.swal.global'))->merge(collect(__('jsPlugins.swal.post')));
+
+        $data = compact('tags', 'categories', 'transSwal', 'postItem');
+        //dd($data);
+        return view('back.post.edit', $data);
+    }
+
+    /**
+     * @param array $data
+     * @param int $id
+     */
+    public function srvUpdate(array $data, int $id)
+    {
+        $temp_path = public_path('/') . $this->post['temp'];
+        $post_path = public_path('/') . $this->post['path'];
+
+        $files = File::files($temp_path);
+
+        $data['active'] = isset($data['active']) ? true : false;
+
+        if ($files) {
+            $data['image_name'] = 'post-' . $id;
+            $data['image_extension'] = $files[0]->getExtension();
+            $imagePost = $data['image_name'] . '.' . $data['image_extension'];
+            File::move($temp_path . $files[0]->getFilename(), $post_path . $imagePost);
+        }
+        //dd($data['tag']);
+        $this->srv_post->postUpdate($id, $data);
+
+        session()->flash('sw-title', __('jsPlugins.swal.user.titleUpdate'));
+        session()->flash('sw-text', __('jsPlugins.swal.user.textUpdate'));
     }
 
     /**

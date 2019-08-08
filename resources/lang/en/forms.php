@@ -39,6 +39,7 @@ return [
         'add-user' => 'Add User',
         'add-post' => 'Add Post',
         'update-user' => 'Update User',
+        'update-post' => 'Update Post',
         'close' => 'Close',
     ],
     'ph-user' => [

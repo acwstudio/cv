@@ -182,8 +182,7 @@ class UserService
         $files = File::files($temp_path);
 
         $data['active'] = isset($data['active']) ? true : false;
-//        $user = $this->srv_user->userUpdate($id, $data);
-        //dd($user);
+
         if ($files) {
             $data['image_name'] = 'user-' . $id;
             $data['image_extension'] = $files[0]->getExtension();

@@ -81,11 +81,11 @@ class PostController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id)
     {
-        //
+        return $this->post->srvEdit($id);
     }
 
     /**
@@ -97,7 +97,9 @@ class PostController extends Controller
      */
     public function update(PostUpdateRequest $request, $id)
     {
-        //
+        $this->post->srvUpdate($request->all(), $id);
+
+        return redirect()->route('posts.index');
     }
 
     /**

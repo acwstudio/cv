@@ -14,6 +14,7 @@ let cv = (function () {
     let sets = {};
     let elems = {};
     let sl2 = {};
+    let smn = {};
 
     function cvInit(props) {
 
@@ -23,11 +24,20 @@ let cv = (function () {
         sw = props.swal.translations;
         sets = props.sets;
         elems = props.elems;
+        smn = props.summernote;
 
         dt ? initDatatable() : null;
         dz ? initDropzone() : null;
         sl2 ? initSelect2() : null;
+        smn ? initSummernote() : null;
     }
+
+    let initSummernote = function () {
+        console.log(smn)
+        elems.summernote.summernote({
+            lang: smn.lang,
+        })
+    };
 
     let initSelect2 = function () {
         elems.select.category.select2({

@@ -24,4 +24,18 @@ class PostRepository extends BaseRepository implements PostInterface
         $post = $this->getById($id);
         $post->tags()->attach($tags);
     }
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return mixed
+     */
+    public function postUpdate(int $id, array $data)
+    {
+        $post = $this->update($id, $data);
+        /** @var $post \App\Post */
+        $post->tags()->sync($data['tag']);
+
+        return $post;
+    }
 }
