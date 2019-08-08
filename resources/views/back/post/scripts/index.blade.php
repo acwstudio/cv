@@ -32,10 +32,10 @@
         },
     });
 
-    @if(session()->has('sw-success'))
+    @if(session()->has('sw-title'))
     swal({
-        title: '{{ __('jsPlugins.swal.post.titleCreate') }}',
-        text: '{{ session()->get('sw-success') }}',
+        title: '{{ session()->get('sw-title') }}',
+        text: '{{ session()->get('sw-text') }}',
         icon: 'success',
     });
     @endif

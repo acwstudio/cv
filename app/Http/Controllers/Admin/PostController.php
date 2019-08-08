@@ -57,23 +57,6 @@ class PostController extends Controller
      */
     public function store(PostCreateRequest $request)
     {
-//        $data = [
-//            'user_id' => Auth::user()->id,
-//            'category_id' => 1,
-//            'image_name' => 'post-',
-//            'image_extension' => 'jpg',
-//            'active' => isset($data['active']) ? true : false,
-//            'en' => [
-//                'title' => 'test title',
-//                'body' => 'bbbbbbbbbbbb',
-//            ],
-//            'ru' => [
-//                'title' => 'тест заголовка',
-//                'body' => 'чччччччччччччч',
-//            ],
-//        ];
-//        $post = Post::create($data);
-        //dd($post);
         $this->post->srvStore($request->all());
 
         return redirect()->route('posts.index');
@@ -125,6 +108,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result = $this->post->srvDestroy($id);
+
+        return $result;
     }
 }

@@ -130,7 +130,9 @@ class PostService
 
         }
 
-        session()->flash('sw-success', __('jsPlugins.swal.post.textCreate'));
+        session()->flash('sw-title', __('jsPlugins.swal.post.titleCreate'));
+        session()->flash('sw-text', __('jsPlugins.swal.post.textCreate'));
+//        session()->flash('sw-success', __('jsPlugins.swal.post.textCreate'));
 
         return $post_new;
     }
@@ -154,6 +156,26 @@ class PostService
         }
 
         return $postItem;
+    }
+
+    /**
+     * @param int $id
+     * @return mixed|null
+     */
+    public function srvDestroy(int $id)
+    {
+        $post = $this->srv_post->getById($id);
+
+        if (Auth::user()->hasRole('admin')) {
+            $result = $this->srv_post->destroy($id);
+            if (file_exists(public_path('/') . $this->post['path'] . $post->image_name . '.' . $post->image_extension)) {
+                File::delete(public_path('/') . $this->post['path'] . $post->image_name . '.' . $post->image_extension);
+            }
+        } else {
+            $result = null;
+        }
+
+        return $result;
     }
 
 }

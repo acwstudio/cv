@@ -118,8 +118,9 @@ class UserService
 
         }
 
-        session()->flash('sw-success', __('jsPlugins.swal.user.textCreate'));
-        //dd(session()->all());
+        session()->flash('sw-title', __('jsPlugins.swal.user.titleCreate'));
+        session()->flash('sw-text', __('jsPlugins.swal.user.textCreate'));
+
         return $user_new;
     }
 
@@ -192,7 +193,8 @@ class UserService
 
         $this->srv_user->userUpdate($id, $data);
 
-        session()->flash('sw-success', 'User was edited');
+        session()->flash('sw-title', __('jsPlugins.swal.user.titleUpdate'));
+        session()->flash('sw-text', __('jsPlugins.swal.user.textUpdate'));
     }
 
     /**
