@@ -76,7 +76,7 @@
 
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label>Image *</label>
+                            <label>{{ __('forms.fields.image') }} *</label>
                             <div id="user" class="form-control dropzone dz-clickable dropzone-file-area"></div>
                         </div>
                     </div>

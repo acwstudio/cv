@@ -178,7 +178,7 @@ class PostService
         $transSwal = collect(__('jsPlugins.swal.global'))->merge(collect(__('jsPlugins.swal.post')));
 
         $data = compact('tags', 'categories', 'transSwal', 'postItem');
-        //dd($data);
+
         return view('back.post.edit', $data);
     }
 
@@ -201,11 +201,11 @@ class PostService
             $imagePost = $data['image_name'] . '.' . $data['image_extension'];
             File::move($temp_path . $files[0]->getFilename(), $post_path . $imagePost);
         }
-        //dd($data['tag']);
+
         $this->srv_post->postUpdate($id, $data);
 
-        session()->flash('sw-title', __('jsPlugins.swal.user.titleUpdate'));
-        session()->flash('sw-text', __('jsPlugins.swal.user.textUpdate'));
+        session()->flash('sw-title', __('jsPlugins.swal.post.titleUpdate'));
+        session()->flash('sw-text', __('jsPlugins.swal.post.textUpdate'));
     }
 
     /**
@@ -215,11 +215,12 @@ class PostService
     public function srvDestroy(int $id)
     {
         $post = $this->srv_post->getById($id);
+        $postImagePath = public_path('/') . $this->post['path'] . $post->image_name . '.' . $post->image_extension;
 
         if (Auth::user()->hasRole('admin')) {
             $result = $this->srv_post->destroy($id);
-            if (file_exists(public_path('/') . $this->post['path'] . $post->image_name . '.' . $post->image_extension)) {
-                File::delete(public_path('/') . $this->post['path'] . $post->image_name . '.' . $post->image_extension);
+            if (file_exists($postImagePath)) {
+                File::delete($postImagePath);
             }
         } else {
             $result = null;

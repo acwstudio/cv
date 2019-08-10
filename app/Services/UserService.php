@@ -203,11 +203,12 @@ class UserService
     public function srvDestroy(int $id)
     {
         $user = $this->srv_user->getById($id);
+        $userImagePath = public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension;
 
         if (Auth::user()->hasRole('admin')) {
             $result = $this->srv_user->destroy($id);
-            if (file_exists(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension)) {
-                File::delete(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension);
+            if (file_exists($userImagePath)) {
+                File::delete($userImagePath);
             }
         } else {
             $result = null;

@@ -15,12 +15,12 @@
                 <i class="fas fa-folder-open text-info"></i>
                 <span class="badge badge-info">{{ $post->category->name }}</span>
                 <p class="card-text">{!! $post->body !!}</p>
-                <a href="{{ route('post', $post->id) }}" class="btn btn-outline-info">Read More &rarr;</a>
+                <a href="{{ route('post', $post->id) }}" class="btn btn-outline-info">{{ __('blog.more') }} &rarr;</a>
             </div>
             <div class="card-footer text-muted">
-                Posted on
-                {{ $post->created_at->format('j F, Y') }}
-                by
+
+                {{ $post->created }}
+                {{ __('blog.author') }}
                 {{ $post->user->name }}
             </div>
         </div>

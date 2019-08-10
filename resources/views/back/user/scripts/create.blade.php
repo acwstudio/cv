@@ -15,6 +15,9 @@
             acceptedFiles: 'image/*',
             thmbn_h: 160,
             thmbn_w: null,
+            dictDefaultMessage: '{{ __('forms.dropzone.dictDefaultMessage') }}',
+            dictFileTooBig: '{{ __('forms.dropzone.dictFileTooBig') }}',
+            dictInvalidFileType: '{{ __('forms.dropzone.dictInvalidFileType') }}',
         },
 
         swal: {

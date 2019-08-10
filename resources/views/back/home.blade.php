@@ -3,17 +3,16 @@
 @section('content')
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active">Dashboard</li>
+        <li class="breadcrumb-item active">{{ __('menu.bread.dashboard') }}</li>
     </ol>
 
     <main role="main" class="container">
         <div class="jumbotron">
-            <h1 class="display-4">Hello, {{ $user }}!</h1>
-            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention
-                to featured content or information.</p>
+            <h1 class="display-4">{{ __('forms.jumbotron-user.title') }} {{ $user }}!</h1>
+            <p class="lead">{{ __('forms.jumbotron-user.lead') }}</p>
             <hr class="my-4">
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            <p>{{ __('forms.jumbotron-user.text') }}</p>
+            <a class="btn btn-primary btn-lg" href="#" role="button">{{ __('forms.jumbotron-user.button') }}</a>
         </div>
     </main>
 

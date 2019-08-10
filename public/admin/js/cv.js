@@ -33,7 +33,7 @@ let cv = (function () {
     }
 
     let initSummernote = function () {
-        console.log(smn)
+
         elems.summernote.summernote({
             lang: smn.lang,
         })
@@ -81,7 +81,10 @@ let cv = (function () {
                 url: dz.url,
                 maxFiles: dz.maxFiles,
                 maxFilesize: dz.maxFilesize,
-                acceptedFiles: 'image/*',
+                acceptedFiles: dz.acceptedFiles,
+                dictDefaultMessage: dz.dictDefaultMessage,
+                dictFileTooBig: dz.dictFileTooBig,
+                dictInvalidFileType: dz.dictInvalidFileType,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -226,8 +229,8 @@ let cv = (function () {
                     if (file.name !== 'mockfile') {
                         if (sets.mode === 'edit') {
                             let mockFile = {name: "mockfile", size: 12345};
-                            createMockFile(element.dropzone, mockFile);
-                            //createMockFile(mockFile);
+                            // createMockFile(element.dropzone, mockFile);
+                            createMockFile(mockFile);
                         }
                         $.ajax({
                             url: dz.urlDelete,

@@ -7,6 +7,7 @@ use App\Repositories\Contracts\PostInterface;
 use App\Repositories\Contracts\TagInterface;
 use App\Traits\ManageImages;
 use Illuminate\Database\Eloquent\Collection;
+use Jenssegers\Date\Date;
 
 /**
  * Class BlogService
@@ -32,6 +33,8 @@ class BlogService
         $this->tag = $tag->getAll();
         $this->category = $category->getAll();
 
+        Date::setLocale(app()->getLocale());
+
         $this->setItemsFromConfig('preset');
     }
 
@@ -55,9 +58,11 @@ class BlogService
             } else {
                 $item->image_path = $dummy_path;
             }
+
+            $item->created = Date::make($item->created_at)->format('j F Y');
         }
 
-//        return $posts;
+//        dd($posts);
         return view('blog.blog', compact('posts'));
     }
 

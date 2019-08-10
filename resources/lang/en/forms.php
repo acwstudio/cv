@@ -53,4 +53,9 @@ return [
         'category' => 'Select a category...',
         'tag' => 'Select tags...',
     ],
+    'dropzone' => [
+        'dictDefaultMessage' => 'Drop files here to upload',
+        'dictFileTooBig' => 'File is too big  ({{filesize}}MiB). Max filesize : {{maxFilesize}}MiB',
+        'dictInvalidFileType' => "You can't upload files of this type.",
+    ]
 ];

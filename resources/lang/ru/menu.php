@@ -13,7 +13,12 @@ return[
     'sidebar' => [
         'dashboard' => 'Админ панель',
         'users' => 'Пользователи',
-        'posts' => 'Статьи',
+        'posts' => 'Посты',
+        'pages' => 'Страницы',
+        'userIndex' => "Список",
+        'userCreate' => 'Добавить',
+        'postIndex' => "Список",
+        'postCreate' => 'Добавить',
     ],
 
     'navbar' => [
@@ -22,5 +27,9 @@ return[
         'login' => 'Логин',
         'register' => 'Регистрация',
         'dashboard' => 'Админ панель',
+        'ph_search' => 'Искать...',
+        'back_site' => 'На сайт',
+        'logout' => 'Выйти',
+        'role' => 'Роль',
     ],
 ];

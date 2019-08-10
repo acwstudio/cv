@@ -1,7 +1,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Curriculum vita</a>
+        <a class="navbar-brand" href="{{ route('blog') }}">Curriculum vita</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -21,7 +21,7 @@
 
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/home') }}">{{ __('menu.navbar.dashboard') }}</a>
+                            <a class="nav-link" href="{{ route('home') }}">{{ __('menu.navbar.dashboard') }}</a>
                         </li>
                     @else
                         <li class="nav-item">

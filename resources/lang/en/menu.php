@@ -14,6 +14,11 @@ return[
         'dashboard' => 'Dashboard',
         'users' => 'Users',
         'posts' => 'Posts',
+        'pages' => 'Pages',
+        'userIndex' => "User's List",
+        'userCreate' => 'Add User',
+        'postIndex' => "Post's List",
+        'postCreate' => 'Add Post',
     ],
 
     'navbar' => [
@@ -22,5 +27,9 @@ return[
         'login' => 'Login',
         'register' => 'Register',
         'dashboard' => 'Dashboard',
+        'ph_search' => 'Search for...',
+        'back_site' => 'Back to site',
+        'logout' => 'Logout',
+        'role' => 'Role',
     ],
 ];
