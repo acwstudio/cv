@@ -17,9 +17,10 @@ class UsersTableSeeder extends Seeder
     {
         $dummy_path = public_path('/') . config('cv-images.preset.user.dummy') . 'user_pics';
         $image_path = public_path('/') . config('cv-images.preset.user.path');
-
+        dump($image_path);
         $files = File::files($image_path);
-        if(count($files) > 0) {
+        if(count($files) === 0) {
+            dump($image_path);
             File::copyDirectory($dummy_path, $image_path);
         }
 
