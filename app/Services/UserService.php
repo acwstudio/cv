@@ -99,7 +99,7 @@ class UserService
         $files = File::files($temp_path);
 
         isset($data['role']) ? $data['role'] : $data['role'] = 'user';
-        $data['image_name'] = 'user-';
+        $data['image_name'] = 'user_';
         $data['image_extension'] = 'jpg';
         $data['active'] = isset($data['active']) ? true : false;
         $data['password'] = Hash::make($data['password']);
@@ -108,7 +108,7 @@ class UserService
 
         if ($files) {
 
-            $data['image_name'] = 'user-' . $user_new->id;
+            $data['image_name'] = 'user_' . $user_new->id;
             $data['image_extension'] = $files[0]->getExtension();
 
             $this->srv_user->update($user_new->id, $data);
@@ -182,9 +182,9 @@ class UserService
         $files = File::files($temp_path);
 
         $data['active'] = isset($data['active']) ? true : false;
-
+        dump($id);
         if ($files) {
-            $data['image_name'] = 'user-' . $id;
+            $data['image_name'] = 'user_' . $id;
             $data['image_extension'] = $files[0]->getExtension();
             $imageUser = $data['image_name'] . '.' . $data['image_extension'];
             File::move($temp_path . $files[0]->getFilename(), $user_path . $imageUser);

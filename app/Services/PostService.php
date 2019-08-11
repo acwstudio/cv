@@ -105,7 +105,7 @@ class PostService
         $post = [
             'user_id' => Auth::user()->id,
             'category_id' => $data['category'],
-            'image_name' => 'post-',
+            'image_name' => 'post_',
             'image_extension' => 'jpg',
             'active' => isset($data['active']) ? 1 : 0,
             app()->getLocale() => [
@@ -120,7 +120,7 @@ class PostService
 
         if ($files) {
 
-            $post['image_name'] = 'post-' . $post_new->id;
+            $post['image_name'] = 'post_' . $post_new->id;
             $post['image_extension'] = $files[0]->getExtension();
 
             $this->srv_post->update($post_new->id, $post);
@@ -196,7 +196,7 @@ class PostService
         $data['active'] = isset($data['active']) ? true : false;
 
         if ($files) {
-            $data['image_name'] = 'post-' . $id;
+            $data['image_name'] = 'post_' . $id;
             $data['image_extension'] = $files[0]->getExtension();
             $imagePost = $data['image_name'] . '.' . $data['image_extension'];
             File::move($temp_path . $files[0]->getFilename(), $post_path . $imagePost);

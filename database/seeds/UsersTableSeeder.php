@@ -27,11 +27,12 @@ class UsersTableSeeder extends Seeder
         /* @var $factory \Illuminate\Database\Eloquent\Factory */
         factory(User::class, 10)->create()->each(function($u) {
             /** @var User $u */
-            $i = $u->id - 1;
-            $u->update(['image_name' => 'user-' . $i]);
+            $i = $u->id;
+            $u->update(['image_name' => 'user_' . $i]);
 
             if ($u->id == 1) {
                 $u->assignRole('admin');
+                $u->update(['email' => 'admin@admin.loc']);
             } elseif($u->id > 1 && $u->id < 4) {
                 $u->assignRole('moderator');
             } elseif($u->id > 3 && $u->id < 6) {
