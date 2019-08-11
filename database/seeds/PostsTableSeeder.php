@@ -17,6 +17,15 @@ class PostsTableSeeder extends Seeder
         $fakerRU = Faker\Factory::create('ru_RU');
         $fakerEN = Faker\Factory::create('en_GB');
 
+        $dummy_path = public_path('/') . config('cv-images.preset.post.dummy') . 'post_pictures';
+        $image_path = public_path('/') . config('cv-images.preset.post.path');
+
+        $files = File::files($image_path);
+        if(count($files) === 0) {
+            dump($image_path);
+            File::copyDirectory($dummy_path, $image_path);
+        }
+
         $users = DB::table('users')->get();
         $categories = DB::table('categories')->pluck('id', 'alias');
         $tags = DB::table('tags')->pluck('id', 'alias');

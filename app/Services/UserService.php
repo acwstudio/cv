@@ -182,7 +182,7 @@ class UserService
         $files = File::files($temp_path);
 
         $data['active'] = isset($data['active']) ? true : false;
-        dump($id);
+
         if ($files) {
             $data['image_name'] = 'user_' . $id;
             $data['image_extension'] = $files[0]->getExtension();
