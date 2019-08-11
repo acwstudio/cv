@@ -45,7 +45,7 @@ class BlogService
     {
         $image_dir = asset('/') . $this->post['path'];
         $dummy_path = asset('/') . $this->post['dummy'] . 'post.jpg';
-        //dd($dummy_path);
+        //dd(public_path($this->post['path']) . 'post.jpg');
         $posts = $this->blog->paginate(3);
         $posts->s_tags = $this->tag;
         $posts->s_categories = $this->category;

@@ -5,7 +5,7 @@ return [
     'preset' => [
         'user' => [
             'prefix' => 'user-',
-            'path' => 'images/users',
+            'path' => 'images/users/',
             'temp' => 'images/temp-files/users/',
             'dummy' => 'images/dummies/',
             'height' => 200,
