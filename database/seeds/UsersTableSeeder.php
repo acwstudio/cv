@@ -17,8 +17,13 @@ class UsersTableSeeder extends Seeder
     {
         $dummy_path = public_path('/') . config('cv-images.preset.user.dummy') . 'user_pics';
         $image_path = public_path('/') . config('cv-images.preset.user.path');
+        
+        if(!File::exists($image_path)) {
+            File::makeDirectory($image_path, 0755, true, true);
+        }
 
         $files = File::files($image_path);
+
         if(count($files) === 0) {
             dump($image_path);
             File::copyDirectory($dummy_path, $image_path);
@@ -32,7 +37,10 @@ class UsersTableSeeder extends Seeder
 
             if ($u->id == 1) {
                 $u->assignRole('admin');
-                $u->update(['email' => 'admin@admin.loc']);
+                $u->update([
+                    'email' => 'admin@admin.loc',
+                    'password' => Hash::make(config('cv-default.admin_password')),
+                ]);
             } elseif($u->id > 1 && $u->id < 4) {
                 $u->assignRole('moderator');
             } elseif($u->id > 3 && $u->id < 6) {

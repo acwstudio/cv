@@ -23,6 +23,8 @@
              'titleUpload' => 'Image upload',
              'cancel' => 'Cancel',
              'ok' => 'OK',
+             'demoTitle' => 'Demo Mode',
+             'demoText' => 'Nothing has happened',
          ],
          'user' => [
              'titleCreate' => 'Create User',

@@ -7,6 +7,7 @@ use App\Repositories\Contracts\PostInterface;
 use App\Repositories\Contracts\TagInterface;
 use App\Traits\ManageImages;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Route;
 use Jenssegers\Date\Date;
 
 /**
@@ -45,7 +46,7 @@ class BlogService
     {
         $image_dir = asset('/') . $this->post['path'];
         $dummy_path = asset('/') . $this->post['dummy'] . 'post.jpg';
-        //dd(public_path($this->post['path']) . 'post.jpg');
+
         $posts = $this->blog->paginate(3);
         $posts->s_tags = $this->tag;
         $posts->s_categories = $this->category;
@@ -62,7 +63,6 @@ class BlogService
             $item->created = Date::make($item->created_at)->format('j F Y');
         }
 
-//        dd($posts);
         return view('blog.blog', compact('posts'));
     }
 

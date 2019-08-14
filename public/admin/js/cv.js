@@ -40,11 +40,11 @@ let cv = (function () {
     };
 
     let initSelect2 = function () {
-        elems.select.category.select2({
-            placeholder: sl2.placeholder.category,
+        elems.select.single.select2({
+            placeholder: sl2.placeholder.single,
         });
-        elems.select.tag.select2({
-            placeholder: sl2.placeholder.tag,
+        elems.select.multiple.select2({
+            placeholder: sl2.placeholder.multiple,
         });
     };
 

@@ -18,6 +18,7 @@ Route::get('lang/{language}', ['as' => 'lang.switch', 'uses' => 'LanguageControl
 
 Auth::routes();
 
+/* Admin panel */
 Route::namespace('Admin')->middleware('auth')->group(function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
@@ -27,21 +28,8 @@ Route::namespace('Admin')->middleware('auth')->group(function () {
     Route::resource('tags', 'TagController');
     Route::resource('categories', 'CategoryController');
 
-//    Route::get('/home', ['as' => 'home', 'uses' => 'AdminController@index']);
-//    Route::get('ajax-categories', ['as' => 'ajax-regions', 'uses' => 'AjaxCategoryController@regions']);
-//    Route::get('ajax-tags', ['as' => 'ajax-tags', 'uses' => 'AjaxTagController@tags']);
-//    Route::get('ajax-municipalities/{region?}', [
-//        'as' => 'ajax-municipalities', 'uses' => 'AjaxCategoryController@municipalities'
-//    ]);
     Route::post('activator',  ['as' => 'activator', 'uses' => 'AjaxController@activator']);
     Route::post('dropzone-store', ['as' => 'dropzone-store', 'uses' => 'DropzoneController@store']);
     Route::post('dropzone-delete', ['as' => 'dropzone-delete', 'uses' => 'DropzoneController@delete']);
-//
-//    Route::resource('images', 'ImageController');
-//    Route::resource('slides', 'SlideController');
-//    Route::resource('categories', 'CategoryController');
-//    Route::resource('tags', 'TagController');
-
-
 
 });

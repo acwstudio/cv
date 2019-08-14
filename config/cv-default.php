@@ -20,5 +20,7 @@ return [
         'moderator',
         'writer',
         'user',
-    ]
+    ],
+
+    'admin_password' => env('ADMIN_PASSWORD'),
 ];

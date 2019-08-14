@@ -25,8 +25,8 @@
 
         select2: {
             placeholder: {
-                category: '{{ __('forms.ph-post.category') }}',
-                tag: '{{ __('forms.ph-post.tag') }}',
+                single: '{{ __('forms.ph-post.category') }}',
+                multiple: '{{ __('forms.ph-post.tag') }}',
             },
 
         },
@@ -46,8 +46,8 @@
         elems: {
             /* Select2 elements */
             select: {
-                category: category,
-                tag: tag,
+                single: category,
+                multiple: tag,
             },
             /* Summernote elements */
             summernote: summernote,

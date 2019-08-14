@@ -8,6 +8,7 @@ use App\Traits\ManageImages;
 use Auth;
 use File;
 use Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 /**
@@ -60,7 +61,7 @@ class UserService
 
         $transDataTable = collect(__('jsPlugins.datatable'))->toJson();
         $transSwal = collect(__('jsPlugins.swal.global'))->merge(collect(__('jsPlugins.swal.user')));
-        //dd($transDataTable);
+//        dd(Auth::user()->getRoleNames()->first());
         $data = compact('users', 'transDataTable', 'transSwal');
 
         return view('back.user.index', $data);
@@ -79,6 +80,12 @@ class UserService
         }
 
         $roles = $this->role->getAll();
+        if (!Auth::user()->hasRole('admin')) {
+            $roles->map(function ($value, $key) use ($roles) {
+                $value->name !== 'admin' ?: $roles->forget($key);
+            });
+        }
+//        $isAdmin = Auth::user()->hasRole('admin');
 
         $transSwal = collect(__('jsPlugins.swal.global'))->merge(collect(__('jsPlugins.swal.user')));
 
@@ -104,24 +111,34 @@ class UserService
         $data['active'] = isset($data['active']) ? true : false;
         $data['password'] = Hash::make($data['password']);
 
-        $user_new = $this->srv_user->register($data);
+        if (Auth::user()->getRoleNames()->first() === 'user'){
 
-        if ($files) {
+            session()->flash('sw-title', __('jsPlugins.swal.global.demoTitle'));
+            session()->flash('sw-text', __('jsPlugins.swal.global.demoText'));
 
-            $data['image_name'] = 'user_' . $user_new->id;
-            $data['image_extension'] = $files[0]->getExtension();
+            Log::info('It has been tested from ' . \Request::ip());
 
-            $this->srv_user->update($user_new->id, $data);
+        } else {
 
-            $imageUser = $data['image_name'] . '.' . $data['image_extension'];
-            File::move($temp_path . $files[0]->getFilename(), $user_path . $imageUser);
+            $user_new = $this->srv_user->register($data);
+
+            if ($files) {
+
+                $data['image_name'] = 'user_' . $user_new->id;
+                $data['image_extension'] = $files[0]->getExtension();
+
+                $this->srv_user->update($user_new->id, $data);
+
+                $imageUser = $data['image_name'] . '.' . $data['image_extension'];
+                File::move($temp_path . $files[0]->getFilename(), $user_path . $imageUser);
+
+            }
+
+            session()->flash('sw-title', __('jsPlugins.swal.user.titleCreate'));
+            session()->flash('sw-text', __('jsPlugins.swal.user.textCreate'));
 
         }
 
-        session()->flash('sw-title', __('jsPlugins.swal.user.titleCreate'));
-        session()->flash('sw-text', __('jsPlugins.swal.user.textCreate'));
-
-        return $user_new;
     }
 
     /**
@@ -157,12 +174,20 @@ class UserService
 
         if (file_exists(public_path('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension)) {
             $user->path = asset('/') . $this->user['path'] . $user->image_name . '.' . $user->image_extension . '?' . time();
-        } else{
+        } else {
             $user->path = asset('/') . $this->user['dummy'] . 'user.jpg';
         }
 
         $user->u_role = $user->roles->first()->name;
+
         $roles = $this->role->getAll();
+
+        if(!Auth::user()->hasRole('admin')){
+            $roles->map(function ($value, $key) use ($roles) {
+                $value->name !== 'admin' ?: $roles->forget($key);
+            });
+        }
+
         $transSwal = collect(__('jsPlugins.swal.global'))->merge(collect(__('jsPlugins.swal.user')));
 
         $data = compact('roles', 'transSwal', 'user');
@@ -183,17 +208,29 @@ class UserService
 
         $data['active'] = isset($data['active']) ? true : false;
 
-        if ($files) {
-            $data['image_name'] = 'user_' . $id;
-            $data['image_extension'] = $files[0]->getExtension();
-            $imageUser = $data['image_name'] . '.' . $data['image_extension'];
-            File::move($temp_path . $files[0]->getFilename(), $user_path . $imageUser);
+        if (Auth::user()->getRoleNames()->first() === 'user'){
+
+            session()->flash('sw-title', __('jsPlugins.swal.global.demoTitle'));
+            session()->flash('sw-text', __('jsPlugins.swal.global.demoText'));
+
+            Log::info('It has been tested from ' . \Request::ip());
+
+        } else {
+
+            if ($files) {
+                $data['image_name'] = 'user_' . $id;
+                $data['image_extension'] = $files[0]->getExtension();
+                $imageUser = $data['image_name'] . '.' . $data['image_extension'];
+                File::move($temp_path . $files[0]->getFilename(), $user_path . $imageUser);
+            }
+
+            $this->srv_user->userUpdate($id, $data);
+
+            session()->flash('sw-title', __('jsPlugins.swal.user.titleUpdate'));
+            session()->flash('sw-text', __('jsPlugins.swal.user.textUpdate'));
+
         }
 
-        $this->srv_user->userUpdate($id, $data);
-
-        session()->flash('sw-title', __('jsPlugins.swal.user.titleUpdate'));
-        session()->flash('sw-text', __('jsPlugins.swal.user.textUpdate'));
     }
 
     /**

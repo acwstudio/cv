@@ -3,6 +3,7 @@
 <script type="text/javascript">
 
     let form = $('#edit-user');
+    let role = $('#form_role');
 
     cv.init({
         dropzone: {
@@ -20,6 +21,13 @@
             dictInvalidFileType: '{{ __('forms.dropzone.dictInvalidFileType') }}',
         },
 
+        select2: {
+            placeholder: {
+                single: '{{ __('forms.ph-user.role') }}',
+            },
+
+        },
+
         swal: {
             translations: JSON.parse('{!! $transSwal !!}'),
         },
@@ -29,7 +37,14 @@
             pathMockFile: {
                 user: '{{ $user->path }}',
             },
-        }
+        },
+
+        elems: {
+            /* Select2 elements */
+            select: {
+                single: role,
+            },
+        },
 
     });
 

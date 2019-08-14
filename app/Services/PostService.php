@@ -8,6 +8,7 @@ use App\Repositories\Contracts\TagInterface;
 use App\Traits\ManageImages;
 use Auth;
 use File;
+use Illuminate\Support\Facades\Log;
 use Session;
 
 /**
@@ -114,26 +115,36 @@ class PostService
             ],
         ];
 
-        $post_new = $this->srv_post->store($post);
+        if (Auth::user()->getRoleNames()->first() === 'user'){
 
-        $this->srv_post->pivotPostTag($post_new->id, $data['tag']);
+            session()->flash('sw-title', __('jsPlugins.swal.global.demoTitle'));
+            session()->flash('sw-text', __('jsPlugins.swal.global.demoText'));
 
-        if ($files) {
+            Log::info('It has been tested from ' . \Request::ip());
 
-            $post['image_name'] = 'post_' . $post_new->id;
-            $post['image_extension'] = $files[0]->getExtension();
+        } else {
 
-            $this->srv_post->update($post_new->id, $post);
+            $post_new = $this->srv_post->store($post);
 
-            $imagePost = $post['image_name'] . '.' . $post['image_extension'];
-            File::move($temp_path . $files[0]->getFilename(), $post_path . $imagePost);
+            $this->srv_post->pivotPostTag($post_new->id, $data['tag']);
+
+            if ($files) {
+
+                $post['image_name'] = 'post_' . $post_new->id;
+                $post['image_extension'] = $files[0]->getExtension();
+
+                $this->srv_post->update($post_new->id, $post);
+
+                $imagePost = $post['image_name'] . '.' . $post['image_extension'];
+                File::move($temp_path . $files[0]->getFilename(), $post_path . $imagePost);
+
+            }
+
+            session()->flash('sw-title', __('jsPlugins.swal.post.titleCreate'));
+            session()->flash('sw-text', __('jsPlugins.swal.post.textCreate'));
 
         }
 
-        session()->flash('sw-title', __('jsPlugins.swal.post.titleCreate'));
-        session()->flash('sw-text', __('jsPlugins.swal.post.textCreate'));
-
-        return $post_new;
     }
 
     /**
@@ -195,17 +206,29 @@ class PostService
 
         $data['active'] = isset($data['active']) ? true : false;
 
-        if ($files) {
-            $data['image_name'] = 'post_' . $id;
-            $data['image_extension'] = $files[0]->getExtension();
-            $imagePost = $data['image_name'] . '.' . $data['image_extension'];
-            File::move($temp_path . $files[0]->getFilename(), $post_path . $imagePost);
+        if (Auth::user()->getRoleNames()->first() === 'user'){
+
+            session()->flash('sw-title', __('jsPlugins.swal.global.demoTitle'));
+            session()->flash('sw-text', __('jsPlugins.swal.global.demoText'));
+
+            Log::info('It has been tested from ' . \Request::ip());
+
+        } else {
+
+            if ($files) {
+                $data['image_name'] = 'post_' . $id;
+                $data['image_extension'] = $files[0]->getExtension();
+                $imagePost = $data['image_name'] . '.' . $data['image_extension'];
+                File::move($temp_path . $files[0]->getFilename(), $post_path . $imagePost);
+            }
+
+            $this->srv_post->postUpdate($id, $data);
+
+            session()->flash('sw-title', __('jsPlugins.swal.post.titleUpdate'));
+            session()->flash('sw-text', __('jsPlugins.swal.post.textUpdate'));
+
         }
 
-        $this->srv_post->postUpdate($id, $data);
-
-        session()->flash('sw-title', __('jsPlugins.swal.post.titleUpdate'));
-        session()->flash('sw-text', __('jsPlugins.swal.post.textUpdate'));
     }
 
     /**

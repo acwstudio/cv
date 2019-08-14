@@ -46,6 +46,7 @@ return [
         'name' => 'Your name',
         'email' => 'Your email',
         'password' => 'Password',
+        'role' => 'Select role...',
     ],
     'ph-post' => [
         'title' => 'Title',

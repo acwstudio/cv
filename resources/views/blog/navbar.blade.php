@@ -21,7 +21,8 @@
 
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">{{ __('menu.navbar.dashboard') }}</a>
+                            <a class="nav-link"
+                               href="{{ route('home') }}">{{ __('menu.navbar.dashboard') }}</a>
                         </li>
                     @else
                         <li class="nav-item">
