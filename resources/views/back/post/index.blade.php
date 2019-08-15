@@ -40,7 +40,7 @@
                             </td>
                             <td>{{ $post->user->name }}</td>
                             <td>{{ $post->title }}</td>
-                            <td>{{ $post->body }}</td>
+                            <td>{{ Str::limit($post->body, 100, ' ...') }}</td>
                             <td>
                                 <span class="badge badge-pill badge-light">{{ $post->category->name }}</span>
                             </td>

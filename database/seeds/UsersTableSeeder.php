@@ -43,8 +43,20 @@ class UsersTableSeeder extends Seeder
                 ]);
             } elseif($u->id > 1 && $u->id < 4) {
                 $u->assignRole('moderator');
+                $u->update([
+                    'password' => Hash::make(config('cv-default.admin_password')),
+                ]);
             } elseif($u->id > 3 && $u->id < 6) {
                 $u->assignRole('writer');
+                $u->update([
+                    'password' => Hash::make(config('cv-default.admin_password')),
+                ]);
+            } elseif($u->id === 7) {
+                $u->assignRole('user');
+                $u->update([
+                    'email' => 'user@user.loc',
+                    'password' => Hash::make('12345678'),
+                ]);
             } else {
                 $u->assignRole('user');
             }
