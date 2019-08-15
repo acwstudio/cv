@@ -12,7 +12,7 @@
             <p class="lead">{{ __('forms.jumbotron-user.lead') }}</p>
             <hr class="my-4">
             <p>{{ __('forms.jumbotron-user.text') }}</p>
-            <a class="btn btn-primary btn-lg" href="#" role="button">{{ __('forms.jumbotron-user.button') }}</a>
+            <a class="btn btn-primary btn-lg" href="{{ route('posts.create') }}" role="button">{{ __('forms.jumbotron-user.button') }}</a>
         </div>
     </main>
 
