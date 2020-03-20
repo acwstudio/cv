@@ -20,7 +20,12 @@ class PostsTableSeeder extends Seeder
         $dummy_path = public_path('/') . config('cv-images.preset.post.dummy') . 'post_pictures';
         $image_path = public_path('/') . config('cv-images.preset.post.path');
 
+        if(!File::exists($image_path)) {
+            File::makeDirectory($image_path, 0755, true, true);
+        }
+
         $files = File::files($image_path);
+
         if(count($files) === 0) {
             dump($image_path);
             File::copyDirectory($dummy_path, $image_path);
