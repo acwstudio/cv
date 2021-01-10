@@ -25,4 +25,198 @@ Laravel по переводам статического контента, но 
 
 Написать REST API для обращения к блогу из внешних сервисов.
 
+# Build an API with Laravel
 
+- Writing JSON:API Specification
+- Planning our API
+- Selection of authentication system
+- Writing the actual API
+- Writing tests for the API
+
+## JSON:API specification
+
+JSON:API specification is the document structure of data for JSON:API request and responses. The document 
+describes how our JSON data should be formed, how members should named, where these should be placed and so 
+forth.
+
+**Top-level of the document**
+
+JSON:API Specification states that there must be a JSON object at the root of the document, representing the 
+top-level.
+
+In the top-level of the document, there must be at least one of the following members:
+
+- **data** - which is the most important member that contains the primary data of the document.
+- **errors** - which is a member that contains all errors objects.
+- **included** - which is a member that contains all resource objects that are related to the primary data 
+and/or related to each other.
+- **jsonapi** - which is a member that contains the server's implementation of the JSON:API Specification
+- **meta** - which is a member that contains  all non-standard meta information.
+
+Note that it is very important that the **data** and **errors** members never coexists in the same document.
+
+**Primary data and Resource objects**
+
+For definiteness, let's take the single **tags** resource 
+
+`GET: tags/1`
+```json
+{
+  "data": {
+    "id": "1",
+    "type": "tags",
+    "attributes": {
+      "name": "any tag"
+    },
+    "relationships": {
+    
+    }
+  }
+}
+```
+We have a clear structure now. In the root of the resource object you'll find:
+
+- **id** - which is the id of the resource as a string
+- **type** - which is the type of the resource as a string
+- **attributes** - which contains all of the attributes of our resource
+- **relationships** - which contains all of the relationships of our resource
+
+It's ok for the **attributes** and **relationships** members to be empty. In fact, these can be removed if 
+not used. But, as an absolute minimum, you should always have the **id** and **type** members in your 
+resource objects, and the value of both should always be a string.
+
+Note, there is a difference between requesting a collection of resources versus requesting a single resource.
+If we are requesting the collection of resources the **data** member of the returned document should be 
+structured like this:
+
+`GET: tags`
+```json
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "tags",
+      "attributes": {
+      },
+      "relationships": {
+      }
+    },
+    {
+       "id": "2",
+       "type": "tags",
+       "attributes": { 
+       },
+       "relationships": {
+       }
+     }
+  ]
+}
+```
+Here, the **data** member is an array containing the requested resource objects.
+
+Now, let's take a look at **relationships** member. A **relatiomships** member must contain at least one of the 
+following members:
+
+- **links**
+- **-self**
+- **-related**
+- **data**
+- **meta**
+
+Let's take a look at **links** member. This member contains two types of links. 
+
+- The link for the **self** member is a link for the relationship itself. 
+- The link for the **related** member is a link for the relation between resources.
+
+The **data** member is something we have seen before, yet this one is a little different. It's called the 
+**resource linkage** and instead of holding **resorce objects**, it holds **resource identifier objects**.
+In contrast to resource objects, which hold **id type attributes relationships** members, resource identifier 
+objects only contain the **id** and **type** members of the related resource objects.
+
+The **meta** member is a meta object that can contain non-standard metadata about the relationship
+
+Let's take a look the relstionship between a **tag** and a **post**
+```json
+{
+  "data": {
+    "id": "1",
+    "type": "tags",
+    "attributes": {
+      "name": "any tag"
+    },
+    "relationships": {
+      "posts": {
+        "links": {
+          "self": "http://example.com/tags/1/relationships/posts",
+          "related": "http://example.com/tags/1/posts"
+        },
+        "data": [
+            {
+              "id": "5",
+              "type": "posts"
+            },
+            {
+              "id": "10",
+              "type": "posts"
+            }
+        ]
+      }
+    }
+  }
+}
+```
+OK, let's take look at requesting **posts** resource. It will be mush more interesting, because of that 
+**posts** resource has relationships with **tags categories users** resources at the same time. 
+Look at, please:
+
+`GET: posts/1`
+```json
+{
+  "data": {
+    "id": "1",
+    "type": "posts",
+    "attributes": {
+      "title": "My first post",
+      "text": "I have written my first post"
+    },
+    "relationships": {
+      "tags": {
+        "links": {
+          "self": "http://example.com/posts/1/relationships/tags",
+          "related": "http://example.com/posts/1/tags"
+        },
+        "data": [
+            {
+              "id": "5",
+              "type": "tags"
+            },
+            {
+              "id": "10",
+              "type": "tags"
+            }
+        ]
+      },
+      "categories": {
+         "links": {
+           "self": "http://example.com/posts/1/relationships/categories",
+           "related": "http://example.com/posts/1/categories"
+         },
+         "data": {
+           "id": "2",
+           "type": "categories"
+         }
+      },
+      "users": {
+        "links": {
+          "self": "http://example.com/posts/1/relationships/users",
+          "related": "http://example.com/posts/1/users"
+        },
+        "data": {
+          "id": "23",
+          "type": "users"
+        }
+      }
+    }
+  }
+}
+```
