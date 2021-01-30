@@ -31,7 +31,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
+//        dd(Request::segment(1));
+//        Passport::routes();
         Passport::routes($callback = null, ['prefix' => Request::segment(1) . '/oauth']);
         //
     }

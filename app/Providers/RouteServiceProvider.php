@@ -64,6 +64,7 @@ class RouteServiceProvider extends ServiceProvider
             'namespace' => $this->namespace,
             'prefix' => $locale
         ], function ($router) {
+//            dd($router);
             require base_path('routes/web.php');
         });
 //        Route::middleware('web')
@@ -80,7 +81,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
+        $locale = Request::segment(1);
+        Route::prefix($locale . '/api')
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
