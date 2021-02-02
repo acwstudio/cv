@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
+use App\Http\Resources\CategoriesCollection;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,7 +34,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->category->srvIndex();
+        $categories = Category::all();
 
         return $categories;
     }

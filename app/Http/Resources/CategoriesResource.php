@@ -4,6 +4,10 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * Class CategoriesResource
+ * @package App\Http\Resources
+ */
 class CategoriesResource extends JsonResource
 {
     /**

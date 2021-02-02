@@ -14,6 +14,8 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
+        $category = factory(\App\Category::class)->create();
+        dd($category);
         for ($i = 0; $i < 5; $i++) {
 
             $category_id = DB::table('categories')->insertGetId([

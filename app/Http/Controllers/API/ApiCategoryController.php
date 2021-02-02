@@ -9,6 +9,10 @@ use App\Http\Resources\CategoriesResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * Class ApiCategoryController
+ * @package App\Http\Controllers\API
+ */
 class ApiCategoryController extends Controller
 {
     /**
@@ -31,7 +35,6 @@ class ApiCategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-
         return $request;
     }
 

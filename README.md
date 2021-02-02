@@ -57,21 +57,60 @@ Note that it is very important that the **data** and **errors** members never co
 
 **Primary data and Resource objects**
 
-For definiteness, let's take the single **tags** resource 
+For definiteness, let's take the real single **categories** resource. 
 
-`GET: tags/1`
+`GET: en/tags/1`
 ```json
 {
-  "data": {
-    "id": "1",
-    "type": "tags",
-    "attributes": {
-      "name": "any tag"
+    "data": {
+        "id": "1",
+        "type": "categories",
+        "attributes": {
+            "alias": "any_category",
+            "locale": "en",
+            "name": "Any Category",
+            "created_at": "2021-02-01 16:51:03",
+            "updated_at": "2021-02-01 16:51:03"
+        },
+        "relationships": {
+            "translations": {
+                "links": {
+                    "self": "http://cv.local/categories/1/relationships/translations",
+                    "related": "http://cv.local/categories/1/translations"
+                },
+                "data": [
+                    {
+                        "id": "1",
+                        "type": "category_translations"
+                    },
+                    {
+                        "id": "2",
+                        "type": "category_translations"
+                    }
+                ]  
+            }
+        }
     },
-    "relationships": {
-    
-    }
-  }
+    "included": [
+        {
+            "id": "1",
+            "type": "category_translations",
+            "attributes": {
+                "category_id": "1",
+                "locale": "en",
+                "name": "Any Category"
+            }
+        },
+        {
+            "id": "2",
+            "type": "category_translations",
+            "attributes": {
+                "category_id": "1",
+                "locale": "ru",
+                "name": "Какая-то категория"
+            }
+        }
+    ]
 }
 ```
 We have a clear structure now. In the root of the resource object you'll find:

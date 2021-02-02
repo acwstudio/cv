@@ -6,6 +6,10 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
+/**
+ * Class Language
+ * @package App\Http\Middleware
+ */
 class Language
 {
     /**
