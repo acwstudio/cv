@@ -194,7 +194,6 @@ class CategoriesTest extends TestCase
                         'alias' => 'Another Alias',
                         'created_at' => $creationTimestamp->setMilliseconds(0)->toJSON(),
                         'updated_at' => now()->setMilliseconds(0)->toJSON(),
-//                        'updated_at' => now()->setSeconds(0)->toJSON()
                     ]
                 ]
             ]);
