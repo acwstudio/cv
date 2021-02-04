@@ -21,7 +21,7 @@ class CategoriesRelationshipsTest extends TestCase
 
     /**
      * @test
-     * @watch
+     *
      */
     public function it_returns_a_relationship_to_translations_adhearing_to_json_api_spec()
     {

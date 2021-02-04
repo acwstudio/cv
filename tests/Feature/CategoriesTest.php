@@ -155,6 +155,7 @@ class CategoriesTest extends TestCase
 
     /**
      * @test
+     *
      */
     public function it_can_update_a_category_from_a_resource_object()
     {
@@ -206,8 +207,9 @@ class CategoriesTest extends TestCase
 
     /**
      * @test
+     * @watch
      */
-    public function it_cah_delete_a_category_through_a_delete_request()
+    public function it_can_delete_a_category_through_a_delete_request()
     {
         /** set up our world */
         \Lang::setLocale('en');
