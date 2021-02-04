@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Category;
 use App\Http\Requests\API\StoreCategoryRequest;
+use App\Http\Requests\API\UpdateCategoryRequest;
 use App\Http\Resources\CategoriesCollection;
 use App\Http\Resources\CategoriesResource;
 use Illuminate\Http\Request;
@@ -62,11 +63,13 @@ class ApiCategoryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return CategoriesResource
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $category->update($request->input('data.attributes'));
+
+        return new CategoriesResource($category);
     }
 
     /**

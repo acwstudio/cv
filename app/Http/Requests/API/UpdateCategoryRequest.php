@@ -5,10 +5,10 @@ namespace App\Http\Requests\API;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class StoreCategoryRequest
+ * Class UpdateCategoryRequest
  * @package App\Http\Requests\API
  */
-class StoreCategoryRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,10 +28,7 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'data' => 'required|array',
-            'data.type' => 'required|in:categories',
-            'data.attributes' => 'required|array',
-            'data.attributes.alias' => 'required|string',
+            //
         ];
     }
 }

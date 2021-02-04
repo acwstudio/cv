@@ -24,6 +24,7 @@ class CategoriesTest extends TestCase
      */
     public function it_returns_a_category_as_resource_object()
     {
+        /** set up our world */
         \Lang::setLocale('en');
 
         $category = factory(Category::class)->create();
@@ -31,10 +32,13 @@ class CategoriesTest extends TestCase
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
+        /** run the code to be tested */
         $this->getJson('/api/v1/categories/1', [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json',
         ])
+
+            /** make all of our assertions */
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
@@ -55,6 +59,7 @@ class CategoriesTest extends TestCase
      */
     public function it_returns_all_categories_as_a_collection_of_resource_objects()
     {
+        /** set up our world */
         \Lang::setLocale('en');
 
         $categories = factory(Category::class, 3)->create();
@@ -62,10 +67,13 @@ class CategoriesTest extends TestCase
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
+        /** run the code to be tested */
         $this->getJson('/api/v1/categories', [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json',
         ])
+
+            /** make all of our assertions */
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
@@ -106,11 +114,13 @@ class CategoriesTest extends TestCase
      */
     public function it_can_create_a_category_from_a_resource_object()
     {
+        /** set up our world */
         \Lang::setLocale('en');
 
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
+        /** run the code to be tested */
         $this->postJson('/api/v1/categories', [
             'data' => [
                 'type' => 'categories',
@@ -118,27 +128,78 @@ class CategoriesTest extends TestCase
                     'alias' => 'Test Alias'
                 ]
             ]
-        ],[
+        ], [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json',
         ])
-        ->assertStatus(201)
-        ->assertJson([
-            'data' => [
-                'id' => '1',
-                'type' => 'categories',
-                'attributes' => [
-                    'alias' => 'Test Alias',
-                    'created_at' => now()->setMilliseconds(0)->toJSON(),
-                    'updated_at' => now() ->setMilliseconds(0)->toJSON(),
+            /** make all of our assertions */
+            ->assertStatus(201)
+            ->assertJson([
+                'data' => [
+                    'id' => '1',
+                    'type' => 'categories',
+                    'attributes' => [
+                        'alias' => 'Test Alias',
+                        'created_at' => now()->setMilliseconds(0)->toJSON(),
+                        'updated_at' => now()->setMilliseconds(0)->toJSON(),
+                    ]
                 ]
-            ]
-        ])
-        ->assertHeader('Location', url('/api/v1/categories/1'));
+            ])
+            ->assertHeader('Location', url('/api/v1/categories/1'));
 
         $this->assertDatabaseHas('categories', [
             'id' => '1',
             'alias' => 'Test Alias'
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_update_a_category_from_a_resource_object()
+    {
+        /** set up our world */
+        \Lang::setLocale('en');
+
+        $user = factory(User::class)->create();
+        Passport::actingAs($user);
+
+        $category = factory(Category::class)->create();
+
+//        $creationTimestamp = now();
+//        sleep(1);
+
+        /** run the code to be tested */
+        $this->patchJson('/api/v1/categories/1', [
+            'data' => [
+                'id' => '1',
+                'type' => 'categories',
+                'attributes' => [
+                    'alias' => 'Another Alias'
+                ]
+            ]
+        ],[
+            'accept' => 'application/vnd.api+json',
+            'content-type' => 'application/vnd.api+json'
+        ])
+
+            /** make all of our assertions */
+            ->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'id' => '1',
+                    'type' => 'categories',
+                    'attributes' => [
+                        'alias' => 'Another Alias',
+                        'created_at' => now()->setMilliseconds(0)->toJSON(),
+                        'updated_at' => now()->setMilliseconds(0)->toJSON(),
+                    ]
+                ]
+            ]);
+
+        $this->assertDatabaseHas('categories', [
+            'id' => '1',
+            'alias' => 'Another Alias'
         ]);
     }
 }
