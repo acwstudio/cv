@@ -166,8 +166,8 @@ class CategoriesTest extends TestCase
 
         $category = factory(Category::class)->create();
 
-//        $creationTimestamp = now();
-//        sleep(1);
+        $creationTimestamp = now();
+        sleep(1);
 
         /** run the code to be tested */
         $this->patchJson('/api/v1/categories/1', [
@@ -191,8 +191,9 @@ class CategoriesTest extends TestCase
                     'type' => 'categories',
                     'attributes' => [
                         'alias' => 'Another Alias',
-                        'created_at' => now()->setMilliseconds(0)->toJSON(),
+                        'created_at' => $creationTimestamp->setMilliseconds(0)->toJSON(),
                         'updated_at' => now()->setMilliseconds(0)->toJSON(),
+//                        'updated_at' => now()->setSeconds(0)->toJSON()
                     ]
                 ]
             ]);
@@ -200,6 +201,33 @@ class CategoriesTest extends TestCase
         $this->assertDatabaseHas('categories', [
             'id' => '1',
             'alias' => 'Another Alias'
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_cah_delete_a_category_through_a_delete_request()
+    {
+        /** set up our world */
+        \Lang::setLocale('en');
+
+        $user = factory(User::class)->create();
+        Passport::actingAs($user);
+
+        $category = factory(Category::class)->create();
+
+        /** run the code to be tested */
+        $this->delete('/api/v1/categories/1', [], [
+            'accept' => 'application/vnd.api+json',
+            'content-type' => 'application/vnd.api+json'
+        ])
+            /** make all of our assertions */
+            ->assertStatus(204);
+
+        $this->assertDatabaseMissing('categories', [
+            'id' => '1',
+            'alias' => $category->alias
         ]);
     }
 }
