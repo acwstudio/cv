@@ -31,11 +31,19 @@ class ApiCategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreCategoryRequest $request)
     {
-        return $request;
+        $category = Category::create([
+            'alias' => $request->input('data.attributes.alias')
+        ]);
+
+        return (new CategoriesResource($category))
+            ->response()
+            ->header('Location', route('api.categories.show', [
+                'category' => $category
+            ]));
     }
 
     /**

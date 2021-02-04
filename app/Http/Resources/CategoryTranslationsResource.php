@@ -5,28 +5,25 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class CategoriesResource
+ * Class CategoryTranslationsResource
  * @package App\Http\Resources
  */
-class CategoriesResource extends JsonResource
+class CategoryTranslationsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return array
      */
     public function toArray($request)
     {
         return [
-            'meta' => [
-                'current_url' => $request->url(),
-                'current_locale' => $request->segment(1),
-            ],
             'id' => (string)$this->id,
             'type' => 'categories',
             'attributes' => [
                 'alias' => $this->alias,
+                'name' => $this->name,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
             ],

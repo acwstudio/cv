@@ -13,6 +13,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ExampleTest extends TestCase
 {
     use DatabaseMigrations;
+
     /**
      * A basic test example.
      *

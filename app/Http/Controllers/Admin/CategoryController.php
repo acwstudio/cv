@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Resources\CategoriesCollection;
+use App\Http\Resources\CategoriesResource;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,7 +36,10 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
+//        $category = Category::find(2);
+//        dd(new CategoriesResource($category));
 
+//        return new CategoriesResource($category);
         return $categories;
     }
 

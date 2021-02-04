@@ -259,3 +259,11 @@ Look at, please:
   }
 }
 ```
+
+## Testing API
+
+**A test is divided into 3 parts**
+
+- In the first part we set up our world
+- I n the second part we run the code to be tested
+- In the third part we make all of our assertions
