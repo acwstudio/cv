@@ -35,10 +35,10 @@ class CategoriesStoreValidationTest extends TestCase
                 'attributes' => [
                     'alias' => 'Test Alias'
                 ]
-            ],[
-                'accept' => 'application/vnd.api+json',
-                'content-type' => 'application/vnd.api+json',
             ]
+        ],[
+            'accept' => 'application/vnd.api+json',
+            'content-type' => 'application/vnd.api+json',
         ])
 
             /** make all of our asserts */
@@ -79,10 +79,10 @@ class CategoriesStoreValidationTest extends TestCase
                 'attributes' => [
                     'alias' => 'Test Alias'
                 ]
-            ],[
-                'accept' => 'application/vnd.api+json',
-                'content-type' => 'application/vnd.api+json',
             ]
+        ],[
+            'accept' => 'application/vnd.api+json',
+            'content-type' => 'application/vnd.api+json',
         ])
 
             /** make all of our asserts */
@@ -120,10 +120,10 @@ class CategoriesStoreValidationTest extends TestCase
         $this->postJson('/api/v1/categories', [
             'data' => [
                 'type' => 'categories',
-            ],[
-                'accept' => 'application/vnd.api+json',
-                'content-type' => 'application/vnd.api+json',
             ]
+        ],[
+            'accept' => 'application/vnd.api+json',
+            'content-type' => 'application/vnd.api+json',
         ])
 
             /** make all of our asserts */
@@ -162,10 +162,10 @@ class CategoriesStoreValidationTest extends TestCase
             'data' => [
                 'type' => 'categories',
                 'attributes' => 'not an object',
-            ],[
-                'accept' => 'application/vnd.api+json',
-                'content-type' => 'application/vnd.api+json',
             ]
+        ],[
+            'accept' => 'application/vnd.api+json',
+            'content-type' => 'application/vnd.api+json',
         ])
 
             /** make all of our asserts */
@@ -206,10 +206,10 @@ class CategoriesStoreValidationTest extends TestCase
                 'attributes' => [
                     'alias' => ''
                 ],
-            ],[
-                'accept' => 'application/vnd.api+json',
-                'content-type' => 'application/vnd.api+json',
             ]
+        ],[
+            'accept' => 'application/vnd.api+json',
+            'content-type' => 'application/vnd.api+json',
         ])
 
             /** make all of our asserts */
@@ -250,10 +250,10 @@ class CategoriesStoreValidationTest extends TestCase
                 'attributes' => [
                     'alias' => 47
                 ],
-            ],[
-                'accept' => 'application/vnd.api+json',
-                'content-type' => 'application/vnd.api+json',
             ]
+        ],[
+            'accept' => 'application/vnd.api+json',
+            'content-type' => 'application/vnd.api+json',
         ])
 
             /** make all of our asserts */

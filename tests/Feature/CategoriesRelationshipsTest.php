@@ -38,7 +38,7 @@ class CategoriesRelationshipsTest extends TestCase
             ]));
         });
         $category = Category::find(1);
-        dump((string)$category->translations[0]->id);
+
         Passport::actingAs($user);
 
         $this->getJson('/api/v1/categories/1', [

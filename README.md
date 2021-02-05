@@ -267,3 +267,11 @@ Look at, please:
 - In the first part we set up our world
 - I n the second part we run the code to be tested
 - In the third part we make all of our assertions
+
+**Testing of request headers**
+
+The GET request needs to test only Accept header, so we have these tests:
+
+- It aborts GET request if an Accept header does not adhere to the json API specification
+- It accepts GET request if an Accept header adhere to the json API specification
+- It ensures GET request 
