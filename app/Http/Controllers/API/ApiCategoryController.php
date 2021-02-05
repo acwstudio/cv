@@ -9,6 +9,8 @@ use App\Http\Resources\CategoriesCollection;
 use App\Http\Resources\CategoriesResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
+
 
 /**
  * Class ApiCategoryController
@@ -23,8 +25,11 @@ class ApiCategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-
+        $categories = QueryBuilder::for(Category::class)->allowedSorts([
+            'alias',
+            'created_at',
+            'updated_at',
+        ])->jsonPaginate();
         return new CategoriesCollection($categories);
     }
 
@@ -61,8 +66,8 @@ class ApiCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UpdateCategoryRequest $request
+     * @param Category $category
      * @return CategoriesResource
      */
     public function update(UpdateCategoryRequest $request, Category $category)
