@@ -4,9 +4,11 @@ namespace App\Exceptions;
 
 use Exception;
 use http\Env\Response;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
+use Str;
 
 class Handler extends ExceptionHandler
 {
@@ -32,8 +34,9 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -50,6 +53,25 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    /**
+     * Prepare a JSON response for the given exception.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception $e
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function prepareJsonResponse($request, Exception $e)
+    {
+        return response()->json([
+            'errors' => [
+                [
+                    'title' => Str::title(Str::snake(class_basename($e), ' ')),
+                    'details' => $e->getMessage(),
+                ]
+            ]
+        ], $this->isHttpException($e) ? $e->getStatusCode() : 500);
     }
 
     /**
@@ -76,5 +98,27 @@ class Handler extends ExceptionHandler
         return response()->json([
             'errors' => $errors
         ], $exception->status);
+    }
+
+    /**
+     * Convert an authentication exception into a response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if($request->expectsJson()){
+            return response()->json([
+                'errors' => [
+                    [
+                        'title' => 'Unauthenticated',
+                        'details' => 'You are not authenticated',
+                    ]
+                ]
+            ], 403);
+        }
+        return redirect()->guest($exception->redirectTo() ?? route('login'));
     }
 }

@@ -18,7 +18,7 @@ class CategoriesStoreValidationTest extends TestCase
     /**
      * @test
      *
-     * @watch
+     *
      */
     public function it_validates_that_the_type_member_is_given_when_creating_a_category()
     {

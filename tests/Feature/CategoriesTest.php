@@ -206,7 +206,7 @@ class CategoriesTest extends TestCase
 
     /**
      * @test
-     * @watch
+     *
      */
     public function it_can_delete_a_category_through_a_delete_request()
     {
