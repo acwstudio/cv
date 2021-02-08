@@ -7,8 +7,11 @@ use App\Http\Requests\API\StoreCategoryRequest;
 use App\Http\Requests\API\UpdateCategoryRequest;
 use App\Http\Resources\CategoriesCollection;
 use App\Http\Resources\CategoriesResource;
+use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 
@@ -25,11 +28,13 @@ class ApiCategoryController extends Controller
      */
     public function index()
     {
-        $categories = QueryBuilder::for(Category::class)->allowedSorts([
-            'alias',
-            'created_at',
-            'updated_at',
-        ])->jsonPaginate();
+        $categories = QueryBuilder::for(Category::class)
+            ->select('categories.*', 'category_translations.name')
+            ->join('category_translations', 'categories.id', '=', 'category_translations.category_id')
+            ->where('category_translations.locale', '=', 'en')
+            ->allowedSorts(['id', 'name'])
+            ->jsonPaginate();
+
         return new CategoriesCollection($categories);
     }
 
@@ -55,12 +60,19 @@ class ApiCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Category $category
      * @return CategoriesResource
      */
-    public function show(Category $category)
+    public function show($category)
     {
-        return new CategoriesResource($category);
+//        return new CategoriesResource($category);
+        $query = QueryBuilder::for(Category::where('id', $category))
+            ->allowedIncludes('translations')
+            ->firstOrFail();
+
+//        dd($query);
+//        return $query;
+        return new CategoriesResource($query);
     }
 
     /**

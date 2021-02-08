@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
@@ -18,6 +19,7 @@ class CategoriesResource extends JsonResource
      */
     public function toArray($request)
     {
+//        dd($this->attributes(['translations']));
         return [
             'meta' => [
                 'current_url' => $request->url(),
@@ -38,14 +40,38 @@ class CategoriesResource extends JsonResource
                         'related' => route('categories.translations',
                             ['id' => $this->id])
                     ],
-                    'data' => $this->translations->map(function ($translation) {
-                        return [
-                            'id' => (string)$translation->id,
-                            'type' => 'category_translations'
-                        ];
-                    })
+
+//                    'data' => CategoriesIdentifierResource::collection($this->translations),
+                    'data' => CategoriesIdentifierResource::collection($this->whenLoaded('translations')),
                 ],
             ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function relations()
+    {
+        return [
+            CategoryTranslationsResource::collection($this->whenLoaded('translations'))
+        ];
+    }
+
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function with($request)
+    {
+//        dd(collect($this->relations())->flatten());
+        return [
+            'included' => collect($this->relations())
+            ->flatMap(function ($resource) use($request) {
+                /** @var CategoriesResource $resource */
+                return $resource->toArray($request);
+            })
         ];
     }
 }

@@ -20,29 +20,14 @@ class CategoryTranslationsResource extends JsonResource
     {
         return [
             'id' => (string)$this->id,
-            'type' => 'categories',
+            'type' => 'category_translations',
             'attributes' => [
-                'alias' => $this->alias,
+                'category_id' => $this->category_id,
+                'locale' => $this->locale,
                 'name' => $this->name,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
             ],
-            'relationships' => [
-                'translations' => [
-                    'links' => [
-                        'self' => route('categories.relationships.translations',
-                            ['id' => $this->id]),
-                        'related' => route('categories.translations',
-                            ['id' => $this->id])
-                    ],
-                    'data' => $this->translations->map(function ($translation) {
-                        return [
-                            'id' => (string)$translation->id,
-                            'type' => 'category_translations'
-                        ];
-                    })
-                ],
-            ]
         ];
     }
 }

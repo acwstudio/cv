@@ -8,6 +8,7 @@ use App\Http\Resources\CategoriesResource;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class CategoryController
@@ -36,10 +37,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-//        $category = Category::find(2);
-//        dd(new CategoriesResource($category));
 
-//        return new CategoriesResource($category);
         return $categories;
     }
 
@@ -67,12 +65,16 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return CategoriesResource
      */
     public function show(Category $category)
     {
-        return $category->translation;
+//        dd($category);
+//        $query = QueryBuilder::for(Category::where('id', $category->id))
+//            ->get();
+//        dd($query);
+//        return new CategoriesResource($query);
     }
 
     /**

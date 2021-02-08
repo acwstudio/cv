@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\API\ApiCategoryController;
+
 Route::get('/', ['as' => 'blog', 'uses' => 'BlogController@index']);
 Route::get('post/{id}', ['as' => 'post', 'uses' => 'BlogController@show']);
 
@@ -33,3 +35,7 @@ Route::namespace('Admin')->middleware('auth')->group(function () {
     Route::post('dropzone-delete', ['as' => 'dropzone-delete', 'uses' => 'DropzoneController@delete']);
 
 });
+
+/* Test API */
+Route::get('/test-api', [ApiCategoryController::class, 'index'])->name('test.api');
+Route::get('/test-api/{category}', [ApiCategoryController::class, 'show'])->name('test.api.show');
