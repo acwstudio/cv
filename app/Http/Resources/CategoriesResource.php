@@ -58,6 +58,21 @@ class CategoriesResource extends JsonResource
         ];
     }
 
+    /**
+     * @param $request
+     * @return \Illuminate\Support\Collection
+     */
+    public function included($request)
+    {
+        return collect($this->relations())
+            ->filter(function ($resource) {
+                return $resource->collection !== null;
+            })
+            ->flatMap(function ($resource) use($request) {
+                /** @var CategoriesResource $resource */
+                return $resource->toArray($request);
+            });
+    }
 
     /**
      * @param Request $request
@@ -65,13 +80,12 @@ class CategoriesResource extends JsonResource
      */
     public function with($request)
     {
-//        dd(collect($this->relations())->flatten());
-        return [
-            'included' => collect($this->relations())
-            ->flatMap(function ($resource) use($request) {
-                /** @var CategoriesResource $resource */
-                return $resource->toArray($request);
-            })
-        ];
+        $with = [];
+
+        if ($this->included($request)->isNotEmpty()) {
+            $with['included'] = $this->included($request);
+        }
+
+        return $with;
     }
 }

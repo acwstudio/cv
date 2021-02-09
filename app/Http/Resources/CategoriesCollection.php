@@ -22,7 +22,21 @@ class CategoriesCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection,
+            'included' => $this->mergeIncludedRelations($request),
         ];
     }
 
+    /**
+     * @param $request
+     * @return MissingValue|\Illuminate\Support\Collection
+     */
+    private function mergeIncludedRelations($request)
+    {
+        $includes = $this->collection->flatMap(function ($resource) use($request){
+            /** @var CategoriesResource $resource */
+            return $resource->included($request);
+        });
+
+        return $includes->isNotEmpty() ? $includes : new MissingValue();
+    }
 }

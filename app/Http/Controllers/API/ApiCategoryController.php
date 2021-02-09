@@ -7,13 +7,8 @@ use App\Http\Requests\API\StoreCategoryRequest;
 use App\Http\Requests\API\UpdateCategoryRequest;
 use App\Http\Resources\CategoriesCollection;
 use App\Http\Resources\CategoriesResource;
-use App\Post;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
-
 
 /**
  * Class ApiCategoryController
@@ -33,6 +28,7 @@ class ApiCategoryController extends Controller
             ->join('category_translations', 'categories.id', '=', 'category_translations.category_id')
             ->where('category_translations.locale', '=', 'en')
             ->allowedSorts(['id', 'name'])
+            ->allowedIncludes('translations')
             ->jsonPaginate();
 
         return new CategoriesCollection($categories);
