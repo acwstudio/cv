@@ -42,8 +42,12 @@ class ApiCategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
+        $locale = $request->input('data.attributes.translation.locale');
+        $name = $request->input('data.attributes.translation.name');
+
         $category = Category::create([
-            'alias' => $request->input('data.attributes.alias')
+            'alias' => $request->input('data.attributes.alias'),
+            $locale => ['name' => $name]
         ]);
 
         return (new CategoriesResource($category))
@@ -61,13 +65,10 @@ class ApiCategoryController extends Controller
      */
     public function show($category)
     {
-//        return new CategoriesResource($category);
         $query = QueryBuilder::for(Category::where('id', $category))
             ->allowedIncludes('translations')
             ->firstOrFail();
 
-//        dd($query);
-//        return $query;
         return new CategoriesResource($query);
     }
 

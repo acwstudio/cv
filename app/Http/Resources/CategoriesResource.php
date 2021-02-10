@@ -19,18 +19,19 @@ class CategoriesResource extends JsonResource
      */
     public function toArray($request)
     {
-//        dd($this->attributes(['translations']));
         return [
-            'meta' => [
-                'current_url' => $request->url(),
-                'current_locale' => $request->segment(1),
-            ],
             'id' => (string)$this->id,
             'type' => 'categories',
             'attributes' => [
                 'alias' => $this->alias,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
+                'translation' => [
+                    'locale' => app()->getLocale(),
+                    'name' => $this->name,
+                    'created_at' => $this->translate(app()->getLocale())->created_at,
+                    'updated_at' => $this->translate(app()->getLocale())->updated_at,
+                ]
             ],
             'relationships' => [
                 'translations' => [
@@ -41,7 +42,6 @@ class CategoriesResource extends JsonResource
                             ['id' => $this->id])
                     ],
 
-//                    'data' => CategoriesIdentifierResource::collection($this->translations),
                     'data' => CategoriesIdentifierResource::collection($this->whenLoaded('translations')),
                 ],
             ]

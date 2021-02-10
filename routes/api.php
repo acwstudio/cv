@@ -28,6 +28,7 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
     /*****************  CATEGORIES ROUTES **************/
 
     Route::apiResource('categories', 'API\ApiCategoryController', ['as' => 'api']);
+//    Route::apiResource('tags', 'API\ApiTagController', ['as' => 'api']);
 
     /* relationships to posts */
     Route::get('categories/{category}/relationships/posts',
@@ -50,4 +51,8 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
     Route::get('categories/{category}/translations',
         [ApiCategoriesTranslationsRelatedController::class, 'index'])
         ->name('categories.translations');
+
+    /********************  TAGS ROUTES *****************/
+
+    Route::apiResource('tags', 'API\ApiTagController', ['as' => 'api']);
 });

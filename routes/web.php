@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\API\ApiCategoryController;
+use App\Http\Controllers\API\ApiTagController;
 
 Route::get('/', ['as' => 'blog', 'uses' => 'BlogController@index']);
 Route::get('post/{id}', ['as' => 'post', 'uses' => 'BlogController@show']);
@@ -37,5 +38,7 @@ Route::namespace('Admin')->middleware('auth')->group(function () {
 });
 
 /* Test API */
-Route::get('/test-api', [ApiCategoryController::class, 'index'])->name('test.api');
-Route::get('/test-api/{category}', [ApiCategoryController::class, 'show'])->name('test.api.show');
+//Route::get('/test-api', [ApiCategoryController::class, 'index'])->name('test.api');
+//Route::get('/test-api/{category}', [ApiCategoryController::class, 'show'])->name('test.api.show');
+//Route::get('/tag-api/{tag}', [ApiTagController::class, 'show'])->name('tag.api.show');
+//Route::post('/tag-api', [ApiTagController::class, 'store'])->name('tag.api.store');
