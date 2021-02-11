@@ -8,6 +8,7 @@ use App\Tag;
 use App\TagTranslation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class ApiTagController
@@ -22,7 +23,14 @@ class ApiTagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all();
+        $tags = QueryBuilder::for(Tag::class)
+            ->select('tags.*', 'tag_translations.name')
+            ->join('tag_translations', 'tags.id', '=', 'tag_translations.tag_id')
+            ->where('tag_translations.locale', '=', 'en')
+            ->allowedSorts(['name'])
+            ->allowedIncludes('translations')
+//            ->get();
+            ->jsonPaginate();
 
         return new TagsCollection($tags);
     }
@@ -66,21 +74,31 @@ class ApiTagController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return TagsResource
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tag $tag)
     {
-        //
+        $locale = $request->input('data.attributes.translation.locale');
+        $name = $request->input('data.attributes.translation.name');
+
+        $tag->update($request->input('data.attributes'));
+        $tag->translate($locale)->name = $name;
+        $tag->save();
+
+        return new TagsResource($tag);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+
+        return response(null, 204);
     }
 }
