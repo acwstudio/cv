@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Category;
+use App\CategoryTranslation;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Passport\Passport;
@@ -22,7 +23,7 @@ class CategoriesParametersTest extends TestCase
      * @test
      *
      */
-    public function it_can_sort_categories_by_alias_through_a_sort_query_parameter()
+    public function it_can_sort_categories_by_name_through_a_sort_query_parameter()
     {
         /** set up our world */
         app()->setLocale('en');
@@ -37,11 +38,23 @@ class CategoriesParametersTest extends TestCase
             'Anna',
         ])->map(function($alias){
             return factory(Category::class)->create([
-                'alias' => $alias,
+                'alias' => $alias
             ]);
         });
 
-        $this->get('/api/v1/categories?sort=alias', [
+        foreach ($categories as $category) {
+            /** @var Category $category */
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'en',
+            ]));
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'ru',
+            ]));
+        }
+
+        $this->get('/api/v1/categories?sort=name', [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json',
         ])
@@ -55,6 +68,9 @@ class CategoriesParametersTest extends TestCase
                             'alias' => 'Anna',
                             'created_at' => $categories[2]->created_at->toJSON(),
                             'updated_at' => $categories[2]->updated_at->toJSON(),
+                            'translation' => [
+                                'name' => 'Anna'
+                            ]
                         ]
                     ],
                     [
@@ -64,6 +80,9 @@ class CategoriesParametersTest extends TestCase
                             'alias' => 'Bertram',
                             'created_at' => $categories[0]->created_at->toJSON(),
                             'updated_at' => $categories[0]->updated_at->toJSON(),
+                            'translation' => [
+                                'name' => 'Bertram'
+                            ]
                         ]
                     ],
                     [
@@ -73,6 +92,9 @@ class CategoriesParametersTest extends TestCase
                             'alias' => 'Claus',
                             'created_at' => $categories[1]->created_at->toJSON(),
                             'updated_at' => $categories[1]->updated_at->toJSON(),
+                            'translation' => [
+                                'name' => 'Claus'
+                            ]
                         ]
                     ],
                 ]
@@ -83,14 +105,15 @@ class CategoriesParametersTest extends TestCase
      * @test
      *
      */
-    public function it_can_sort_categories_by_alias_in_descending_order_through_a_sort_query_parameter()
+    public function it_can_sort_categories_by_name_in_descending_order_through_a_sort_query_parameter()
     {
         /** set up our world */
-        \Lang::setLocale('en');
+        app()->setLocale('en');
 
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
+        /** run the code to be tested */
         $categories = collect([
             'Bertram',
             'Claus',
@@ -101,8 +124,20 @@ class CategoriesParametersTest extends TestCase
             ]);
         });
 
+        foreach ($categories as $category) {
+            /** @var Category $category */
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'en',
+            ]));
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'ru',
+            ]));
+        }
+
         /** run the code to be tested */
-        $this->get('/api/v1/categories?sort=-alias', [
+        $this->get('/api/v1/categories?sort=-name', [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json',
         ])
@@ -116,6 +151,9 @@ class CategoriesParametersTest extends TestCase
                             'alias' => 'Claus',
                             'created_at' => $categories[1]->created_at->toJSON(),
                             'updated_at' => $categories[1]->updated_at->toJSON(),
+                            'translation' => [
+                                'name' => 'Claus'
+                            ]
                         ]
                     ],
                     [
@@ -125,6 +163,9 @@ class CategoriesParametersTest extends TestCase
                             'alias' => 'Bertram',
                             'created_at' => $categories[0]->created_at->toJSON(),
                             'updated_at' => $categories[0]->updated_at->toJSON(),
+                            'translation' => [
+                                'name' => 'Bertram'
+                            ]
                         ]
                     ],
                     [
@@ -134,6 +175,9 @@ class CategoriesParametersTest extends TestCase
                             'alias' => 'Anna',
                             'created_at' => $categories[2]->created_at->toJSON(),
                             'updated_at' => $categories[2]->updated_at->toJSON(),
+                            'translation' => [
+                                'name' => 'Anna'
+                            ]
                         ]
                     ],
                 ]
@@ -147,7 +191,7 @@ class CategoriesParametersTest extends TestCase
     public function it_can_sort_categories_by_multiple_attributes_through_a_sort_query_parameter()
     {
         /** set up our world */
-        \Lang::setLocale('en');
+        app()->setLocale('en');
 
         $user = factory(User::class)->create();
         Passport::actingAs($user);
@@ -157,7 +201,6 @@ class CategoriesParametersTest extends TestCase
             'Claus',
             'Anna',
         ])->map(function($alias){
-
             if($alias === 'Bertram'){
                 return factory(Category::class)->create([
                     'alias' => $alias,
@@ -169,8 +212,21 @@ class CategoriesParametersTest extends TestCase
                 'alias' => $alias,
             ]);
         });
+
+        foreach ($categories as $category) {
+            /** @var Category $category */
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'en',
+            ]));
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'ru',
+            ]));
+        }
+
         /** run the code to be tested */
-        $this->get('/api/v1/categories?sort=created_at,alias', [
+        $this->get('/api/v1/categories?sort=created_at,name', [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json',
         ])->assertStatus(200)->assertJson([
@@ -182,6 +238,9 @@ class CategoriesParametersTest extends TestCase
                         'alias' => 'Anna',
                         'created_at' => $categories[2]->created_at->toJSON(),
                         'updated_at' => $categories[2]->updated_at->toJSON(),
+                        'translation' => [
+                            'name' => 'Anna'
+                        ]
                     ]
                 ],
                 [
@@ -191,6 +250,9 @@ class CategoriesParametersTest extends TestCase
                         'alias' => 'Claus',
                         'created_at' => $categories[1]->created_at->toJSON(),
                         'updated_at' => $categories[1]->updated_at->toJSON(),
+                        'translation' => [
+                            'name' => 'Claus'
+                        ]
                     ]
                 ],
                 [
@@ -200,6 +262,9 @@ class CategoriesParametersTest extends TestCase
                         'alias' => 'Bertram',
                         'created_at' => $categories[0]->created_at->toJSON(),
                         'updated_at' => $categories[0]->updated_at->toJSON(),
+                        'translation' => [
+                            'name' => 'Bertram'
+                        ]
                     ]
                 ],
             ]
@@ -213,7 +278,7 @@ class CategoriesParametersTest extends TestCase
     public function it_can_sort_categories_by_multiple_attributes_in_descending_order_through_a_sort_query_parameter()
     {
         /** set up our world */
-        \Lang::setLocale('en');
+        app()->setLocale('en');
 
         $user = factory(User::class)->create();
         Passport::actingAs($user);
@@ -235,8 +300,21 @@ class CategoriesParametersTest extends TestCase
                 'alias' => $alias,
             ]);
         });
+
+        foreach ($categories as $category) {
+            /** @var Category $category */
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'en',
+            ]));
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'ru',
+            ]));
+        }
+
         /** run the code to be tested */
-        $this->get('/api/v1/categories?sort=-created_at,alias', [
+        $this->get('/api/v1/categories?sort=-created_at,name', [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json',
         ])
@@ -250,6 +328,9 @@ class CategoriesParametersTest extends TestCase
                             'alias' => 'Bertram',
                             'created_at' => $categories[0]->created_at->toJSON(),
                             'updated_at' => $categories[0]->updated_at->toJSON(),
+                            'translation' => [
+                                'name' => 'Bertram'
+                            ]
                         ]
                     ],
                     [
@@ -259,6 +340,9 @@ class CategoriesParametersTest extends TestCase
                             'alias' => 'Anna',
                             'created_at' => $categories[2]->created_at->toJSON(),
                             'updated_at' => $categories[2]->updated_at->toJSON(),
+                            'translation' => [
+                                'name' => 'Anna'
+                            ]
                         ]
                     ],
                     [
@@ -268,6 +352,9 @@ class CategoriesParametersTest extends TestCase
                             'alias' => 'Claus',
                             'created_at' => $categories[1]->created_at->toJSON(),
                             'updated_at' => $categories[1]->updated_at->toJSON(),
+                            'translation' => [
+                                'name' => 'Claus'
+                            ]
                         ]
                     ],
                 ]

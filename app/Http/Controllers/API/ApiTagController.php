@@ -27,7 +27,7 @@ class ApiTagController extends Controller
             ->select('tags.*', 'tag_translations.name')
             ->join('tag_translations', 'tags.id', '=', 'tag_translations.tag_id')
             ->where('tag_translations.locale', '=', 'en')
-            ->allowedSorts(['name'])
+            ->allowedSorts(['name', 'created_at'])
             ->allowedIncludes('translations')
 //            ->get();
             ->jsonPaginate();

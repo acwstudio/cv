@@ -27,7 +27,7 @@ class ApiCategoryController extends Controller
             ->select('categories.*', 'category_translations.name')
             ->join('category_translations', 'categories.id', '=', 'category_translations.category_id')
             ->where('category_translations.locale', '=', 'en')
-            ->allowedSorts(['id', 'name'])
+            ->allowedSorts(['name', 'created_at'])
             ->allowedIncludes('translations')
             ->jsonPaginate();
 
