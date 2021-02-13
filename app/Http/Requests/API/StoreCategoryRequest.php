@@ -32,6 +32,9 @@ class StoreCategoryRequest extends FormRequest
             'data.type' => 'required|in:categories',
             'data.attributes' => 'required|array',
             'data.attributes.alias' => 'required|string',
+            'data.attributes.translation' => 'required|array',
+            'data.attributes.translation.locale' => 'required|string',
+            'data.attributes.translation.name' => 'required|string',
         ];
     }
 }

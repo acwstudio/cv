@@ -41,6 +41,7 @@ class EnsureCorrectAPIHeaders
     private function addCorrectContentType(BaseResponse $response)
     {
         $response->headers->set('content-type', 'application/vnd.api+json');
+
         return $response;
     }
 }

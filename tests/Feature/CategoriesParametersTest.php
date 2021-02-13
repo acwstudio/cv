@@ -368,12 +368,24 @@ class CategoriesParametersTest extends TestCase
     public function it_can_paginate_categories_through_a_page_query_parameter()
     {
         /** set up our world */
-        \Lang::setLocale('en');
+        app()->setLocale('en');
 
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
         $categories = factory(Category::class, 10)->create();
+
+        foreach ($categories as $category) {
+            /** @var Category $category */
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'en',
+            ]));
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'ru',
+            ]));
+        }
 
         /** run the code to be tested */
         $this->get('/api/v1/categories?page[size]=5&page[number]=1', [
@@ -445,11 +457,24 @@ class CategoriesParametersTest extends TestCase
     public function it_can_paginate_categories_through_a_page_query_parameter_and_show_different_pages()
     {
         /** set up our world */
-        \Lang::setLocale('en');
+        app()->setLocale('en');
 
         $user = factory(User::class)->create();
         Passport::actingAs($user);
+
         $categories = factory(Category::class, 10)->create();
+
+        foreach ($categories as $category) {
+            /** @var Category $category */
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'en',
+            ]));
+            $category->translations()->save(factory(CategoryTranslation::class)->make([
+                'name' => $category->alias,
+                'locale' => 'ru',
+            ]));
+        }
 
         /** run the code to be tested */
         $this->get('/api/v1/categories?page[size]=5&page[number]=2', [

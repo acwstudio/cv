@@ -23,7 +23,7 @@ class CategoriesStoreValidationTest extends TestCase
     public function it_validates_that_the_type_member_is_given_when_creating_a_category()
     {
         /** set up our world */
-        \Lang::setLocale('en');
+        app()->setLocale('en');
 
         $user = factory(User::class)->create();
         Passport::actingAs($user);

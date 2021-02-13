@@ -38,7 +38,7 @@ Route::namespace('Admin')->middleware('auth')->group(function () {
 });
 
 /* Test API */
-//Route::get('/test-api', [ApiCategoryController::class, 'index'])->name('test.api');
+Route::get('/test-api', [ApiCategoryController::class, 'index'])->name('test.api');
 //Route::get('/test-api/{category}', [ApiCategoryController::class, 'show'])->name('test.api.show');
 //Route::get('/tag-api/{tag}', [ApiTagController::class, 'show'])->name('tag.api.show');
 Route::get('/tag-api', [ApiTagController::class, 'index'])->name('tag.api.index');
