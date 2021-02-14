@@ -3,13 +3,12 @@
 namespace App\Http\Requests\API;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 /**
- * Class StoreCategoryRequest
+ * Class StoreTagRequest
  * @package App\Http\Requests\API
  */
-class StoreCategoryRequest extends FormRequest
+class StoreTagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,16 +29,12 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'data' => 'required|array',
-            'data.type' => 'required|in:categories',
+            'data.type' => 'required|in:tags',
             'data.attributes' => 'required|array',
             'data.attributes.alias' => 'required|string',
             'data.attributes.translation' => 'required|array',
-            'data.attributes.translation.locale' => [
-                'required',
-                Rule::in([app()->getLocale()])
-            ],
+            'data.attributes.translation.locale' => 'required|string',
             'data.attributes.translation.name' => 'required|string',
         ];
     }
-
 }

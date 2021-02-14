@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\API\StoreTagRequest;
 use App\Http\Resources\TagsCollection;
 use App\Http\Resources\TagsResource;
 use App\Tag;
@@ -41,7 +42,7 @@ class ApiTagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(StoreTagRequest $request)
     {
         $locale = $request->input('data.attributes.translation.locale');
         $name = $request->input('data.attributes.translation.name');
