@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
  * Class UpdateCategoryRequest
@@ -31,8 +32,13 @@ class UpdateCategoryRequest extends FormRequest
             'data' => 'required|array',
             'data.id' => 'required|string',
             'data.type' => 'required|in:categories',
-            'data.attributes' => 'required|array',
+            'data.attributes' => 'array',
             'data.attributes.alias' => 'string',
+            'data.attributes.translation' => 'array',
+            'data.attributes.translation.locale' => [
+                Rule::in([app()->getLocale()])
+            ],
+            'data.attributes.translation.name' => 'string',
         ];
     }
 }
