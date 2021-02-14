@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
  * Class StoreTagRequest
@@ -33,7 +34,10 @@ class StoreTagRequest extends FormRequest
             'data.attributes' => 'required|array',
             'data.attributes.alias' => 'required|string',
             'data.attributes.translation' => 'required|array',
-            'data.attributes.translation.locale' => 'required|string',
+            'data.attributes.translation.locale' => [
+                'required',
+                Rule::in([app()->getLocale()])
+            ],
             'data.attributes.translation.name' => 'required|string',
         ];
     }

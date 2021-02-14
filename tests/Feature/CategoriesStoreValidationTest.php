@@ -19,7 +19,7 @@ class CategoriesStoreValidationTest extends TestCase
      * @test
      *
      */
-    public function it_validates_that_the_type_member_is_given_when_creating_a_category()
+    public function it_validates_that_type_member_is_given_when_creating_a_category()
     {
         app()->setLocale('en');
 
@@ -64,7 +64,7 @@ class CategoriesStoreValidationTest extends TestCase
      * @test
      *
      */
-    public function it_validates_that_the_type_member_has_the_value_of_categories_when_creating_a_category()
+    public function it_validates_that_type_member_has_the_value_of_categories_when_creating_a_category()
     {
         app()->setLocale('en');
 
@@ -109,7 +109,7 @@ class CategoriesStoreValidationTest extends TestCase
      * @test
      *
      */
-    public function it_validates_that_the_attributes_member_is_given_when_creating_a_category()
+    public function it_validates_that_attributes_member_is_given_when_creating_a_category()
     {
         app()->setLocale('en');
 
@@ -147,7 +147,7 @@ class CategoriesStoreValidationTest extends TestCase
      * @test
      *
      */
-    public function it_validates_that_the_attributes_member_is_an_object_when_creating_a_category()
+    public function it_validates_that_attributes_member_is_an_object_when_creating_a_category()
     {
         app()->setLocale('en');
 
@@ -320,7 +320,7 @@ class CategoriesStoreValidationTest extends TestCase
      * @test
      *
      */
-    public function it_validates_that_an_translation_attribute_is_an_object_when_creating_a_category()
+    public function it_validates_that_translation_attribute_is_an_object_when_creating_a_category()
     {
         app()->setLocale('en');
 
@@ -362,7 +362,7 @@ class CategoriesStoreValidationTest extends TestCase
      * @test
      *
      */
-    public function it_validates_that_a_locale_translation_attribute_is_given_when_creating_a_category()
+    public function it_validates_that_locale_translation_attribute_is_given_when_creating_a_category()
     {
         app()->setLocale('en');
 
@@ -407,7 +407,7 @@ class CategoriesStoreValidationTest extends TestCase
      * @test
      *
      */
-    public function it_validates_that_the_locale_translation_attribute_has_the_value_of_en_when_creating_a_category()
+    public function it_validates_that_locale_translation_attribute_has_the_value_of_en_when_creating_a_category()
     {
         app()->setLocale('en');
 
@@ -452,7 +452,7 @@ class CategoriesStoreValidationTest extends TestCase
      * @test
      *
      */
-    public function it_validates_that_the_locale_translation_attribute_has_the_value_of_ru_when_creating_a_category()
+    public function it_validates_that_locale_translation_attribute_has_the_value_of_ru_when_creating_a_category()
     {
         app()->setLocale('ru');
 
@@ -497,7 +497,7 @@ class CategoriesStoreValidationTest extends TestCase
      * @test
      *
      */
-    public function it_validates_that_a_name_translation_attribute_is_given_when_creating_a_category()
+    public function it_validates_that_name_translation_attribute_is_given_when_creating_a_category()
     {
         app()->setLocale('en');
 
@@ -542,7 +542,7 @@ class CategoriesStoreValidationTest extends TestCase
      * @test
      *
      */
-    public function it_validates_that_a_name_translation_attribute_is_string_when_creating_a_category()
+    public function it_validates_that_name_translation_attribute_is_string_when_creating_a_category()
     {
         app()->setLocale('en');
 
