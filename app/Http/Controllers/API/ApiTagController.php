@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\StoreTagRequest;
+use App\Http\Requests\API\UpdateTagRequest;
 use App\Http\Resources\TagsCollection;
 use App\Http\Resources\TagsResource;
 use App\Tag;
@@ -77,14 +78,9 @@ class ApiTagController extends Controller
      * @param  int  $id
      * @return TagsResource
      */
-    public function update(Request $request, Tag $tag)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
-        $locale = $request->input('data.attributes.translation.locale');
-        $name = $request->input('data.attributes.translation.name');
-
-        $tag->update($request->input('data.attributes'));
-        $tag->translate($locale)->name = $name;
-        $tag->save();
+        $tag->update($request->all());
 
         return new TagsResource($tag);
     }
