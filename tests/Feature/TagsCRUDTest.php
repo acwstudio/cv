@@ -55,8 +55,8 @@ class TagsCRUDTest extends TestCase
                     'translation' => [
                         'locale' => app()->getLocale(),
                         'name' => $tag->name,
-                        'created_at' => $tag->translate(app()->getLocale())->created_at,
-                        'updated_at' => $tag->translate(app()->getLocale())->updated_at,
+                        'created_at' => $tag->translate(app()->getLocale())->created_at->toJson(),
+                        'updated_at' => $tag->translate(app()->getLocale())->updated_at->toJson(),
                     ]
                 ]
             ]
@@ -101,8 +101,10 @@ class TagsCRUDTest extends TestCase
                         'translation' => [
                             'locale' => app()->getLocale(),
                             'name' => $tags[0]->name,
-                            'created_at' => $tags[0]->translate(app()->getLocale())->created_at,
-                            'updated_at' => $tags[0]->translate(app()->getLocale())->updated_at
+                            'created_at' => $tags[0]->translate(app()->getLocale())
+                                ->created_at->toJson(),
+                            'updated_at' => $tags[0]->translate(app()->getLocale())
+                                ->updated_at->toJson()
                         ]
                     ]
                 ],
@@ -116,8 +118,10 @@ class TagsCRUDTest extends TestCase
                         'translation' => [
                             'locale' => app()->getLocale(),
                             'name' => $tags[1]->name,
-                            'created_at' => $tags[0]->translate(app()->getLocale())->created_at,
-                            'updated_at' => $tags[0]->translate(app()->getLocale())->updated_at
+                            'created_at' => $tags[0]->translate(app()->getLocale())
+                                ->created_at->toJson(),
+                            'updated_at' => $tags[0]->translate(app()->getLocale())
+                                ->updated_at->toJson()
                         ]
                     ]
                 ],
@@ -131,8 +135,10 @@ class TagsCRUDTest extends TestCase
                         'translation' => [
                             'locale' => app()->getLocale(),
                             'name' => $tags[2]->name,
-                            'created_at' => $tags[0]->translate(app()->getLocale())->created_at,
-                            'updated_at' => $tags[0]->translate(app()->getLocale())->updated_at
+                            'created_at' => $tags[0]->translate(app()->getLocale())
+                                ->created_at->toJson(),
+                            'updated_at' => $tags[0]->translate(app()->getLocale())
+                                ->updated_at->toJson()
                         ]
                     ]
                 ]
@@ -277,7 +283,6 @@ class TagsCRUDTest extends TestCase
                 'attributes' => [
                     'alias' => 'another_alias',
                     'translation' => [
-                        'locale' => app()->getLocale(),
                         'name' => 'Another Tag'
                     ]
                 ]
@@ -296,7 +301,6 @@ class TagsCRUDTest extends TestCase
                     'attributes' => [
                         'alias' => 'another_alias',
                         'translation' => [
-                            'locale' => app()->getLocale(),
                             'name' => 'Another Tag'
                         ]
                     ]
@@ -321,7 +325,6 @@ class TagsCRUDTest extends TestCase
      */
     public function it_can_update_a_tag_of_ru_locale_from_a_resource_object()
     {
-        /** set up our world */
         app()->setLocale('ru');
 
         $user = factory(User::class)->create();
@@ -337,7 +340,6 @@ class TagsCRUDTest extends TestCase
             ]));
         });
 
-        /** run the code to be tested */
         $this->patchJson('/api/v1/tags/1', [
             'data' => [
                 'id' => '1',
@@ -345,7 +347,6 @@ class TagsCRUDTest extends TestCase
                 'attributes' => [
                     'alias' => 'another_alias',
                     'translation' => [
-                        'locale' => app()->getLocale(),
                         'name' => 'Другой Тэг'
                     ]
                 ]
@@ -354,8 +355,6 @@ class TagsCRUDTest extends TestCase
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json'
         ])
-
-            /** make all of our assertions */
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
@@ -364,7 +363,6 @@ class TagsCRUDTest extends TestCase
                     'attributes' => [
                         'alias' => 'another_alias',
                         'translation' => [
-                            'locale' => app()->getLocale(),
                             'name' => 'Другой Тэг'
                         ]
                     ]
@@ -389,7 +387,6 @@ class TagsCRUDTest extends TestCase
      */
     public function it_can_delete_a_tag_with_all_translations_through_a_delete_request()
     {
-        /** set up our world */
         app()->setLocale('en');
 
         $user = factory(User::class)->create();
@@ -407,15 +404,13 @@ class TagsCRUDTest extends TestCase
 
         $tag = Tag::find(1);
 
-        /** run the code to be tested */
         $this->delete('/api/v1/tags/1', [], [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json'
         ])
-            /** make all of our assertions */
             ->assertStatus(204);
 
-        $this->assertDatabaseMissing('categories', [
+        $this->assertDatabaseMissing('tags', [
             'id' => '1',
             'alias' => $tag->alias
         ]);

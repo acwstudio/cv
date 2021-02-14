@@ -28,7 +28,6 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
     /*****************  CATEGORIES ROUTES **************/
 
     Route::apiResource('categories', 'API\ApiCategoryController', ['as' => 'api']);
-//    Route::apiResource('tags', 'API\ApiTagController', ['as' => 'api']);
 
     /* relationships to posts */
     Route::get('categories/{category}/relationships/posts',

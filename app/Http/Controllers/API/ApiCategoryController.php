@@ -81,7 +81,12 @@ class ApiCategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $category->update($request->all());
+        $category->update([
+            'alias' => $request->input('data.attributes.alias'),
+            'name' => $request->input('data.attributes.translation.name')
+        ]);
+
+        $category->save();
 
         return new CategoriesResource($category);
     }

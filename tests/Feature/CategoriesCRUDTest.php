@@ -25,9 +25,8 @@ class CategoriesCRUDTest extends TestCase
      */
     public function it_returns_a_category_as_resource_object()
     {
-        /** set up our world */
         app()->setLocale('en');
-
+//
         factory(Category::class)->create()->each(function ($category) {
             /** @var Category $category */
             $category->translations()->save(factory(CategoryTranslation::class)->make([
@@ -41,13 +40,11 @@ class CategoriesCRUDTest extends TestCase
 
         $user = factory(User::class)->create();
         Passport::actingAs($user);
-        /** run the code to be tested */
+
         $this->getJson('/api/v1/categories/1', [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json',
         ])
-
-            /** make all of our assertions */
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
@@ -60,8 +57,8 @@ class CategoriesCRUDTest extends TestCase
                         'translation' => [
                             'locale' => app()->getLocale(),
                             'name' => $category->name,
-                            'created_at' => $category->translate(app()->getLocale())->created_at,
-                            'updated_at' => $category->translate(app()->getLocale())->updated_at,
+                            'created_at' => $category->translate(app()->getLocale())->created_at->toJson(),
+                            'updated_at' => $category->translate(app()->getLocale())->updated_at->toJson(),
                         ]
                     ]
                 ]
@@ -74,7 +71,6 @@ class CategoriesCRUDTest extends TestCase
      */
     public function it_returns_all_categories_as_a_collection_of_resource_objects()
     {
-        /** set up our world */
         app()->setLocale('en');
 
         factory(Category::class, 3)->create()->each(function ($category) {
@@ -91,13 +87,10 @@ class CategoriesCRUDTest extends TestCase
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
-        /** run the code to be tested */
         $this->getJson('/api/v1/categories', [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json',
         ])
-
-            /** make all of our assertions */
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
@@ -111,8 +104,10 @@ class CategoriesCRUDTest extends TestCase
                             'translation' => [
                                 'locale' => app()->getLocale(),
                                 'name' => $categories[0]->name,
-                                'created_at' => $categories[0]->translate(app()->getLocale())->created_at,
-                                'updated_at' => $categories[0]->translate(app()->getLocale())->updated_at
+                                'created_at' => $categories[0]->translate(app()->getLocale())
+                                    ->created_at->toJson(),
+                                'updated_at' => $categories[0]->translate(app()->getLocale())
+                                    ->updated_at->toJson()
                             ]
                         ]
                     ],
@@ -126,8 +121,10 @@ class CategoriesCRUDTest extends TestCase
                             'translation' => [
                                 'locale' => app()->getLocale(),
                                 'name' => $categories[1]->name,
-                                'created_at' => $categories[1]->translate(app()->getLocale())->created_at,
-                                'updated_at' => $categories[1]->translate(app()->getLocale())->updated_at
+                                'created_at' => $categories[1]->translate(app()->getLocale())
+                                    ->created_at->toJson(),
+                                'updated_at' => $categories[1]->translate(app()->getLocale())
+                                    ->updated_at->toJson()
                             ]
                         ]
                     ],
@@ -141,8 +138,10 @@ class CategoriesCRUDTest extends TestCase
                             'translation' => [
                                 'locale' => app()->getLocale(),
                                 'name' => $categories[2]->name,
-                                'created_at' => $categories[2]->translate(app()->getLocale())->created_at,
-                                'updated_at' => $categories[2]->translate(app()->getLocale())->updated_at
+                                'created_at' => $categories[2]->translate(app()->getLocale())
+                                    ->created_at->toJson(),
+                                'updated_at' => $categories[2]->translate(app()->getLocale())
+                                    ->updated_at->toJson()
                             ]
                         ]
                     ],
@@ -263,9 +262,8 @@ class CategoriesCRUDTest extends TestCase
      */
     public function it_can_update_a_category_of_en_locale_from_a_resource_object()
     {
-        /** set up our world */
         app()->setLocale('en');
-        $this->withoutExceptionHandling();
+
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
@@ -279,7 +277,6 @@ class CategoriesCRUDTest extends TestCase
             ]));
         });
 
-        /** run the code to be tested */
         $this->patchJson('/api/v1/categories/1', [
             'data' => [
                 'id' => '1',
@@ -287,7 +284,6 @@ class CategoriesCRUDTest extends TestCase
                 'attributes' => [
                     'alias' => 'another_alias',
                     'translation' => [
-                        'locale' => app()->getLocale(),
                         'name' => 'Another Category'
                     ]
                 ]
@@ -296,8 +292,6 @@ class CategoriesCRUDTest extends TestCase
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json'
         ])
-
-            /** make all of our assertions */
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
@@ -306,7 +300,6 @@ class CategoriesCRUDTest extends TestCase
                     'attributes' => [
                         'alias' => 'another_alias',
                         'translation' => [
-                            'locale' => app()->getLocale(),
                             'name' => 'Another Category'
                         ]
                     ]
@@ -332,9 +325,8 @@ class CategoriesCRUDTest extends TestCase
      */
     public function it_can_update_a_category_of_ru_locale_from_a_resource_object()
     {
-        /** set up our world */
         app()->setLocale('ru');
-        $this->withoutExceptionHandling();
+
         $user = factory(User::class)->create();
         Passport::actingAs($user);
 
@@ -348,7 +340,6 @@ class CategoriesCRUDTest extends TestCase
             ]));
         });
 
-        /** run the code to be tested */
         $this->patchJson('/api/v1/categories/1', [
             'data' => [
                 'id' => '1',
@@ -356,7 +347,6 @@ class CategoriesCRUDTest extends TestCase
                 'attributes' => [
                     'alias' => 'another_alias',
                     'translation' => [
-                        'locale' => app()->getLocale(),
                         'name' => 'Другая категория'
                     ]
                 ]
@@ -365,8 +355,6 @@ class CategoriesCRUDTest extends TestCase
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json'
         ])
-
-            /** make all of our assertions */
             ->assertStatus(200)
             ->assertJson([
                 'data' => [
@@ -375,7 +363,6 @@ class CategoriesCRUDTest extends TestCase
                     'attributes' => [
                         'alias' => 'another_alias',
                         'translation' => [
-                            'locale' => app()->getLocale(),
                             'name' => 'Другая категория'
                         ]
                     ]
@@ -401,7 +388,6 @@ class CategoriesCRUDTest extends TestCase
      */
     public function it_can_delete_a_category_with_all_translations_through_a_delete_request()
     {
-        /** set up our world */
         app()->setLocale('en');
 
         $user = factory(User::class)->create();
@@ -419,12 +405,10 @@ class CategoriesCRUDTest extends TestCase
 
         $category = Category::find(1);
 
-        /** run the code to be tested */
         $this->delete('/api/v1/categories/1', [], [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json'
         ])
-            /** make all of our assertions */
             ->assertStatus(204);
 
         $this->assertDatabaseMissing('categories', [
@@ -432,4 +416,5 @@ class CategoriesCRUDTest extends TestCase
             'alias' => $category->alias
         ]);
     }
+
 }

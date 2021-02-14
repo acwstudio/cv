@@ -80,7 +80,12 @@ class ApiTagController extends Controller
      */
     public function update(UpdateTagRequest $request, Tag $tag)
     {
-        $tag->update($request->all());
+        $tag->update([
+            'alias' => $request->input('data.attributes.alias'),
+            'name' => $request->input('data.attributes.translation.name')
+        ]);
+
+        $tag->save();
 
         return new TagsResource($tag);
     }
