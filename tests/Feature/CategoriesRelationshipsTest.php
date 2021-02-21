@@ -20,23 +20,12 @@ class CategoriesRelationshipsTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     *
-     *
-     */
-//    public function test_case()
-//    {
-//        $this->withoutExceptionHandling();
-//        $this->assertTrue(true);
-//    }
-
-    /**
-     *
+     * @test
      *
      */
-    public function it_returns_a_relationship_to_translations_adhering_to_json_api_spec()
+    public function it_returns_category_relationship_to_translations_adhering_to_json_api_spec()
     {
-        /** set up our world */
-        \Lang::setLocale('en');
+        app()->setLocale('en');
 
         $user = factory(User::class)->create();
         factory(Category::class)->create()->each(function ($category) {
@@ -52,12 +41,10 @@ class CategoriesRelationshipsTest extends TestCase
 
         Passport::actingAs($user);
 
-        /** run the code to be tested */
         $this->getJson('/api/v1/categories/1', [
             'accept' => 'application/vnd.api+json',
             'content-type' => 'application/vnd.api+json',
         ])
-            /** make all of our assertions */
             ->assertStatus(200)
             ->assertJson([
                 'data' => [

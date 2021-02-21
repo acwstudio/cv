@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 /**
- * Class ApiCategoriesTranslationsRelationshipsController
+ * Class ApiCategoryTranslationsRelationshipsController
  * @package App\Http\Controllers\API
  */
-class ApiCategoriesTranslationsRelationshipsController extends Controller
+class ApiCategoryTranslationsRelationshipsController extends Controller
 {
     /**
      * @param Category $category

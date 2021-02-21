@@ -31,6 +31,20 @@ class TagsResource extends JsonResource
                     'created_at' => $this->translate(app()->getLocale())->created_at,
                     'updated_at' => $this->translate(app()->getLocale())->updated_at,
                 ]
+            ],
+            'relationships' => [
+                'translations' => [
+                    'links' => [
+                        'self' => route('tags.relationships.translations',
+                            ['id' => $this->id]),
+                        'related' => route('tags.translations',
+                            ['id' => $this->id])
+                    ],
+
+                    'data' => TagTranslationsIdentifierResource::collection(
+                        $this->whenLoaded('translations')
+                    ),
+                ],
             ]
         ];
     }

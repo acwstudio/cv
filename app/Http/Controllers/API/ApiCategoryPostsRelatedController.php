@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 /**
- * Class ApiCategoriesTranslationsRelatedController
+ * Class ApiCategoryPostsRelatedController
  * @package App\Http\Controllers\API
  */
-class ApiCategoriesTranslationsRelatedController extends Controller
+class ApiCategoryPostsRelatedController extends Controller
 {
     public function index()
     {

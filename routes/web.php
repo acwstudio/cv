@@ -42,4 +42,4 @@ Route::get('/test-api', [ApiCategoryController::class, 'index'])->name('test.api
 //Route::delete('/test-api/2/del', [ApiCategoryController::class, 'destroy'])->name('test.api');
 //Route::get('/test-api/{category}', [ApiCategoryController::class, 'show'])->name('test.api.show');
 //Route::get('/tag-api/{tag}', [ApiTagController::class, 'show'])->name('tag.api.show');
-Route::get('/tag-api', [ApiTagController::class, 'index'])->name('tag.api.index');
+//Route::get('/tag-api', [ApiTagController::class, 'index'])->name('tag.api.index');

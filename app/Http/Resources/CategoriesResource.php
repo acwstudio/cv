@@ -41,9 +41,21 @@ class CategoriesResource extends JsonResource
                         'related' => route('categories.translations',
                             ['id' => $this->id])
                     ],
-
-                    'data' => CategoriesIdentifierResource::collection($this->whenLoaded('translations')),
+                    'data' => CategoryTranslationsIdentifierResource::collection(
+                        $this->whenLoaded('translations')
+                    ),
                 ],
+                'posts' => [
+                    'links' => [
+                        'self' => route('categories.relationships.posts',
+                            ['id' => $this->id]),
+                        'related' => route('categories.posts',
+                            ['id' => $this->id])
+                    ],
+                    'data' => PostsIdentifierResource::collection(
+                        $this->whenLoaded('posts')
+                    )
+                ]
             ]
         ];
     }
@@ -54,7 +66,8 @@ class CategoriesResource extends JsonResource
     private function relations()
     {
         return [
-            CategoryTranslationsResource::collection($this->whenLoaded('translations'))
+            CategoryTranslationsResource::collection($this->whenLoaded('translations')),
+            PostsResource::collection($this->whenLoaded('posts'))
         ];
     }
 
@@ -68,7 +81,7 @@ class CategoriesResource extends JsonResource
             ->filter(function ($resource) {
                 return $resource->collection !== null;
             })
-            ->flatMap(function ($resource) use($request) {
+            ->flatMap(function ($resource) use ($request) {
                 /** @var CategoriesResource $resource */
                 return $resource->toArray($request);
             });

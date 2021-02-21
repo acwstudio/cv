@@ -57,8 +57,10 @@ class CategoriesCRUDTest extends TestCase
                         'translation' => [
                             'locale' => app()->getLocale(),
                             'name' => $category->name,
-                            'created_at' => $category->translate(app()->getLocale())->created_at->toJson(),
-                            'updated_at' => $category->translate(app()->getLocale())->updated_at->toJson(),
+                            'created_at' => $category->translate(app()->getLocale())
+                                ->created_at->toJson(),
+                            'updated_at' => $category->translate(app()->getLocale())
+                                ->updated_at->toJson(),
                         ]
                     ]
                 ]

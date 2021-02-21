@@ -26,11 +26,11 @@ class ApiCategoryController extends Controller
         $categories = QueryBuilder::for(Category::class)
             ->select('categories.*', 'category_translations.name')
             ->join('category_translations', 'categories.id', '=', 'category_translations.category_id')
-            ->where('category_translations.locale', '=', 'en')
+            ->where('category_translations.locale', '=', app()->getLocale())
             ->allowedSorts(['name', 'created_at'])
-            ->allowedIncludes('translations')
+            ->allowedIncludes(['posts', 'translations'])
             ->jsonPaginate();
-
+//        dd(new CategoriesCollection($categories));
         return new CategoriesCollection($categories);
     }
 
@@ -42,13 +42,12 @@ class ApiCategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $locale = $request->input('data.attributes.translation.locale');
-        $name = $request->input('data.attributes.translation.name');
-
         $category = Category::create([
             'alias' => $request->input('data.attributes.alias'),
-            $locale => ['name' => $name]
+            'name' => $request->input('data.attributes.translation.name')
         ]);
+
+        $category->save();
 
         return (new CategoriesResource($category))
             ->response()
@@ -66,7 +65,7 @@ class ApiCategoryController extends Controller
     public function show($category)
     {
         $query = QueryBuilder::for(Category::where('id', $category))
-            ->allowedIncludes('translations')
+            ->allowedIncludes(['posts'])
             ->firstOrFail();
 
         return new CategoriesResource($query);

@@ -32,6 +32,7 @@ class HandlerTest extends TestCase
         $exception = new \Exception('Test exception');
 
         $response = $handler->render($request, $exception);
+
         TestResponse::fromBaseResponse($response)->assertJson([
             'errors' => [
                 [
@@ -77,6 +78,7 @@ class HandlerTest extends TestCase
         $handler = app(Handler::class);
 
         $request = Request::create('/test', 'GET');
+
         $request->headers->set('accept', 'application/vnd.api+json');
 
         $exception = new AuthenticationException();

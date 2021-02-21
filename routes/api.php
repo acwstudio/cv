@@ -1,9 +1,13 @@
 <?php
 
-use App\Http\Controllers\API\ApiCategoriesPostsRelatedController;
-use App\Http\Controllers\API\ApiCategoriesPostsRelationshipsController;
-use App\Http\Controllers\API\ApiCategoriesTranslationsRelatedController;
-use App\Http\Controllers\API\ApiCategoriesTranslationsRelationshipsController;
+use App\Http\Controllers\API\ApiCategoryPostsRelatedController;
+use App\Http\Controllers\API\ApiCategoryPostsRelationshipsController;
+use App\Http\Controllers\API\ApiCategoryTranslationsRelatedController;
+use App\Http\Controllers\API\ApiCategoryTranslationsRelationshipsController;
+use App\Http\Controllers\API\ApiTagsPostsRelatedController;
+use App\Http\Controllers\API\ApiTagsPostsRelationshipsController;
+use App\Http\Controllers\API\ApiTagTranslationsRelatedController;
+use App\Http\Controllers\API\ApiTagTranslationsRelationshipsController;
 use Illuminate\Http\Request;
 
 /*
@@ -21,7 +25,7 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
 
     /********************  USERS ROUTES ****************/
 
-    Route::get('/user', function (Request $request) {
+    Route::get('user', function (Request $request) {
         return $request->user();
     });
 
@@ -31,27 +35,53 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
 
     /* relationships to posts */
     Route::get('categories/{category}/relationships/posts',
-        [ApiCategoriesPostsRelationshipsController::class, 'index'])
+        [ApiCategoryPostsRelationshipsController::class, 'index'])
         ->name('categories.relationships.posts');
     Route::patch('categories/{category}/relationships/posts',
-        [ApiCategoriesPostsRelationshipsController::class, 'update'])
+        [ApiCategoryPostsRelationshipsController::class, 'update'])
         ->name('categories.relationships.posts');
     Route::get('categories/{category}/posts',
-        [ApiCategoriesPostsRelatedController::class, 'index'])
+        [ApiCategoryPostsRelatedController::class, 'index'])
         ->name('categories.posts');
 
     /* relationships to translations */
     Route::get('categories/{category}/relationships/translations',
-        [ApiCategoriesTranslationsRelationshipsController::class, 'index'])
+        [ApiCategoryTranslationsRelationshipsController::class, 'index'])
         ->name('categories.relationships.translations');
     Route::patch('categories/{category}/relationships/translations',
-        [ApiCategoriesTranslationsRelationshipsController::class, 'update'])
+        [ApiCategoryTranslationsRelationshipsController::class, 'update'])
         ->name('categories.relationships.translations');
     Route::get('categories/{category}/translations',
-        [ApiCategoriesTranslationsRelatedController::class, 'index'])
+        [ApiCategoryTranslationsRelatedController::class, 'index'])
         ->name('categories.translations');
 
     /********************  TAGS ROUTES *****************/
 
     Route::apiResource('tags', 'API\ApiTagController', ['as' => 'api']);
+
+    /* relationships to posts */
+    Route::get('tags/{tag}/relationships/posts',
+        [ApiTagsPostsRelationshipsController::class, 'index'])
+        ->name('categories.relationships.posts');
+    Route::patch('tags/{tag}/relationships/posts',
+        [ApiTagsPostsRelationshipsController::class, 'update'])
+        ->name('tags.relationships.posts');
+    Route::get('tags/{tag}/posts',
+        [ApiTagsPostsRelatedController::class, 'index'])
+        ->name('tags.posts');
+
+    /* relationships to translations */
+    Route::get('tags/{tag}/relationships/translations',
+        [ApiTagTranslationsRelationshipsController::class, 'index'])
+        ->name('tags.relationships.translations');
+    Route::patch('tags/{tag}/relationships/translations',
+        [ApiTagTranslationsRelationshipsController::class, 'update'])
+        ->name('tags.relationships.translations');
+    Route::get('tags/{tag}/translations',
+        [ApiTagTranslationsRelatedController::class, 'index'])
+        ->name('tags.translations');
+
+    /********************  POSTS ROUTES *****************/
+
+    Route::apiResource('posts', 'API\ApiPostController', ['as' => 'api']);
 });

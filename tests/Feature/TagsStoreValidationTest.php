@@ -8,10 +8,10 @@ use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 /**
- * Class TagsStoreValidation
+ * Class TagsStoreValidationTest
  * @package Tests\Feature
  */
-class TagsStoreValidation extends TestCase
+class TagsStoreValidationTest extends TestCase
 {
     use DatabaseMigrations;
 

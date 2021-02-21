@@ -45,13 +45,12 @@ class ApiTagController extends Controller
      */
     public function store(StoreTagRequest $request)
     {
-        $locale = $request->input('data.attributes.translation.locale');
-        $name = $request->input('data.attributes.translation.name');
-
         $tag = Tag::create([
            'alias' => $request->input('data.attributes.alias'),
-            $locale => ['name' => $name]
+            'name' => $request->input('data.attributes.translation.name')
         ]);
+
+        $tag->save();
 
         return (new TagsResource($tag))
             ->response()

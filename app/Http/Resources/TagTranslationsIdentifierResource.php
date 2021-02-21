@@ -5,10 +5,10 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Class CategoriesIdentifierResource
+ * Class TagTranslationsIdentifierResource
  * @package App\Http\Resources
  */
-class CategoriesIdentifierResource extends JsonResource
+class TagTranslationsIdentifierResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,7 +20,7 @@ class CategoriesIdentifierResource extends JsonResource
     {
         return [
             'id' => (string)$this->id,
-            'type' => 'categories'
+            'type' => 'tag_translations'
         ];
     }
 }

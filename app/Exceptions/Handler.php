@@ -6,10 +6,15 @@ use Exception;
 use http\Env\Response;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 use Str;
 
+/**
+ * Class Handler
+ * @package App\Exceptions
+ */
 class Handler extends ExceptionHandler
 {
     /**
@@ -46,7 +51,7 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
@@ -58,7 +63,7 @@ class Handler extends ExceptionHandler
     /**
      * Prepare a JSON response for the given exception.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  \Exception $e
      * @return \Illuminate\Http\JsonResponse
      */
@@ -78,8 +83,8 @@ class Handler extends ExceptionHandler
     /**
      * Convert a validation exception into a JSON response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Illuminate\Validation\ValidationException  $exception
+     * @param  Request  $request
+     * @param ValidationException $exception
      * @return \Illuminate\Http\JsonResponse
      */
     protected function invalidJson($request, ValidationException $exception)
@@ -104,7 +109,7 @@ class Handler extends ExceptionHandler
     /**
      * Convert an authentication exception into a response.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      * @param  \Illuminate\Auth\AuthenticationException  $exception
      * @return \Symfony\Component\HttpFoundation\Response
      */
